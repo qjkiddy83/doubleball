@@ -7,7 +7,7 @@ document.querySelector('#slider1').addEventListener('slide', function(event) {
 });
 
 function setScontainerH() {
-    $('.mui-slider-group .scroll-container').eq(sliderIndex).height($(window).height() - $('.mini-classify').height() - 235)
+    $('.mui-slider-group .scroll-container').eq(sliderIndex).height($(window).height() - $('.mini-classify').height() - 166)
 
 }
 
@@ -54,14 +54,14 @@ setScontainerH();
                 li = document.createElement('li');
                 li.className = 'mui-table-view-cell';
                 li.innerHTML = `<a href="/expert.html">
-                                    <img class="mui-media-object mui-pull-left" src="../images/cbd.jpg">
-                                    <div class="mui-media-body">
-                                        <h3>第一天堂</h3>
-                                        <div class="balls">精选9+3 <p class="mui-inline mui-col-xs-8 mui-col-ms-9"><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="ball blue">01</span><span class="ball blue">01</span><span class="ball blue">01</span></p></div>
-                                        <p class='mui-ellipsis'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
-                                    </div>
-                                    <em>中奖</em>
-                                </a>`;
+                                        <img class="mui-media-object mui-pull-left" src="../images/cbd.jpg">
+                                        <div class="mui-media-body">
+                                            <h3><span>第一天堂</span><small>专家</small><small>测7期中7期</small></h3>
+                                            <p class='mui-ellipsis mui-col-xs-10'>蓝球定五：<span class="color-link">想中大奖，必看该专家的预测号码</span></p>
+                                            <p class='mui-ellipsis'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
+                                        </div>
+                                        <em class="iconfont icon-ioseye"></em>
+                                    </a>`;
                 fragment.appendChild(li);
             }
             return fragment;
