@@ -4,6 +4,7 @@ var webpack = require('webpack'),
     pkg = require('./package.json'),
     webroot = process.env.WEBROOT,
     merge = require('merge'),
+    os = require('os'),
     isDev = process.env.npm_lifecycle_event === "dev",
     ExtractTextPlugin = require('extract-text-webpack-plugin'),
     HtmlWebpackPlugin = require('html-webpack-plugin'),
@@ -33,6 +34,7 @@ var webpack = require('webpack'),
         }),
         new ExtractTextPlugin({ filename: 'css/[name].css' }),
     ];
+
 
 //生成入口对象
 function getOEntry() {
@@ -78,8 +80,8 @@ function getExports() {
     if (isDev) {
         _exports = merge(_exports, {
             devServer: {
-                host: '192.168.105.46',
-                // host: os.networkInterfaces().eth1 ? os.networkInterfaces().eth1[0].address : os.networkInterfaces()['本地连接'][1].address,
+                // host: '192.168.105.107',
+                host: os.networkInterfaces().en0[1].address,
                 port: 8080,
                 inline: true, //可以监控js变化
                 hot: true, //热启动
