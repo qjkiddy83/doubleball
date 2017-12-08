@@ -17,10 +17,33 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-guanzhu:before { content: "\e60f"; }
+
+.icon-jinbi:before { content: "\e601"; }
+
 .icon-gupiao-copy:before { content: "\e600"; }
-.icon-message:before { content: "\e60d"; }
-.icon-news:before { content: "\e634"; }
+
+.icon-vip:before { content: "\e61a"; }
+
 .icon-ioseye:before { content: "\e6a8"; }
+
+.icon-fenxiang:before { content: "\e610"; }
+
+.icon-message:before { content: "\e77f"; }
+
+.icon-chongzhi1:before { content: "\e6b0"; }
+
+.icon-icon103:before { content: "\e61b"; }
+
+.icon-news:before { content: "\e634"; }
+
+.icon-taocan:before { content: "\e65e"; }
+
+.icon-goumai:before { content: "\e611"; }
+
+.icon-chongzhi:before { content: "\e646"; }
+
+.icon-guanyu:before { content: "\e638"; }
 
 .mui-bar~.mui-content .mui-fullscreen {
     top: 44px;
@@ -127,7 +150,7 @@ header.mui-bar{
 .mui-bar .mui-btn-link{
 	color: #fff;
 }
-.mui-bar .mui-icon-extra{
+header.mui-bar .mui-icon-extra{
 	line-height: 44px;
 }
 .mui-bar-tab{
@@ -136,6 +159,9 @@ header.mui-bar{
 			color: #f85959;
 		}
 	}
+}
+.mui-nav-icon{
+
 }
 
 .ball{
