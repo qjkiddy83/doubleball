@@ -1,0 +1,23 @@
+body{
+	background: #efeff4;
+}
+.mui-card{
+	img{
+		display: block;
+	}
+	.more{
+		text-align: center;
+		display: block;
+		color: #f85959;
+		padding: 10px 0;
+		line-height: 24px;
+		i{
+			color: #a5a5a5;
+			vertical-align: middle;
+		}
+	}
+
+	.mui-card-content{
+		display: none;
+	}
+}

@@ -78,6 +78,7 @@ function getExports() {
     _exports.plugins = plugins.concat(oConfig.aHtmlWebpackPlugin);
 
     if (isDev) {
+        console.log(os.networkInterfaces().en0[1].address)
         _exports = merge(_exports, {
             devServer: {
                 // host: '192.168.105.107',

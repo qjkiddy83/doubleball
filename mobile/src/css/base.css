@@ -27,6 +27,8 @@ body {
 
 .icon-ioseye:before { content: "\e6a8"; }
 
+.icon-huodong:before { content: "\e617"; }
+
 .icon-fenxiang:before { content: "\e610"; }
 
 .icon-message:before { content: "\e77f"; }
@@ -37,6 +39,10 @@ body {
 
 .icon-news:before { content: "\e634"; }
 
+.icon-paihang:before { content: "\e60c"; }
+
+.icon-yin-yang:before { content: "\e670"; }
+
 .icon-taocan:before { content: "\e65e"; }
 
 .icon-goumai:before { content: "\e611"; }
@@ -44,6 +50,8 @@ body {
 .icon-chongzhi:before { content: "\e646"; }
 
 .icon-guanyu:before { content: "\e638"; }
+
+.icon-paihangbang:before { content: "\e65b"; }
 
 .mui-bar~.mui-content .mui-fullscreen {
     top: 44px;
@@ -160,8 +168,23 @@ header.mui-bar .mui-icon-extra{
 		}
 	}
 }
-.mui-nav-icon{
-
+.mui-bar-nav{
+	.icon-text{
+		width: 44px;
+		text-align: center;
+		padding: 3px 0 2px;
+		font-weight: lighter;
+		.mui-icon{
+			font-size: 18px;
+			display: block;
+			padding: 0;
+			margin: 0;
+		}
+		.mui-tab-label{
+			font-size: 12px;
+			line-height: 12px;
+		}
+	}
 }
 
 .ball{

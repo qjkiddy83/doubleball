@@ -1,0 +1,11 @@
+.mui-slider {
+    position: absolute;
+    top: 83px;
+    bottom: 0;
+    .mui-slider-group {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+    }
+}
