@@ -1,0 +1,43 @@
+header.mui-bar{
+	.mui-segmented-control{
+		border-color: #fff;
+		width: 80%;
+		line-height: 28px;
+		.mui-control-item{
+			border-color: #fff;
+			color: #fff;
+		line-height: 28px;
+			&.mui-active{
+				background-color: #fff;
+				color: #d0021b;
+			}
+		}
+	}
+}
+.lottery-classify ~ .mui-slider{
+	top: 83px;
+}
+.mui-slider{
+	position: absolute;
+	top: 44px;
+	bottom: 50px;
+	.mui-slider-group{
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		width: 100%;
+	}
+}
+.mui-control-content{
+	position: static;
+}
+.mui-table-view-cell{
+	a{
+		display: block;
+		padding-top: 30px !important;
+	}
+	span{
+		display: block;
+		text-align: right;
+	}
+}

@@ -1,4 +1,5 @@
 .guess {
+    position: absolute;
     bottom: 50px;
     top: 83px;
     li{
@@ -30,6 +31,16 @@
     		color: #f5aa23;
     	}
     }
+    .mui-slider-group{
+        position: absolute;
+        width: 100%;
+        top: 0;
+        bottom: 0;
+        left: 0;
+    }
+}
+.mui-pull-bottom-tips,.mui-pull-top-tips{
+    display: none;
 }
 .lottery-classify{
 	position: fixed;

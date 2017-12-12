@@ -1,3 +1,32 @@
 .mui-content{
 	background-color: #fff;
+	padding: 10px 15px;
+	color: #868383;
+	font-size: 14px;
+	h5{
+		text-align: center;
+		color: #5c5757;
+		line-height: 42px;
+		font-size: 16px;
+	}
+	article{
+		border-top: 1px solid #ccc;
+		border-bottom: 1px solid #ccc;
+		padding-top: 10px;
+	}
+	.author{
+		text-align: right;
+		padding: 10px 0;
+	}
+	.mui-btn{
+		background-color: #f85959;
+		border-color: #f85959;
+		color: #fff;
+	}
+	.explain{
+		padding-top: 10px;
+		p{
+			margin-bottom: 0;
+		}
+	}
 }
