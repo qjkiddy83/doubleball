@@ -86,6 +86,12 @@ function getExports() {
                 port: 8080,
                 inline: true, //可以监控js变化
                 hot: true, //热启动
+                proxy: {
+                    '*': {
+                      target: 'http://115.28.145.132/',
+                      changeOrigin: true
+                    }
+                 }
             },
             watch: true,
             watchOptions: {

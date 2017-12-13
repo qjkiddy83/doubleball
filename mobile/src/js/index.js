@@ -1,4 +1,6 @@
+var lotterys = require('./lottery-data.js');
 var $ = require('./zepto.js');
+
 var sliderIndex = 0;
 document.querySelector('#slider1').addEventListener('slide', function(event) {
     sliderIndex = event.detail.slideNumber;
@@ -8,16 +10,16 @@ document.querySelector('#slider1').addEventListener('slide', function(event) {
 
 function setScontainerH() {
     $('.mui-slider-group .scroll-container').eq(sliderIndex).height($(window).height() - $('.mini-classify').height() - 235)
-
 }
 
 setScontainerH();
 
-;(function(mui) {
+;
+(function(mui) {
     mui.ready(function() {
         //循环初始化所有下拉刷新，上拉加载。
         mui.each(document.querySelectorAll('.mui-scroll-wrapper'), function(index, pullRefreshEl) {
-            mui(pullRefreshEl).pullRefresh({
+            var aa = mui(pullRefreshEl).pullRefresh({
                 down: {
                     callback: pulldownRefresh
                 },
@@ -93,3 +95,40 @@ $(document).on('tap', '[node-act="combine"]', function() {
     }
     setScontainerH();
 })
+
+var curLottery = lotterys[sliderIndex],
+    page = 0;
+var vm = new Vue({
+    el: '#app',
+    data: {
+        lotterys: lotterys,
+        curLottery: curLottery,
+        forecasttype: curLottery.product[0].code,
+        forecasttypename: curLottery.product[0].name,
+        lottery: "-,-,-,-,-,-|-",
+        lotterytime: "0000-00-00",
+        lotterytype: curLottery.code,
+        lotterytypename: curLottery.name,
+        pagecount: "1",
+        periods: "0000000",
+        returnlist: []
+    }
+})
+
+function getData() {
+    $.ajax({
+        url: '/forecast/forecastprivlist.jsp',
+        data: {
+            forecasttype: curLottery.product[0].code,
+            lotterytype: curLottery.code,
+            page: page,
+            pagesize: 20
+        },
+        dataType: 'json',
+        success: function(d) {
+            console.log(d)
+            vm.periods = d.periods;
+        }
+    })
+}
+getData();

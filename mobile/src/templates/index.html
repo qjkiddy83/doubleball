@@ -8,6 +8,7 @@
 </head>
 
 <body ontouchmove="event.preventDefault();">
+    <div id="app">
     <header class="mui-bar mui-bar-nav">
         <a href="verb.html" class="mui-pull-left icon-text">
             <span class="mui-icon iconfont icon-paihangbang"></span>
@@ -21,15 +22,9 @@
     </header>
     <section class="lottery-classify">
         <ul>
-            <li class="active">双色球</li>
-            <li>大乐透</li>
-            <li>大乐透</li>
-            <li>大乐透</li>
-            <li>大乐透</li>
-            <li>大乐透</li>
-            <li>大乐透</li>
-            <li>大乐透</li>
-            <li>大乐透</li>
+            <li v-for="(item,index) in lotterys" v-bind:data-code="item.code" v-bind:class="index==0?'active':''" v-on:click="">
+                {{ item.name }}
+            </li>
         </ul>
     </section>
     <div class="mui-slider home" id="slider1">
@@ -37,7 +32,7 @@
             <!--第一个内容区容器-->
             <div class="mui-slider-item">
                 <a href="history.html" class="res-board mui-navigate-right">
-                    <h3>第2017141期开奖结果</h3>
+                    <h3>第{{periods}}期开奖结果</h3>
                     <ol>
                         <li class="ball">08</li>
                         <li class="ball">08</li>
@@ -53,7 +48,7 @@
                 </div>
                 <div class="mini-classify">
                     <ul>
-                        <li class="active mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3" node-act="combine"><span>收起 <i class="mui-icon mui-icon-arrowup"></i></span></li>
+                        <li v-for="(item,index) in curLottery.product" v-bind:class="index==0?'active mui-col-xs-3':'mui-col-xs-3'"><span>{{item.name}}</span></li><li class="mui-col-xs-3" node-act="combine"><span>收起 <i class="mui-icon mui-icon-arrowup"></i></span></li>
                     </ul>
                 </div>
                 <div class="scroll-container">
@@ -186,6 +181,8 @@
                 <span class="mui-tab-label">我的</span>
             </a>
         </nav>
+    </div>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue"></script>
 </body>
 
 </html>
