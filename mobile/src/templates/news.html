@@ -8,252 +8,106 @@
 </head>
 
 <body ontouchmove="event.preventDefault();">
-    <header class="mui-bar mui-bar-nav">
-        <div class="mui-segmented-control">
-            <a class="mui-control-item mui-active" href="#item1">预测分析</a>
-            <a class="mui-control-item" href="#item2">投注技巧</a>
-            <a class="mui-control-item" href="#item3">彩市新闻</a>
-        </div>
-    </header>
-    <div id="item1" class="mui-control-content mui-active">
-        <section class="lottery-classify">
-            <ul>
-                <li class="active">双色球</li>
-                <li>大乐透</li>
-                <li>大乐透</li>
-                <li>大乐透</li>
-                <li>大乐透</li>
-                <li>大乐透</li>
-                <li>大乐透</li>
-                <li>大乐透</li>
-                <li>大乐透</li>
-            </ul>
-        </section>
-        <div class="mui-slider">
-            <div class="mui-slider-group">
-                <!--第一个内容区容器-->
-                <div class="mui-slider-item">
-                    <div class="mui-content mui-scroll-wrapper">
-                        <div class="mui-scroll">
-                            <ul class="mui-table-view">
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!--第二个内容区容器-->
-                <div class="mui-slider-item">
-                    <div class="mui-content mui-scroll-wrapper">
-                        <div class="mui-scroll">
-                            <ul class="mui-table-view">
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                            </ul>
+    <div id="app">
+        <header class="mui-bar mui-bar-nav">
+            <div class="mui-segmented-control">
+                <a class="mui-control-item mui-active" data-type='fenxi' data-id=2 href="#fenxi" v-on:tap="changeTab">预测分析</a>
+                <a class="mui-control-item" data-type='jiqiao' data-id=3 href="#jiqiao" v-on:tap="changeTab">投注技巧</a>
+                <a class="mui-control-item" data-type='xinwen' data-id=4 href="#xinwen" v-on:tap="changeTab">彩市新闻</a>
+            </div>
+        </header>
+        <div id="fenxi" class="mui-control-content mui-active">
+            <section class="lottery-classify">
+                <ul>
+                    <li v-for="(item,index) in lotterys" v-bind:data-code="item.code" v-bind:data-index="index" v-bind:class="item.code==(dataset.fenxi.curLtype)?'active':''" v-on:click="changeLtype">
+                        {{ item.name }}
+                    </li>
+                </ul>
+            </section>
+            <div class="mui-slider">
+                <div class="mui-slider-group">
+                    <div class="mui-slider-item" v-for="(item,index) in dataset.fenxi.ltype">
+                        <div class="mui-content mui-scroll-wrapper">
+                            <div class="mui-scroll">
+                                <ul class="mui-table-view">
+                                    <li v-if="item.list.length>1" class="mui-table-view-cell" v-for="cell in item.list">
+                                        <a v-bind:href="'article.html?id='+cell.id">{{cell.informationtitile}}<span>{{cell.informationtime}}</span></a>
+                                    </li>
+                                    <li v-if="item.list.length==0" class="mui-table-view-cell tip-center">
+                                        <a>暂无数据<span>&nbsp;</span></a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div id="item2" class="mui-control-content">
-        <section class="lottery-classify">
-            <ul>
-                <li class="active">双色球</li>
-                <li>大乐透</li>
-            </ul>
-        </section>
-        <div class="mui-slider">
-            <div class="mui-slider-group">
-                <!--第一个内容区容器-->
-                <div class="mui-slider-item">
-                    <div class="mui-content mui-scroll-wrapper">
-                        <div class="mui-scroll">
-                            <ul class="mui-table-view">
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!--第二个内容区容器-->
-                <div class="mui-slider-item">
-                    <div class="mui-content mui-scroll-wrapper">
-                        <div class="mui-scroll">
-                            <ul class="mui-table-view">
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                            </ul>
+        <div id="jiqiao" class="mui-control-content mui-active">
+            <section class="lottery-classify">
+                <ul>
+                    <li v-for="(item,index) in lotterys" v-bind:data-code="item.code" v-bind:data-index="index" v-bind:class="item.code==(dataset.jiqiao.curLtype)?'active':''" v-on:click="changeLtype">
+                        {{ item.name }}
+                    </li>
+                </ul>
+            </section>
+            <div class="mui-slider">
+                <div class="mui-slider-group">
+                    <div class="mui-slider-item" v-for="(item,index) in dataset.jiqiao.ltype">
+                        <div class="mui-content mui-scroll-wrapper">
+                            <div class="mui-scroll">
+                                <ul class="mui-table-view">
+                                    <li v-if="item.list.length>1" class="mui-table-view-cell" v-for="cell in item.list">
+                                        <a href="article.html">{{cell.informationtitile}}<span>{{cell.informationtime}}</span></a>
+                                    </li>
+                                    <li v-if="item.list.length==0" class="mui-table-view-cell tip-center">
+                                        <a>暂无数据<span>&nbsp;</span></a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div id="item3" class="mui-control-content">
-        <div class="mui-slider">
-            <div class="mui-slider-group">
-                <div class="mui-slider-item">
-                    <div class="mui-content mui-scroll-wrapper">
-                        <div class="mui-scroll">
-                            <ul class="mui-table-view">
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                                <li class="mui-table-view-cell"><a href="article.html">
-                                    双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>
-                                </a></li>
-                            </ul>
-                        </div>
-                    </div>
+        <div id="xinwen" class="mui-control-content">
+            <div class="mui-content mui-scroll-wrapper">
+                <div class="mui-scroll">
+                    <ul class="mui-table-view">
+                        <li v-if="dataset.xinwen.list.length>=1" class="mui-table-view-cell" v-for="cell in dataset.xinwen.list">
+                            <a href="article.html">{{cell.informationtitile}}<span>{{cell.informationtime}}</span></a>
+                        </li>
+                        <li v-if="dataset.xinwen.list.length==0" class="mui-table-view-cell tip-center">
+                            <a>暂无数据<span>&nbsp;</span></a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
-    </div>
-    <nav class="mui-bar mui-bar-tab">
-        <a class="mui-tab-item" href="./">
+        <nav class="mui-bar mui-bar-tab">
+            <a class="mui-tab-item" href="./">
                 <span class="mui-icon mui-icon-extra mui-icon-extra-heart-filled"></span>
                 <span class="mui-tab-label">上期测中</span>
             </a>
-        <a class="mui-tab-item" href="cur-predict.html">
+            <a class="mui-tab-item" href="cur-predict.html">
                 <span class="mui-icon iconfont icon-gupiao-copy"></span>
                 <span class="mui-tab-label">本期预测</span>
             </a>
-        <a class="mui-tab-item" href="guess.html">
+            <a class="mui-tab-item" href="guess.html">
                 <span class="mui-icon iconfont icon-yin-yang"></span>
                 <span class="mui-tab-label">字诗图猜</span>
             </a>
-        <a class="mui-tab-item mui-active" href="news.html">
+            <a class="mui-tab-item mui-active" href="news.html">
                 <span class="mui-icon iconfont icon-news"></span>
                 <span class="mui-tab-label">彩票资讯</span>
             </a>
-        <a class="mui-tab-item" href="my.html">
+            <a class="mui-tab-item" href="my.html">
                 <span class="mui-icon mui-icon-extra mui-icon-extra-people"></span>
                 <span class="mui-tab-label">我的</span>
             </a>
-    </nav>
+        </nav>
+    </div>
+    <!-- <script type="text/javascript" src=''></script> -->
 </body>
 
 </html>

@@ -31,128 +31,140 @@
         <div class="mui-slider-group">
             <!--第一个内容区容器-->
             <div class="mui-slider-item">
-                <a href="history.html" class="res-board mui-navigate-right">
-                    <h3>第{{periods}}期开奖结果</h3>
-                    <ol>
-                        <li class="ball">08</li>
-                        <li class="ball">08</li>
-                        <li class="ball">08</li>
-                        <li class="ball">08</li>
-                        <li class="ball">08</li>
-                        <li class="ball">08</li>
-                        <li class="ball blue">08</li>
-                    </ol>
-                </a>
-                <div class="notice mui-ellipsis">
-                    <span class="iconfont icon-message"></span>喜！141期头奖1000万中3注，权威专家带您一起中！
-                </div>
-                <div class="mini-classify">
-                    <ul>
-                        <li v-for="(item,index) in curLottery.product" v-bind:class="index==0?'active mui-col-xs-3':'mui-col-xs-3'"><span>{{item.name}}</span></li><li class="mui-col-xs-3" node-act="combine"><span>收起 <i class="mui-icon mui-icon-arrowup"></i></span></li>
-                    </ul>
-                </div>
-                <div class="scroll-container">
-                    <div id="scroll1" class="mui-content mui-scroll-wrapper li-praised">
-                        <div class="mui-scroll">
-                            <ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
-                                <li class="mui-table-view-cell">
-                                    <a href="expert.html">
-                                        <img class="mui-media-object mui-pull-left" src="../images/cbd.jpg">
-                                        <div class="mui-media-body">
-                                            <h3><span>第一天堂</span><small>专家</small><small>测7期中7期</small></h3>
-                                            <div class="balls">后区定六 <p class="mui-inline mui-col-xs-8 mui-col-ms-9"><span class="mball blue">01</span><span class="mball blue">01</span><span class="mball blue">01</span><span class="mball blue">01</span><span class="mball blue">01</span><span class="mball blue">01</span></p></div>
-                                            <p class='mui-ellipsis'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
-                                        </div>
-                                        <em>中奖</em>
-                                    </a>
-                                </li>
-                                <li class="mui-table-view-cell">
-                                    <a href="expert.html">
-                                        <img class="mui-media-object mui-pull-left" src="../images/cbd.jpg">
-                                        <div class="mui-media-body">
-                                            <h3><span>第一天堂</span><small>专家</small><small>测7期中7期</small></h3>
-                                            <div class="balls">精选9+3 <p class="mui-inline mui-col-xs-8 mui-col-ms-9"><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball blue">01</span><span class="mball blue">01</span><span class="mball blue">01</span></p></div>
-                                            <p class='mui-ellipsis'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
-                                        </div>
-                                        <em>中奖</em>
-                                    </a>
-                                </li>
-                                <li class="mui-table-view-cell">
-                                    <a href="expert.html">
-                                        <img class="mui-media-object mui-pull-left" src="../images/cbd.jpg">
-                                        <div class="mui-media-body">
-                                            <h3><span>第一天堂</span><small>专家</small><small>测7期中7期</small></h3>
-                                            <div class="balls">红球25码 <p class="mui-inline mui-col-xs-8 mui-col-ms-9"><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span></p></div>
-                                            <p class='mui-ellipsis'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
-                                        </div>
-                                        <em>中奖</em>
-                                    </a>
-                                </li>
+                <div>
+                    <div class="flex-auto">
+                        <a href="history.html" class="res-board mui-navigate-right">
+                            <h3>第{{periods}}期开奖结果</h3>
+                            <ol>
+                                <li class="ball">08</li>
+                                <li class="ball">08</li>
+                                <li class="ball">08</li>
+                                <li class="ball">08</li>
+                                <li class="ball">08</li>
+                                <li class="ball">08</li>
+                                <li class="ball blue">08</li>
+                            </ol>
+                        </a>
+                        <div class="notice mui-ellipsis">
+                            <span class="iconfont icon-message"></span>喜！141期头奖1000万中3注，权威专家带您一起中！
+                        </div>
+                        <div class="mini-classify">
+                            <ul>
+                                <li v-for="(item,index) in curLottery.product" v-bind:class="index==0?'active mui-col-xs-3':'mui-col-xs-3'"><span>{{item.name}}</span></li><li class="mui-col-xs-3" node-act="combine"><span>收起 <i class="mui-icon mui-icon-arrowup"></i></span></li>
                             </ul>
+                        </div>
+                    </div>
+                    <div class="scroll-container">
+                        <div>
+                            <div id="scroll1" class="mui-content mui-scroll-wrapper li-praised">
+                                <div class="mui-scroll">
+                                    <ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+                                        <li class="mui-table-view-cell">
+                                            <a href="expert.html">
+                                                <img class="mui-media-object mui-pull-left" src="../images/cbd.jpg">
+                                                <div class="mui-media-body">
+                                                    <h3><span>第一天堂</span><small>专家</small><small>测7期中7期</small></h3>
+                                                    <div class="balls">后区定六 <p class="mui-inline mui-col-xs-8 mui-col-ms-9"><span class="mball blue">01</span><span class="mball blue">01</span><span class="mball blue">01</span><span class="mball blue">01</span><span class="mball blue">01</span><span class="mball blue">01</span></p></div>
+                                                    <p class='mui-ellipsis'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
+                                                </div>
+                                                <em>中奖</em>
+                                            </a>
+                                        </li>
+                                        <li class="mui-table-view-cell">
+                                            <a href="expert.html">
+                                                <img class="mui-media-object mui-pull-left" src="../images/cbd.jpg">
+                                                <div class="mui-media-body">
+                                                    <h3><span>第一天堂</span><small>专家</small><small>测7期中7期</small></h3>
+                                                    <div class="balls">精选9+3 <p class="mui-inline mui-col-xs-8 mui-col-ms-9"><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball blue">01</span><span class="mball blue">01</span><span class="mball blue">01</span></p></div>
+                                                    <p class='mui-ellipsis'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
+                                                </div>
+                                                <em>中奖</em>
+                                            </a>
+                                        </li>
+                                        <li class="mui-table-view-cell">
+                                            <a href="expert.html">
+                                                <img class="mui-media-object mui-pull-left" src="../images/cbd.jpg">
+                                                <div class="mui-media-body">
+                                                    <h3><span>第一天堂</span><small>专家</small><small>测7期中7期</small></h3>
+                                                    <div class="balls">红球25码 <p class="mui-inline mui-col-xs-8 mui-col-ms-9"><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span></p></div>
+                                                    <p class='mui-ellipsis'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
+                                                </div>
+                                                <em>中奖</em>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <!--第二个内容区容器-->
             <div class="mui-slider-item">
-                <a href="history.html" class="res-board mui-navigate-right">
-                    <h3>第2017141期开奖结果</h3>
-                    <ol>
-                        <li class="ball">08</li>
-                        <li class="ball">08</li>
-                        <li class="ball">08</li>
-                        <li class="ball">08</li>
-                        <li class="ball">08</li>
-                        <li class="ball">08</li>
-                        <li class="ball blue">08</li>
-                    </ol>
-                </a>
-                <div class="notice mui-ellipsis">
-                    <span class="iconfont icon-message"></span>喜！141期头奖1000万中3注，权威专家带您一起中！
-                </div>
-                <div class="mini-classify">
-                    <ul>
-                        <li class="active mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3" node-act="combine"><span>收起 <i class="mui-icon mui-icon-arrowup"></i></span></li>
-                    </ul>
-                </div>
-                <div class="scroll-container">
-                    <div id="scroll1" class="mui-content mui-scroll-wrapper li-praised">
-                        <div class="mui-scroll">
-                            <ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
-                                <li class="mui-table-view-cell">
-                                    <a href="expert.html">
-                                        <img class="mui-media-object mui-pull-left" src="../images/cbd.jpg">
-                                        <div class="mui-media-body">
-                                            <h3><span>第一天堂</span><small>专家</small><small>测7期中7期</small></h3>
-                                            <div class="balls">后区定六 <p class="mui-inline mui-col-xs-8 mui-col-ms-9"><span class="mball blue">01</span><span class="mball blue">01</span><span class="mball blue">01</span><span class="mball blue">01</span><span class="mball blue">01</span><span class="mball blue">01</span></p></div>
-                                            <p class='mui-ellipsis'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
-                                        </div>
-                                        <em>中奖</em>
-                                    </a>
-                                </li>
-                                <li class="mui-table-view-cell">
-                                    <a href="expert.html">
-                                        <img class="mui-media-object mui-pull-left" src="../images/cbd.jpg">
-                                        <div class="mui-media-body">
-                                            <h3><span>第一天堂</span><small>专家</small><small>测7期中7期</small></h3>
-                                            <div class="balls">精选9+3 <p class="mui-inline mui-col-xs-8 mui-col-ms-9"><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball blue">01</span><span class="mball blue">01</span><span class="mball blue">01</span></p></div>
-                                            <p class='mui-ellipsis'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
-                                        </div>
-                                        <em>中奖</em>
-                                    </a>
-                                </li>
-                                <li class="mui-table-view-cell">
-                                    <a href="expert.html">
-                                        <img class="mui-media-object mui-pull-left" src="../images/cbd.jpg">
-                                        <div class="mui-media-body">
-                                            <h3><span>第一天堂</span><small>专家</small><small>测7期中7期</small></h3>
-                                            <div class="balls">红球25码 <p class="mui-inline mui-col-xs-8 mui-col-ms-9"><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span></p></div>
-                                            <p class='mui-ellipsis'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
-                                        </div>
-                                        <em>中奖</em>
-                                    </a>
-                                </li>
+                <div>
+                    <div class="flex-auto">
+                        <a href="history.html" class="res-board mui-navigate-right">
+                            <h3>第{{periods}}期开奖结果</h3>
+                            <ol>
+                                <li class="ball">08</li>
+                                <li class="ball">08</li>
+                                <li class="ball">08</li>
+                                <li class="ball">08</li>
+                                <li class="ball">08</li>
+                                <li class="ball">08</li>
+                                <li class="ball blue">08</li>
+                            </ol>
+                        </a>
+                        <div class="notice mui-ellipsis">
+                            <span class="iconfont icon-message"></span>喜！141期头奖1000万中3注，权威专家带您一起中！
+                        </div>
+                        <div class="mini-classify">
+                            <ul>
+                                <li v-for="(item,index) in curLottery.product" v-bind:class="index==0?'active mui-col-xs-3':'mui-col-xs-3'"><span>{{item.name}}</span></li><li class="mui-col-xs-3" node-act="combine"><span>收起 <i class="mui-icon mui-icon-arrowup"></i></span></li>
                             </ul>
+                        </div>
+                    </div>
+                    <div class="scroll-container">
+                        <div>
+                            <div id="scroll1" class="mui-content mui-scroll-wrapper li-praised">
+                                <div class="mui-scroll">
+                                    <ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+                                        <li class="mui-table-view-cell">
+                                            <a href="expert.html">
+                                                <img class="mui-media-object mui-pull-left" src="../images/cbd.jpg">
+                                                <div class="mui-media-body">
+                                                    <h3><span>第一天堂</span><small>专家</small><small>测7期中7期</small></h3>
+                                                    <div class="balls">后区定六 <p class="mui-inline mui-col-xs-8 mui-col-ms-9"><span class="mball blue">01</span><span class="mball blue">01</span><span class="mball blue">01</span><span class="mball blue">01</span><span class="mball blue">01</span><span class="mball blue">01</span></p></div>
+                                                    <p class='mui-ellipsis'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
+                                                </div>
+                                                <em>中奖</em>
+                                            </a>
+                                        </li>
+                                        <li class="mui-table-view-cell">
+                                            <a href="expert.html">
+                                                <img class="mui-media-object mui-pull-left" src="../images/cbd.jpg">
+                                                <div class="mui-media-body">
+                                                    <h3><span>第一天堂</span><small>专家</small><small>测7期中7期</small></h3>
+                                                    <div class="balls">精选9+3 <p class="mui-inline mui-col-xs-8 mui-col-ms-9"><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball blue">01</span><span class="mball blue">01</span><span class="mball blue">01</span></p></div>
+                                                    <p class='mui-ellipsis'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
+                                                </div>
+                                                <em>中奖</em>
+                                            </a>
+                                        </li>
+                                        <li class="mui-table-view-cell">
+                                            <a href="expert.html">
+                                                <img class="mui-media-object mui-pull-left" src="../images/cbd.jpg">
+                                                <div class="mui-media-body">
+                                                    <h3><span>第一天堂</span><small>专家</small><small>测7期中7期</small></h3>
+                                                    <div class="balls">红球25码 <p class="mui-inline mui-col-xs-8 mui-col-ms-9"><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span></p></div>
+                                                    <p class='mui-ellipsis'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
+                                                </div>
+                                                <em>中奖</em>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -1,15 +1,157 @@
 var $ = require('./zepto.js');
+var lotterys = require('./lottery-data.js');
+var Vue = require('./vue.js')
 
+function initLtype() {
+    var arr = []
+    lotterys.forEach(function(item) {
+        arr.push({
+            code: `l${item.code}`,
+            list: [],
+            page: 1,
+            pagecount: 1
+        })
+    })
+    return arr;
+}
 
-;(function(mui) {
+function getData(params, callback) {
+    $.ajax({
+        url: '/infomation/infomationlist.jsp',
+        data: {
+            informationtype: params.informationtype,
+            ltype: params.ltype,
+            page: params.page,
+            pagesize: 20
+        },
+        method: "POST",
+        dataType: 'json',
+        success: function(data) {
+            // var data = { "pagecount": "1", "informationtlist": [{ "id": "1", "informationtitile": "\u4FE1\u606F1\u6807\u9898", "informationtime": "20151201" }, { "id": "2", "informationtitile": "\u4FE1\u606F2", "informationtime": "20151201" }], "statusmsg": "\u00E6\u0088\u0090\u00E5\u008A\u009F", "statuscode": "1" };
+            callback(data)
+        }
+    })
+}
+
+;
+(function(mui) {
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            lotterys: lotterys,
+            informationtype: 2,
+            informationtypename: 'fenxi',
+            dataset: {
+                'fenxi': {
+                    informationtype: 2,
+                    curLtype: '0001',
+                    curLindex: 0,
+                    ltype: initLtype()
+                },
+                'jiqiao': {
+                    informationtype: 3,
+                    curLtype: '0001',
+                    curLindex: 0,
+                    ltype: initLtype()
+                },
+                'xinwen': {
+                    informationtype: 4,
+                    pagecount: 1,
+                    page: 1,
+                    list: []
+                }
+            }
+        },
+        methods: {
+            changeLtype: function(event) {
+                var dataset = event.target.dataset;
+                var id = $(event.target).closest('.mui-control-content').attr('id')
+                this.dataset[id].curLtype = event.target.dataset.code;
+                mui(`#${id} .mui-slider`).slider().gotoItem(event.target.dataset.index)
+            },
+            changeTab: function(event) {
+                this.informationtypename = event.target.dataset.type;
+                this.informationtype = event.target.dataset.id;
+                // console.log(this.dataset[this.informationtypename])
+                getData({
+                    informationtype: this.informationtype,
+                    ltype: this.dataset[this.informationtypename].curLtype,
+                    page: 1,
+                    pagesize: 20
+                }, function(data) {
+                    var curLData = this.dataset[this.informationtypename];
+                    var pullRefreshEl = $(`#${this.informationtypename} .mui-scroll-wrapper`)[0];
+
+                    if (this.informationtypename == "xinwen") {
+                        pullRefreshEl = $(`#${this.informationtypename} .mui-scroll-wrapper`)[0];
+                        curLData.list = data.informationtlist;
+                        mui(pullRefreshEl).pullRefresh().endPulldownToRefresh(); //refresh completed
+                        if (data.pagecount <= curLData.pagecount) {
+                            mui(pullRefreshEl).pullRefresh().endPullupToRefresh(true);
+                        }
+                    } else {
+                        pullRefreshEl = $(`#${this.informationtypename} .mui-scroll-wrapper`).eq(this.dataset[this.informationtypename].curLindex)[0];
+                        curLData.ltype[curLData.curLindex].list = data.informationtlist;
+                        mui(pullRefreshEl).pullRefresh().endPulldownToRefresh(); //refresh completed
+                        if (data.pagecount <= curLData.ltype[curLData.curLindex].pagecount) {
+                            mui(pullRefreshEl).pullRefresh().endPullupToRefresh(true);
+                        }
+                    }
+
+                    // curLData.ltype[curLData.curLindex].list = data.informationtlist;
+                    // if (data.pagecount <= curLData.ltype[curLData.curLindex].pagecount) {
+                    //     mui(mui('#fenxi .mui-scroll-wrapper')[0]).pullRefresh().endPullupToRefresh(true)
+                    // }
+                }.bind(this))
+            }
+        },
+        beforeCreate: function() {
+            getData({
+                informationtype: this.informationtype,
+                ltype: this.curLtype,
+                page: 1,
+                pagesize: 20
+            }, function(data) {
+                var curLData = this.dataset[this.informationtypename];
+                curLData.ltype[curLData.curLindex].list = data.informationtlist;
+                if (data.pagecount <= curLData.ltype[curLData.curLindex].pagecount) {
+                    mui(mui('#fenxi .mui-scroll-wrapper')[0]).pullRefresh().endPullupToRefresh(true)
+                }
+            }.bind(this))
+        },
+        created: function() {
+            // console.log(this.dataset.fenxi.ltype)
+        }
+    })
     mui.ready(function() {
-    	mui.each(document.querySelectorAll('.mui-slider'),function(index,dom){
-			var sliderIndex = 0;
-			dom.addEventListener('slide', function(event) {
-			    sliderIndex = event.detail.slideNumber;
-			    $(dom).prev('.lottery-classify').find('li').eq(sliderIndex).addClass('active').siblings().removeClass('active')
-			});
-		})
+        $('#jiqiao').removeClass('mui-active') //处理slider插件bug，如果开始未显示，则切换有问题
+
+        mui.each(document.querySelectorAll('.mui-slider'), function(index, dom) {
+            var curId = $(dom).closest('.mui-control-content').attr('id');
+            dom.addEventListener('slide', function(event) {
+                vm.dataset[curId].curLtype = lotterys[event.detail.slideNumber].code;
+                var curLData = vm.dataset[vm.informationtypename];
+                getData({
+                    informationtype: curLData.informationtype,
+                    ltype: curLData.curLtype,
+                    page: curLData.ltype[curLData.curLindex].page
+                }, function(data) {
+                    if (vm.informationtypename == "xinwen") {
+                        curLData.list = data.informationtlist;
+                        mui(pullRefreshEl).pullRefresh().endPulldownToRefresh(); //refresh completed
+                        if (data.pagecount <= curLData.page) {
+                            mui(pullRefreshEl).pullRefresh().endPullupToRefresh(true);
+                        }
+                    } else {
+                        curLData.ltype[curLData.curLindex].list = data.informationtlist;
+                        mui(pullRefreshEl).pullRefresh().endPulldownToRefresh(); //refresh completed
+                        if (data.pagecount <= curLData.ltype[curLData.curLindex].page) {
+                            mui(pullRefreshEl).pullRefresh().endPullupToRefresh(true);
+                        }
+                    }
+                })
+            });
+        })
 
         //循环初始化所有下拉刷新，上拉加载。
         mui.each(document.querySelectorAll('.mui-scroll-wrapper'), function(index, pullRefreshEl) {
@@ -19,6 +161,7 @@ var $ = require('./zepto.js');
                 },
                 up: {
                     contentrefresh: '正在加载...',
+                    contentnomore: '没有更多数据了',
                     callback: pullupRefresh
                 }
             });
@@ -27,33 +170,56 @@ var $ = require('./zepto.js');
              * 下拉刷新具体业务实现
              */
             function pulldownRefresh() {
-                setTimeout(function() {
-                    $(pullRefreshEl).find('ul').html(createFragment(5))
-                    mui(pullRefreshEl).pullRefresh().endPulldownToRefresh(); //refresh completed
-                }, 1500);
+                var curLData = vm.dataset[vm.informationtypename];
+                // console.log(curLData)
+                getData({
+                    informationtype: curLData.informationtype,
+                    ltype: curLData.curLtype,
+                    page: 1 //curLData.ltype[curLData.curLindex].page
+                }, function(data) {
+                    if (vm.informationtypename == "xinwen") {
+                        curLData.list = data.informationtlist;
+                        mui(pullRefreshEl).pullRefresh().endPulldownToRefresh(); //refresh completed
+                        if (data.pagecount <= curLData.page) {
+                            mui(pullRefreshEl).pullRefresh().endPullupToRefresh(true);
+                        }
+                    } else {
+                        curLData.ltype[curLData.curLindex].list = data.informationtlist;
+                        mui(pullRefreshEl).pullRefresh().endPulldownToRefresh(); //refresh completed
+                        if (data.pagecount <= curLData.ltype[curLData.curLindex].page) {
+                            mui(pullRefreshEl).pullRefresh().endPullupToRefresh(true);
+                        }
+                    }
+                })
             }
-            var count = 0;
             /**
              * 上拉加载具体业务实现
              */
             function pullupRefresh() {
-                setTimeout(function() {
-                    mui(pullRefreshEl).pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
-                    $(pullRefreshEl).find('ul').append(createFragment(5))
-                }, 1500);
+                var curLData = vm.dataset[vm.informationtypename];
+                curLData.ltype[curLData.curLindex].page++;
+                // console.log(curLData)
+                getData({
+                    informationtype: curLData.informationtype,
+                    ltype: curLData.curLtype,
+                    page: curLData.ltype[curLData.curLindex].page
+                }, function(data) {
+                    if (vm.informationtypename == "xinwen") {
+                        curLData.list = data.informationtlist;
+                        mui(pullRefreshEl).pullRefresh().endPulldownToRefresh(); //refresh completed
+                        if (data.pagecount <= curLData.page) {
+                            mui(pullRefreshEl).pullRefresh().endPullupToRefresh(true);
+                        }
+                    } else {
+                        curLData.ltype[curLData.curLindex].list = data.informationtlist;
+                        mui(pullRefreshEl).pullRefresh().endPulldownToRefresh(); //refresh completed
+                        if (data.pagecount <= curLData.ltype[curLData.curLindex].page) {
+                            mui(pullRefreshEl).pullRefresh().endPullupToRefresh(true);
+                        }
+                    }
+                })
             }
         });
-        var createFragment = function(count) {
-            var fragment = document.createDocumentFragment();
-            var li;
-            for (var i = 0; i < count; i++) {
-                li = document.createElement('li');
-                li.className = 'mui-table-view-cell';
-                li.innerHTML = `双色球第17144期专家推荐号码全汇总
-                                    <span>2017-12-02</span>`;
-                fragment.appendChild(li);
-            }
-            return fragment;
-        };
+
     });
 })(require('./mui/mui'))

@@ -82,14 +82,8 @@ body {
     flex: 50;
     position: relative;
     width: 100%;
-    left: 0;
-    /*top: 120px;*/
-    bottom: 0;
     margin-top: 20px;
     overflow: hidden;
-    .mui-scroll-wrapper {
-        /*top: 28px;*/
-    }
     .mui-table-view-cell {
         .mui-h5 {
             float: right;

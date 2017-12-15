@@ -35,9 +35,19 @@ header.mui-bar{
 	a{
 		display: block;
 		padding-top: 30px !important;
+		font-size: 14px;
 	}
 	span{
 		display: block;
 		text-align: right;
+	}
+	&.tip-center{
+		text-align: center;
+	}
+}
+#xinwen{
+	.mui-content{
+		top: 44px;
+		bottom: 50px;
 	}
 }

@@ -5,14 +5,13 @@ var sliderIndex = 0;
 document.querySelector('#slider1').addEventListener('slide', function(event) {
     sliderIndex = event.detail.slideNumber;
     $('.lottery-classify li').eq(sliderIndex).addClass('active').siblings().removeClass('active')
-    setScontainerH();
+    // setScontainerH();
 });
 
 function setScontainerH() {
-    $('.mui-slider-group .scroll-container').eq(sliderIndex).height($(window).height() - $('.mini-classify').height() - 235)
+    $('.mui-slider-group .scroll-container').eq(sliderIndex).height($(window).height() - $('.mini-classify').eq(sliderIndex).height() - 235)
 }
 
-setScontainerH();
 
 ;
 (function(mui) {
@@ -93,7 +92,7 @@ $(document).on('tap', '[node-act="combine"]', function() {
     } else {
         combine($(this).parent().find('li'), _this)
     }
-    setScontainerH();
+    // setScontainerH();
 })
 
 var curLottery = lotterys[sliderIndex],
@@ -126,9 +125,9 @@ function getData() {
         },
         dataType: 'json',
         success: function(d) {
-            console.log(d)
             vm.periods = d.periods;
         }
     })
 }
 getData();
+// setScontainerH();
