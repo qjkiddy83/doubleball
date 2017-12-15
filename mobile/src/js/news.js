@@ -80,7 +80,7 @@ function getData(params, callback) {
                     pagesize: 20
                 }, function(data) {
                     var curLData = this.dataset[this.informationtypename];
-                    var pullRefreshEl = $(`#${this.informationtypename} .mui-scroll-wrapper`)[0];
+                    var pullRefreshEl;
 
                     if (this.informationtypename == "xinwen") {
                         pullRefreshEl = $(`#${this.informationtypename} .mui-scroll-wrapper`)[0];
@@ -131,18 +131,22 @@ function getData(params, callback) {
             dom.addEventListener('slide', function(event) {
                 vm.dataset[curId].curLtype = lotterys[event.detail.slideNumber].code;
                 var curLData = vm.dataset[vm.informationtypename];
+                var pullRefreshEl;
+
                 getData({
                     informationtype: curLData.informationtype,
                     ltype: curLData.curLtype,
                     page: curLData.ltype[curLData.curLindex].page
                 }, function(data) {
                     if (vm.informationtypename == "xinwen") {
+                        pullRefreshEl = $(`#${vm.informationtypename} .mui-scroll-wrapper`)[0];
                         curLData.list = data.informationtlist;
                         mui(pullRefreshEl).pullRefresh().endPulldownToRefresh(); //refresh completed
                         if (data.pagecount <= curLData.page) {
                             mui(pullRefreshEl).pullRefresh().endPullupToRefresh(true);
                         }
                     } else {
+                        pullRefreshEl = $(`#${vm.informationtypename} .mui-scroll-wrapper`).eq(vm.dataset[vm.informationtypename].curLindex)[0];
                         curLData.ltype[curLData.curLindex].list = data.informationtlist;
                         mui(pullRefreshEl).pullRefresh().endPulldownToRefresh(); //refresh completed
                         if (data.pagecount <= curLData.ltype[curLData.curLindex].page) {
