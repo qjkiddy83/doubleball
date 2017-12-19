@@ -124,6 +124,10 @@ function getData(params, callback) {
         }
     })
     mui.ready(function() {
+        mui('.lottery-classify').scroll({
+            scrollY: false, //是否竖向滚动
+            scrollX: true
+        });
         $('#jiqiao').removeClass('mui-active') //处理slider插件bug，如果开始未显示，则切换有问题
 
         mui.each(document.querySelectorAll('.mui-slider'), function(index, dom) {

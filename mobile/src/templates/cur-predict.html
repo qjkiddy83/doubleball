@@ -8,77 +8,56 @@
 </head>
 
 <body ontouchmove="event.preventDefault();">
-    <header class="mui-bar mui-bar-nav"><h1 class="mui-title">专家本期预测</h1><a class="mui-icon-extra mui-icon-extra-share mui-pull-right"></a></header>
-    <section class="lottery-classify">
-        <ul>
-            <li class="active">双色球</li>
-            <li>大乐透</li>
-            <li>大乐透</li>
-            <li>大乐透</li>
-            <li>大乐透</li>
-            <li>大乐透</li>
-            <li>大乐透</li>
-            <li>大乐透</li>
-            <li>大乐透</li>
-        </ul>
-    </section>
-    <div class="mui-slider home" id="slider1">
-        <div class="mui-slider-group">
-            <!--第一个内容区容器-->
-            <div class="mui-slider-item">
-                <div class="notice mui-ellipsis">
-                    141期头奖1000万中3注，权威专家带您一起中！
-                </div>
-                <div class="mini-classify">
-                    <ul>
-                        <li class="active mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3"><span>后区定六</span></li><li class="mui-col-xs-3" node-act="combine"><span>收起 <i class="mui-icon mui-icon-arrowup"></i></span></li>
-                    </ul>
-                </div>
-                <div class="scroll-container">
-                    <div id="scroll1" class="mui-content mui-scroll-wrapper li-praised">
-                        <div class="mui-scroll">
-                            <ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
-                                <li class="mui-table-view-cell">
-                                    <a href="expert.html">
-                                        <img class="mui-media-object mui-pull-left" src="../images/cbd.jpg">
-                                        <div class="mui-media-body">
-                                            <h3><span>第一天堂</span><small>专家</small><small>测7期中7期</small></h3>
-                                            <p class='mui-ellipsis mui-col-xs-10'>蓝球定五：<span class="color-link">想中大奖，必看该专家的预测号码</span></p>
-                                            <p class='mui-ellipsis'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
-                                        </div>
-                                        <em class="iconfont icon-ioseye"></em>
-                                    </a>
-                                </li>
-                                <li class="mui-table-view-cell">
-                                    <a href="expert.html">
-                                        <img class="mui-media-object mui-pull-left" src="../images/cbd.jpg">
-                                        <div class="mui-media-body">
-                                            <h3><span>第一天堂</span><small>专家</small><small>测7期中7期</small></h3>
-                                            <p class='mui-ellipsis mui-col-xs-10'>蓝球定五：<span class="color-link">想中大奖，必看该专家的预测号码</span></p>
-                                            <p class='mui-ellipsis'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
-                                        </div>
-                                        <em class="iconfont icon-ioseye"></em>
-                                    </a>
-                                </li>
-                                <li class="mui-table-view-cell">
-                                    <a href="expert.html">
-                                        <img class="mui-media-object mui-pull-left" src="../images/cbd.jpg">
-                                        <div class="mui-media-body">
-                                            <h3><span>第一天堂</span><small>专家</small><small>测7期中7期</small></h3>
-                                            <p class='mui-ellipsis mui-col-xs-10'>蓝球定五：<span class="color-link">想中大奖，必看该专家的预测号码</span></p>
-                                            <p class='mui-ellipsis'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
-                                        </div>
-                                        <em class="iconfont icon-ioseye"></em>
-                                    </a>
-                                </li>
-                            </ul>
+    <div id="app">
+        <header class="mui-bar mui-bar-nav"><h1 class="mui-title">专家本期预测</h1><a class="mui-icon-extra mui-icon-extra-share mui-pull-right"></a></header>
+        <section class="lottery-classify mui-scroll-wrapper mui-slider-indicatorcode mui-segmented-control mui-segmented-control-inverted">
+            <div class="mui-scroll">
+                <ul>
+                    <li v-for="(item,index) in lotterys" v-bind:data-code="item.code" v-bind:data-index="index" v-bind:class="index==curLottery?'active':''" v-on:click="changeLtype">
+                        {{ item.name }}
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <div class="mui-slider home" id="slider1">
+            <div class="mui-slider-group">
+                <!--第一个内容区容器-->
+                <div class="mui-slider-item" v-for="group in lotterys">
+                    <div>
+                        <div class="flex-auto">
+                            <div class="notice mui-ellipsis">
+                                141期头奖1000万中3注，权威专家带您一起中！
+                            </div>
+                            <div class="mini-classify">
+                                <ul>
+                                    <li v-for="(item,index) in group.product" v-on:click="changeForecast" v-bind:data-index="index" v-bind:class="group.product[group.curforecast].code==item.code?'active mui-col-xs-3':'mui-col-xs-3'"><span>{{item.name}}</span></li><li v-if="group.product.length>5" class="mui-col-xs-3" node-act="combine"><span>收起 <i class="mui-icon mui-icon-arrowup"></i></span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="scroll-container">
+                            <div class="mui-content mui-scroll-wrapper mui-scroll-wrapper-segmented li-praised">
+                                <div class="mui-scroll">
+                                    <ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+                                        <li class="mui-table-view-cell" v-for="li in group.product[group.curforecast].list">
+                                            <a v-bind:href='"expert.html?expertid="+li.expertsid'>
+                                                <img class="mui-media-object mui-pull-left" v-bind:src="li.expertspic">
+                                                <div class="mui-media-body">
+                                                    <h3><span>{{li.expertsname}}</span><small>{{li.rank}}</small></h3>
+                                                    <p class='mui-ellipsis mui-col-xs-10'>{{group.product[group.curforecast].name}}：<span class="color-link">想中大奖，必看该专家的预测号码</span></p>
+                                                    <p class='mui-ellipsis'>{{li.expertdesc}}</p>
+                                                </div>
+                                                <em class="iconfont icon-ioseye"></em>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <nav class="mui-bar mui-bar-tab">
+        <nav class="mui-bar mui-bar-tab">
             <a class="mui-tab-item" href="./">
                 <span class="mui-icon mui-icon-extra mui-icon-extra-heart-filled"></span>
                 <span class="mui-tab-label">上期测中</span>
@@ -100,6 +79,7 @@
                 <span class="mui-tab-label">我的</span>
             </a>
         </nav>
+    </div>
 </body>
 
 </html>

@@ -17,13 +17,16 @@
             </div>
         </header>
         <div id="fenxi" class="mui-control-content mui-active">
-            <section class="lottery-classify">
-                <ul>
-                    <li v-for="(item,index) in lotterys" v-bind:data-code="item.code" v-bind:data-index="index" v-bind:class="item.code==(dataset.fenxi.curLtype)?'active':''" v-on:click="changeLtype">
-                        {{ item.name }}
-                    </li>
-                </ul>
+            <section class="lottery-classify mui-scroll-wrapper mui-slider-indicatorcode mui-segmented-control mui-segmented-control-inverted">
+                <div class="mui-scroll">
+                    <ul>
+                        <li v-for="(item,index) in lotterys" v-bind:data-code="item.code" v-bind:data-index="index" v-bind:class="item.code==(dataset.fenxi.curLtype)?'active':''" v-on:tap="changeLtype">
+                            {{ item.name }}
+                        </li>
+                    </ul>
+                </div>
             </section>
+            
             <div class="mui-slider">
                 <div class="mui-slider-group">
                     <div class="mui-slider-item" v-for="(item,index) in dataset.fenxi.ltype">

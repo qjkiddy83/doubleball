@@ -17,14 +17,14 @@ lotterys.map(function(item) { //初始化数据结构
     })
 })
 
-document.querySelector('#slider1').addEventListener('slide', function(event) {
-    vm.curLottery = event.detail.slideNumber;
-});
-
 var pullRefreshArr = []
 mui.ready(function() {
+    mui('.lottery-classify').scroll({
+        scrollY: false, //是否竖向滚动
+        scrollX: true
+    });
     //循环初始化所有下拉刷新，上拉加载。
-    mui.each(document.querySelectorAll('.mui-scroll-wrapper'), function(index, pullRefreshEl) {
+    mui.each(document.querySelectorAll('.mui-scroll-wrapper-segmented'), function(index, pullRefreshEl) {
         var oPullRefresh = mui(pullRefreshEl).pullRefresh({
             down: {
                 callback: pulldownRefresh
@@ -85,6 +85,19 @@ mui.ready(function() {
             });
         }
     });
+    document.querySelector('#slider1').addEventListener('slide', function(event) {
+        var curLottery = event.detail.slideNumber,curforecast = 0;
+        vm.curLottery = event.detail.slideNumber;
+        vm.lotterys[curLottery].product[curforecast].page = 1;
+        getData({
+            forecasttype: vm.lotterys[curLottery].product[curforecast].code,
+            lotterytype: vm.lotterys[curLottery].code,
+            page: 1,
+            pagesize: 20
+        }, function(d) {
+            callbackTpl(vm.lotterys, curLottery, curforecast, 0, d)
+        })
+    });
 });
 
 function combine(list, _this) {
@@ -102,7 +115,7 @@ function expand(list, _this) {
     _this.html(`<span>收起 <i class="mui-icon mui-icon-arrowup"></i></span>`).data('combined', 0)
     _this.closest('.mui-slider-group').find('.li-praised').removeClass('combine')
 }
-$(document).on('tap', '[node-act="combine"]', function() {
+$(document).on('click', '[node-act="combine"]', function() {
     var _this = $(this);
     if (_this.data('combined')) {
         expand($(this).parent().find('li'), _this)
@@ -130,12 +143,14 @@ var vm = new Vue({
             }, function(d) {
                 callbackTpl(this.lotterys, curLottery, curforecast, 0, d)
                 pullRefreshArr[curLottery].refresh(true)
+                pullRefreshArr[curLottery].scrollTo(0,0)
             }.bind(this));
         },
         changeLtype: function(event) {
             var dataset = event.target.dataset;
             var curLottery = dataset.index,curforecast = 0;
             this.curLottery = curLottery;
+            this.lotterys[curLottery].product[curforecast].page = 1;
             mui(`.mui-slider`).slider().gotoItem(dataset.index);
             getData({
                 forecasttype: this.lotterys[curLottery].product[curforecast].code,
@@ -162,6 +177,9 @@ var vm = new Vue({
 })
 
 function callbackTpl(lotterys, curLottery, curforecast, load, d) {
+    if(d.statuscode != '1'){
+        return;
+    }
     lotterys[curLottery].periods = d.periods;
     lotterys[curLottery].lotteryFormat = lotteryFormat(d.lottery);
     d.returnlist.map(function(item) {

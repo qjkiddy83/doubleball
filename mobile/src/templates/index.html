@@ -20,12 +20,14 @@
             <span class="mui-tab-label">活动</span>
         </a>
     </header>
-    <section class="lottery-classify">
-        <ul>
-            <li v-for="(item,index) in lotterys" v-bind:data-code="item.code" v-bind:data-index="index" v-bind:class="index==curLottery?'active':''" v-on:click="changeLtype">
-                {{ item.name }}
-            </li>
-        </ul>
+    <section class="lottery-classify mui-scroll-wrapper mui-slider-indicatorcode mui-segmented-control mui-segmented-control-inverted">
+        <div class="mui-scroll">
+            <ul>
+                <li v-for="(item,index) in lotterys" v-bind:data-code="item.code" v-bind:data-index="index" v-bind:class="index==curLottery?'active':''" v-on:click="changeLtype">
+                    {{ item.name }}
+                </li>
+            </ul>
+        </div>
     </section>
     <div class="mui-slider home" id="slider1">
         <div class="mui-slider-group">
@@ -45,13 +47,13 @@
                         </div>
                         <div class="mini-classify">
                             <ul>
-                                <li v-for="(item,index) in group.product" v-on:click="changeForecast" v-bind:data-index="index" v-bind:class="group.product[group.curforecast].code==item.code?'active mui-col-xs-3':'mui-col-xs-3'"><span>{{item.name}}</span></li><li class="mui-col-xs-3" node-act="combine"><span>收起 <i class="mui-icon mui-icon-arrowup"></i></span></li>
+                                <li v-for="(item,index) in group.product" v-on:click="changeForecast" v-bind:data-index="index" v-bind:class="group.product[group.curforecast].code==item.code?'active mui-col-xs-3':'mui-col-xs-3'"><span>{{item.name}}</span></li><li v-if="group.product.length>5" class="mui-col-xs-3" node-act="combine"><span>收起 <i class="mui-icon mui-icon-arrowup"></i></span></li>
                             </ul>
                         </div>
                     </div>
                     <div class="scroll-container">
                         <div>
-                            <div id="scroll1" class="mui-content mui-scroll-wrapper li-praised">
+                            <div class="mui-content mui-scroll-wrapper mui-scroll-wrapper-segmented li-praised">
                                 <div class="mui-scroll">
                                     <ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
                                         <li class="mui-table-view-cell" v-for="li in group.product[group.curforecast].list">

@@ -186,6 +186,9 @@ header.mui-bar .mui-icon-extra{
 		}
 	}
 }
+.mui-popup-button{
+    color: #f85959;
+}
 
 .ball{
     float: left;
@@ -216,16 +219,19 @@ header.mui-bar .mui-icon-extra{
     position: relative;
     width: 100%;
     overflow-x: auto;
-    overflow-scrolling: touch;
+    overflow-y: hidden;
+    .mui-scrollbar{
+        display: none;
+    }
     ul {
-        display: flex;
         padding: 0;
         margin: 0;
+        width: 35rem;
     }
     li {
         list-style: none;
         float: left;
-        width: 12rem;
+        width: 5rem;
         padding: 0 1rem;
         white-space: nowrap;
         line-height: 38px;
@@ -233,6 +239,7 @@ header.mui-bar .mui-icon-extra{
         position: relative;
         border-bottom: 1px solid #ccc;
         text-align: center;
+        background-color: #fff;
         &.active {
             color: #d43d3d;
             &:after {

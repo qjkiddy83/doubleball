@@ -1,39 +1,94 @@
 var mui = require('./mui/mui');
+var lotterys = require('./lottery-data.js');
 var Vue = require('./vue.js')
 
 var $ = require('./zepto.js');
 
+function lotteryFormat(str) {
+    var ret = [];
+    str.split(/\|+/).forEach(function(item, i) {
+        ret[i] = item.split(',');
+    })
+    return ret;
+}
 
+function getAchievement(callback){
+    $.ajax({
+            url: '/exper/experthistory.jsp',
+            data: {
+                expertid: (location.search.match(/[?&]expertid=(.*?)(?:&|$)/) || [])[1],
+                lotterytype:vm.achievement.lotterys[vm.achievement.curLottery].code
+            },
+            method: 'POST',
+            dataType: 'json',
+            success: function(d) {
+                d.periodinfos.map(function(item){
+                    item.lotterywinFormat = lotteryFormat(item.lotterywin)
+                    item.list.map(function(balls){
+                        balls.periodsconFormat = lotteryFormat(balls.periodscon)
+                    })
+                })
+                vm.achievement.periodinfos = d.periodinfos;
+                mui('#pullrefresh1').pullRefresh().scrollTo(0,0);
+            }
+        }) 
+}
 
 var vm = new Vue({
     el: '#app',
     data: {
-        expense:"",
-        expertdesc:"",
-        expertsid:"",
-        expertsname:"",
-        expertspic:"",
-        follow:"",
-        likedtime:"",
-        lotterylist:[],
-        originalmonth:"",
-        originalweek:"",
-        pagecount:"",
-        praise:"",
-        purchasetime:"",
-        rank:"",
-        statuscode:"",
-        statusmsg:"",
-        subscribe:"",
-        subscribemonth:"",
-        subscribeweek:""
+        expense: "",
+        expertdesc: "",
+        expertsid: "",
+        expertsname: "",
+        expertspic: "",
+        follow: "",
+        likedtime: "",
+        lotterylist: [],
+        originalmonth: "",
+        originalweek: "",
+        pagecount: "",
+        page : 1,
+        praise: "",
+        purchasetime: "",
+        rank: "",
+        statuscode: "",
+        statusmsg: "",
+        subscribe: "",
+        subscribemonth: "",
+        subscribeweek: "",
+        buyed: [],
+        buyedname: '',
+        achievement:{
+            lotterys: lotterys,
+            curLottery: 0,
+            periodinfos:[]
+        },
+        sliderIndex:0
     },
     methods: {
-        showResult:function(event){
-            
-            mui.alert(``, '提示', function() {
+        showResult: function(event) {
+            this.buyed = lotteryFormat(this.lotterylist[event.target.dataset.index].periodscon);
+            this.buyedname = this.lotterylist[event.target.dataset.index].forecasttypename;
+            this.$nextTick(function() {
+                var tpl = $('#rets').html();
+                mui.alert(`${tpl}`, '提示', function() {
 
-            });
+                });
+            })
+        },
+        changeTab:function(event){
+            var dataset = event.target.dataset;
+            this.sliderIndex = dataset.index;
+            mui(`.mui-slider`).slider().gotoItem(dataset.index);
+            // getAchievement();
+        },
+        changeLottery:function(event){
+            var dataset = event.currentTarget.dataset;
+            this.achievement.curLottery = dataset.index;
+            this.$nextTick(function() {
+                getAchievement();
+            })
         }
     },
     created: function() {
@@ -41,67 +96,93 @@ var vm = new Vue({
         $.ajax({
             url: '/exper/forecastexperbyexper.jsp',
             data: {
-                expertid: (location.search.match(/[?&]expertid=(.*?)(?:&|$)/) || [])[1],
+                expertid: (location.search.match(/[?&]expertid=(.*?)(?:&|$)/) || [])[1]
             },
             method: 'POST',
             dataType: 'json',
             success: function(d) {
-                $.extend(_this,d)
+                $.extend(_this, d);
+                if(d.pagecount<=_this.page){
+                    mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+                }
             }
         })
     }
 })
 
 
-var sliderIndex = 0;
 document.querySelector('#slider1').addEventListener('slide', function(event) {
-    sliderIndex = event.detail.slideNumber;
-    $('.tabs li').eq(sliderIndex).addClass('active').siblings().removeClass('active')
+    vm.sliderIndex = event.detail.slideNumber;
+    if(event.detail.slideNumber){
+        getAchievement()
+    }
 });
 
-mui.each(document.querySelectorAll('.mui-scroll-wrapper'), function(index, pullRefreshEl) {
-    mui(pullRefreshEl).pullRefresh({
-        down: {
-            callback: pulldownRefresh
-        },
-        up: {
-            contentrefresh: '正在加载...',
-            callback: pullupRefresh
+mui('#pullrefresh').pullRefresh({
+    down: {
+        callback: pulldownRefresh
+    },
+    up: {
+        contentrefresh: '正在加载...',
+        callback: pullupRefresh
+    }
+});
+var pullrefresh1 = mui('#pullrefresh1').pullRefresh({
+    down: {
+        callback: function(){
+            mui('#pullrefresh1').pullRefresh().endPulldownToRefresh();
         }
-    });
-
-    /**
-     * 下拉刷新具体业务实现
-     */
-    function pulldownRefresh() {
-        setTimeout(function() {
-            $(pullRefreshEl).find('ul').prepend(createFragment(5))
-            mui(pullRefreshEl).pullRefresh().endPulldownToRefresh(); //refresh completed
-        }, 1500);
-    }
-    var count = 0;
-    /**
-     * 上拉加载具体业务实现
-     */
-    function pullupRefresh() {
-        setTimeout(function() {
-            mui(pullRefreshEl).pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
-            $(pullRefreshEl).find('ul').append(createFragment(5))
-        }, 1500);
+    },
+    up: {
+        contentrefresh: '正在加载...',
+        callback: function(){
+            mui('#pullrefresh1').pullRefresh().endPullupToRefresh(true);
+        }
     }
 });
+mui('#pullrefresh1').pullRefresh().endPullupToRefresh(true);
 
-function createFragment() {
-    var tpl = '';
-    for (var i = 0, len = 5; i < len; i++) {
-        tpl += `<li class="mui-table-view-cell">
-                        <div class="mui-table">
-                            <div class="mui-table-cell">
-                                <p class="mui-ellipsis">双色球兰球定五<span class="mui-h5">2017-12-05</span></p>
-                                <button type="button" class="mui-btn mui-btn-danger">查看该预测号码</button>
-                            </div>
-                        </div>
-                    </li>`
+function pulldownRefresh() {
+    vm.page = 1;
+    $.ajax({
+        url: '/exper/forecastexperbyexper.jsp',
+        data: {
+            expertid: (location.search.match(/[?&]expertid=(.*?)(?:&|$)/) || [])[1],
+            page:1
+        },
+        method: 'POST',
+        dataType: 'json',
+        success: function(d) {
+            vm.pagecount = d.pagecount;
+            vm.lotterylist = d.lotterylist;
+            mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+            if(d.pagecount<=vm.page){
+                mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+            }
+        }
+    })
+}
+function pullupRefresh() {
+    if(d.pagecount<=_this.page){
+        mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+        return;
     }
-    return tpl;
+
+    vm.page++;
+    $.ajax({
+        url: '/exper/forecastexperbyexper.jsp',
+        data: {
+            expertid: (location.search.match(/[?&]expertid=(.*?)(?:&|$)/) || [])[1],
+            page:vm.page
+        },
+        method: 'POST',
+        dataType: 'json',
+        success: function(d) {
+            vm.pagecount = d.pagecount;
+            vm.lotterylist = vm.lotterylist.concat(d.lotterylist);
+            if(d.pagecount<=vm.page){
+                mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+            }
+        }
+    })
 }

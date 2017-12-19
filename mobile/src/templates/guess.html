@@ -12,12 +12,14 @@
 <body ontouchmove="event.preventDefault();">
     <header class="mui-bar mui-bar-nav"><a href="javascript:;" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
         <h1 class="mui-title">字诗图猜</h1></header>
-    <section class="lottery-classify">
-        <ul>
-            <li class="active">双色球</li>
-            <li>大乐透</li>
-            <li>大乐透</li>
-        </ul>
+    <section class="lottery-classify mui-scroll-wrapper mui-slider-indicatorcode mui-segmented-control mui-segmented-control-inverted">
+        <div class="mui-scroll">
+            <ul>
+                <li v-for="(item,index) in lotterys" v-bind:data-code="item.code" v-bind:data-index="index" v-bind:class="index==curLottery?'active':''" v-on:click="changeLtype">
+                    {{ item.name }}
+                </li>
+            </ul>
+        </div>
     </section>
     <div class="mui-slider guess" id="slider1">
         <div class="mui-slider-group">
