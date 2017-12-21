@@ -78,11 +78,10 @@ function getExports() {
     _exports.plugins = plugins.concat(oConfig.aHtmlWebpackPlugin);
 
     if (isDev) {
-        console.log(os.networkInterfaces().en0[1].address)
         _exports = merge(_exports, {
             devServer: {
-                // host: '192.168.105.107',
-                host: os.networkInterfaces().en0[1].address,
+                host: '192.168.11.231',
+                // host: os.networkInterfaces().en0[1].address,
                 port: 8080,
                 inline: true, //可以监控js变化
                 hot: true, //热启动

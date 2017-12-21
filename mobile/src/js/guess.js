@@ -5,14 +5,14 @@ var Vue = require('./vue');
 
 lotterys.map(function(item) { //初始化数据结构
     $.extend(item, {
-        list0001:[],
-        list0002:[],
-        list0003:[]
+        list0001: [],
+        list0002: [],
+        list0003: []
     })
 })
 
 mui.ready(function() {
-	mui('.lottery-classify').scroll({
+    mui('.lottery-classify').scroll({
         scrollY: false, //是否竖向滚动
         scrollX: true
     });
@@ -24,20 +24,25 @@ mui.ready(function() {
         vm.curLottery = event.detail.slideNumber;
         Vue.nextTick(() => {
             getData({
-                lotterytype : vm.lotterys[vm.curLottery].code,
+                lotterytype: vm.lotterys[vm.curLottery].code,
                 page: vm.page,
-                    pagesize: 20
-            },function(data){
-                vm.lotterys[vm.curLottery].list0001 = data.list0001;
-                vm.lotterys[vm.curLottery].list0002 = data.list0002;
-                vm.lotterys[vm.curLottery].list0003 = data.list0003;
+                pagesize: 20
+            }, function(data) {
+                setData(data)
             })
         })
     });
 });
 
+function setData(data) {
+    vm.lotterys[vm.curLottery].list0001 = data.list0001 || [];
+    vm.lotterys[vm.curLottery].list0002 = data.list0002 || [];
+    vm.lotterys[vm.curLottery].list0003 = data.list0003 || [];
+}
 
-function getData(params,callback){
+function getData(params, callback) {
+    console.log('eee')
+
     $.ajax({
         url: '/infomation/decodelist.jsp',
         data: params,
@@ -55,37 +60,26 @@ var vm = new Vue({
     data: {
         lotterys: lotterys,
         curLottery: 0,
-        page : 1
+        page: 1
     },
     methods: {
-    	changeLtype:function(event){
-    		var dataset = event.target.dataset;
-            var curLottery = dataset.index,curforecast = 0;
+        changeLtype: function(event) {
+            console.log('111')
+            var dataset = event.target.dataset;
+            var curLottery = dataset.index,
+                curforecast = 0;
             this.curLottery = curLottery;
             this.lotterys[curLottery].product[curforecast].page = 1;
             mui(`.mui-slider`).slider().gotoItem(dataset.index);
-            Vue.nextTick(() => {
-                getData({
-                    lotterytype : this.lotterys[this.curLottery].code,
-                    page: this.page,
-                        pagesize: 20
-                },function(data){
-                    this.lotterys[this.curLottery].list0001 = data.list0001;
-                    this.lotterys[this.curLottery].list0002 = data.list0002;
-                    this.lotterys[this.curLottery].list0003 = data.list0003;
-                }.bind(this))
-            })
-    	}
+        }
     },
     created: function() {
         getData({
-            lotterytype : this.lotterys[this.curLottery].code,
+            lotterytype: this.lotterys[this.curLottery].code,
             page: this.page,
-                pagesize: 20
-        },function(data){
-            this.lotterys[this.curLottery].list0001 = data.list0001;
-            this.lotterys[this.curLottery].list0002 = data.list0002;
-            this.lotterys[this.curLottery].list0003 = data.list0003;
+            pagesize: 20
+        }, function(data) {
+            setData(data)
         }.bind(this))
     }
 })

@@ -1,4 +1,3 @@
-@import './vars';
 @import './icons-extra';
 
 @font-face {font-family: "iconfont";
@@ -135,6 +134,13 @@ body {
 
 .full-extfooter{
 	margin-bottom: 50px;
+}
+
+.mui-btn-red{
+    background-color: #f85959;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
 }
 
 *{

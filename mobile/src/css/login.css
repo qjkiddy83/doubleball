@@ -1,0 +1,84 @@
+#app{
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	position: absolute;
+	width: 100%;
+	left: 0;
+	top: 0;
+}
+.mui-content{
+	flex: 99;
+	margin-top: 15px;
+	display: flex;
+	flex-direction: column;
+	form{
+		height: 100%;
+		background: #fff;
+		flex: 1;
+	}
+	.mui-content-padded{
+		padding: 20px 0 0;
+		.link-area{
+			overflow: hidden;
+			margin-top: 15px;
+			a{
+				float: left;
+				color: #f85959;
+				padding: 0 10px;
+				&:last-child{
+					float:right;
+				}
+			}
+		}
+	}
+	.third{
+		flex: 1;
+		background: #fff;
+		h4{
+			position: relative;
+			text-align: center;
+			font-weight: normal;
+			height: 30px;
+			line-height: 30px;
+			span{
+				position: relative;
+				display: inline-block;
+				background: #fff;
+				z-index: 1;
+				padding: 0 5px;
+			}
+			&:before{
+				position: absolute;
+			    right: 15px;
+			    top: 15px;
+			    left: 15px;
+			    height: 1px;
+			    content: '';
+			    -webkit-transform: scaleY(0.5);
+			    transform: scaleY(0.5);
+			    background-color: #c8c7cc;
+			}
+		}
+		ul{
+			display: flex;
+			li{
+				flex: 1;
+				text-align: center;
+				padding-top: 10px;
+				.mui-icon{
+					font-size: 30px;
+					padding: 10px;
+					border-radius: 50%;
+					border:1px solid #62b900;
+					margin-bottom: 10px;
+					color: #62b900;
+					&.mui-icon-qq{
+						color: #327196;
+						border-color: #327196;
+					}
+				}
+			}
+		}
+	}
+}

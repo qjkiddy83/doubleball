@@ -22,8 +22,6 @@ function getData(params, callback) {
         data: params,
         dataType: 'json',
         success: function(d) {
-            pullRefreshArr[vm.curLottery].refresh(true)
-            pullRefreshArr[vm.curLottery].scrollTo(0,0);
             callback(d)
         }
     })
@@ -121,7 +119,6 @@ mui.ready(function() {
     document.querySelector('#slider1').addEventListener('slide', function(event) {
         sliderIndex = event.detail.slideNumber;
         $('.lottery-classify li').eq(sliderIndex).addClass('active').siblings().removeClass('active')
-        setScontainerH();
     });
 });
 
@@ -143,7 +140,7 @@ var vm = new Vue({
                 pagesize: 20
             }, function(d) {
                 callbackTpl(this.lotterys, curLottery, curforecast, 0, d)
-                pullRefreshArr[curLottery].refresh(true)
+                pullRefreshArr[vm.curLottery].scrollTo(0,0);
             }.bind(this));
         },
         changeLtype: function(event) {

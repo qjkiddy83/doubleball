@@ -152,14 +152,14 @@ var vm = new Vue({
             this.curLottery = curLottery;
             this.lotterys[curLottery].product[curforecast].page = 1;
             mui(`.mui-slider`).slider().gotoItem(dataset.index);
-            getData({
-                forecasttype: this.lotterys[curLottery].product[curforecast].code,
-                lotterytype: this.lotterys[curLottery].code,
-                page: 1,
-                pagesize: 20
-            }, function(d) {
-                callbackTpl(this.lotterys, curLottery, curforecast, 0, d)
-            }.bind(this))
+            // getData({
+            //     forecasttype: this.lotterys[curLottery].product[curforecast].code,
+            //     lotterytype: this.lotterys[curLottery].code,
+            //     page: 1,
+            //     pagesize: 20
+            // }, function(d) {
+            //     callbackTpl(this.lotterys, curLottery, curforecast, 0, d)
+            // }.bind(this))
         }
     },
     created: function() {
