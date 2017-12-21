@@ -36,9 +36,6 @@
                                     <li v-if="item.list.length>1" class="mui-table-view-cell" v-for="cell in item.list">
                                         <a v-bind:href="'article.html?id='+cell.id">{{cell.informationtitile}}<span>{{cell.informationtime}}</span></a>
                                     </li>
-                                    <li v-if="item.list.length==0" class="mui-table-view-cell tip-center">
-                                        <a>暂无数据<span>&nbsp;</span></a>
-                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -63,9 +60,6 @@
                                     <li v-if="item.list.length>1" class="mui-table-view-cell" v-for="cell in item.list">
                                         <a v-bind:href="'article.html?id='+cell.id">{{cell.informationtitile}}<span>{{cell.informationtime}}</span></a>
                                     </li>
-                                    <li v-if="item.list.length==0" class="mui-table-view-cell tip-center">
-                                        <a>暂无数据<span>&nbsp;</span></a>
-                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -79,9 +73,6 @@
                     <ul class="mui-table-view">
                         <li v-if="dataset.xinwen.list.length>=1" class="mui-table-view-cell" v-for="cell in dataset.xinwen.list">
                             <a v-bind:href="'article.html?id='+cell.id">{{cell.informationtitile}}<span>{{cell.informationtime}}</span></a>
-                        </li>
-                        <li v-if="dataset.xinwen.list.length==0" class="mui-table-view-cell tip-center">
-                            <a>暂无数据<span>&nbsp;</span></a>
                         </li>
                     </ul>
                 </div>

@@ -67,47 +67,48 @@
      * 下拉刷新具体业务实现
      */
     function pulldownRefresh() {
-        setTimeout(function() {
-            var table = document.body.querySelector('.mui-table-view');
-            var tpl = '';
-            for (var i = 0, len = 5; i < len; i++) {
-                tpl += `<li class="mui-table-view-cell">
-                    <div class="mui-table">
-                        <div class="mui-table-cell mui-col-xs-9">
-                            <p class="mui-ellipsis">第20170312期</p>
-                            <p class="balls"><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span><span class="mball">01</span></p>
-                        </div>
-                        <div class="mui-table-cell mui-col-xs-3 mui-text-right">
-                            <span class="mui-h5">2017-12-05</span>
-                        </div>
-                    </div>
-                </li>`
-            }
-            table.innerHTML = tpl;
-            mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
-        }, 1500);
+        vm.page = 1;
+        Vue.nextTick(function(){
+            getData({
+                lotterytype: lotterytype,
+                drawstat: 1,
+                page: vm.page,
+                pagesize: 20
+            },function(d){
+                var nomore = false;
+                if(d.pagecount <= vm.page){
+                    nomore = true;
+                }
+                d.lotterylist.map(function(item) {
+                    item.lotteryFormat = lotteryFormat(item.lottery)
+                })
+                vm.list = vm.list = d.lotterylist
+                mui('#pullrefresh').pullRefresh().endPulldownToRefresh(nomore);
+            });
+        })
     }
-    var count = 0;
     /**
      * 上拉加载具体业务实现
      */
     function pullupRefresh() {
         vm.page++;
-        getData({
-            lotterytype: lotterytype,
-            drawstat: 1,
-            page: vm.page,
-            pagesize: 20
-        },function(d){
-            var nomore = false;
-            if(d.pagecount <= vm.page){
-                nomore = true;
-            }
-            d.lotterylist.map(function(item) {
-                item.lotteryFormat = lotteryFormat(item.lottery)
-            })
-            vm.list = vm.list.concat(d.lotterylist)
-            mui('#pullrefresh').pullRefresh().endPullupToRefresh(nomore);
-        });
+        Vue.nextTick(function(){
+            getData({
+                lotterytype: lotterytype,
+                drawstat: 1,
+                page: vm.page,
+                pagesize: 20
+            },function(d){
+                var nomore = false;
+                if(d.pagecount <= vm.page){
+                    nomore = true;
+                }
+                d.lotterylist.map(function(item) {
+                    item.lotteryFormat = lotteryFormat(item.lottery)
+                })
+                vm.list = vm.list.concat(d.lotterylist)
+                mui('#pullrefresh').pullRefresh().endPullupToRefresh(nomore);
+            });
+        })
     }
 })(require('./mui/mui'))

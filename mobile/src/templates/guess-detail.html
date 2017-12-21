@@ -9,27 +9,32 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 </head>
 
-<body ontouchmove="event.preventDefault();">
-    <header class="mui-bar mui-bar-nav"><a href="javascript:;" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-        <h1 class="mui-title">双色球字诗图谜</h1></header>
-    <section class="mui-content">
-        <h5>双色球17143期南宫道人预测谜</h5>
-        <article>
-            <p>金陵一少霸南街</p>
-            <p>巴陵一夜雨来下</p>
-            <p>故园三十二年前</p>
-            <p>二十四桥明月夜</p>
-        </article>
-        <div class="author">南宫道人</div>
-        <a class="mui-btn mui-btn-block">解码</a>
-        <div class="explain">
-            <p>解码说明</p>
-            <p>1.文字文字文字文字文字文字文字文字文字文字文字文字文文字文字文字文字文字文字文字文字文字文字</p>
-            <p>2.文字文字文字文字文字文字字文字</p>
-            <p>3.文字文字文字文字文字文字文字文字文字文字文字文字</p>
-            <p>4.文字文字文字文字文字文字文字文字文文字</p>
-        </div>
-    </section>
+<body>
+    <div id="app">
+        <header class="mui-bar mui-bar-nav"><a href="javascript:;" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+            <h1 class="mui-title">{{lotteryname}}字诗图谜</h1></header>
+        <section class="mui-content">
+            <h5>{{title}}</h5>
+            <article>
+                <div v-if="!decoded">
+                    <img v-bind:src="pic" width="100%" v-if="pic">
+                    <pre><p>{{content}}</p></pre>
+                </div>
+                <div v-else>
+                    <pre><p>{{decodecontent}}</p></pre>
+                </div>
+            </article>
+            <div class="author">{{expername}}</div>
+            <a class="mui-btn mui-btn-block" v-on:tap="decode">解码</a>
+            <div class="explain">
+                <p>解码说明</p>
+                <p>1.文字文字文字文字文字文字文字文字文字文字文字文字文文字文字文字文字文字文字文字文字文字文字</p>
+                <p>2.文字文字文字文字文字文字字文字</p>
+                <p>3.文字文字文字文字文字文字文字文字文字文字文字文字</p>
+                <p>4.文字文字文字文字文字文字文字文字文文字</p>
+            </div>
+        </section>
+    </div>
 </body>
 
 </html>

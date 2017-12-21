@@ -1,37 +1,91 @@
+var lotterys = require('./lottery-data.js');
 var $ = require('./zepto.js');
-var sliderIndex = 0;
-document.querySelector('#slider1').addEventListener('slide', function(event) {
-    sliderIndex = event.detail.slideNumber;
-    $('.lottery-classify li').eq(sliderIndex).addClass('active').siblings().removeClass('active')
+var mui = require('./mui/mui');
+var Vue = require('./vue');
+
+lotterys.map(function(item) { //初始化数据结构
+    $.extend(item, {
+        list0001:[],
+        list0002:[],
+        list0003:[]
+    })
+})
+
+mui.ready(function() {
+	mui('.lottery-classify').scroll({
+        scrollY: false, //是否竖向滚动
+        scrollX: true
+    });
+    mui('.mui-scroll-wrapper-segmented').scroll({
+        scrollY: true, //是否竖向滚动
+        scrollX: false
+    });
+    document.querySelector('#slider1').addEventListener('slide', function(event) {
+        vm.curLottery = event.detail.slideNumber;
+        Vue.nextTick(() => {
+            getData({
+                lotterytype : vm.lotterys[vm.curLottery].code,
+                page: vm.page,
+                    pagesize: 20
+            },function(data){
+                vm.lotterys[vm.curLottery].list0001 = data.list0001;
+                vm.lotterys[vm.curLottery].list0002 = data.list0002;
+                vm.lotterys[vm.curLottery].list0003 = data.list0003;
+            })
+        })
+    });
 });
 
-;(function(mui) {
-	require('./mui/mui.pullToRefresh.js')(mui,window,document)
-	require('./mui/mui.pullToRefresh.material.js')(mui)
-    mui.ready(function() {
-        mui.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
-			mui(pullRefreshEl).pullToRefresh({
-				down: {
-					callback: function() {
-						var self = this;
-						setTimeout(function() {
-							var ul = self.element.querySelector('.mui-table-view');
-							// ul.insertBefore(createFragment(ul, index, 10, true), ul.firstChild);
-							self.endPullDownToRefresh();
-						}, 1000);
-					}
-				},
-				up: {
-					callback: function() {
-						var self = this;
-						setTimeout(function() {
-							var ul = self.element.querySelector('.mui-table-view');
-							// ul.appendChild(createFragment(ul, index, 5));
-							self.endPullUpToRefresh();
-						}, 1000);
-					}
-				}
-			});
-		});
-    });
-})(require('./mui/mui'))
+
+function getData(params,callback){
+    $.ajax({
+        url: '/infomation/decodelist.jsp',
+        data: params,
+        method: 'POST',
+        dataType: 'json',
+        success: function(d) {
+            // d = {"list0003":[{"id":"2","time":"2017-09-25","conent":"\u8BF7\u8F93\u5165\u5185\u5BB9adfa","expername":"adfasd","titile":"ddddddddd","codetype":"0003"}],"list0002":[],"list0001":[{"id":"1","time":"2017-09-19","conent":"\u8BF7\u8F93\u5165\u5185\u5BB92222ff","expername":"4444","titile":"titlr","codetype":"0001"}],"statusmsg":"\u6210\u529F","statuscode":"1"} ;
+            callback(d);
+        }
+    })
+}
+
+var vm = new Vue({
+    el: '#app',
+    data: {
+        lotterys: lotterys,
+        curLottery: 0,
+        page : 1
+    },
+    methods: {
+    	changeLtype:function(event){
+    		var dataset = event.target.dataset;
+            var curLottery = dataset.index,curforecast = 0;
+            this.curLottery = curLottery;
+            this.lotterys[curLottery].product[curforecast].page = 1;
+            mui(`.mui-slider`).slider().gotoItem(dataset.index);
+            Vue.nextTick(() => {
+                getData({
+                    lotterytype : this.lotterys[this.curLottery].code,
+                    page: this.page,
+                        pagesize: 20
+                },function(data){
+                    this.lotterys[this.curLottery].list0001 = data.list0001;
+                    this.lotterys[this.curLottery].list0002 = data.list0002;
+                    this.lotterys[this.curLottery].list0003 = data.list0003;
+                }.bind(this))
+            })
+    	}
+    },
+    created: function() {
+        getData({
+            lotterytype : this.lotterys[this.curLottery].code,
+            page: this.page,
+                pagesize: 20
+        },function(data){
+            this.lotterys[this.curLottery].list0001 = data.list0001;
+            this.lotterys[this.curLottery].list0002 = data.list0002;
+            this.lotterys[this.curLottery].list0003 = data.list0003;
+        }.bind(this))
+    }
+})

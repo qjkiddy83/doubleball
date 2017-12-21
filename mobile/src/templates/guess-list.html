@@ -10,70 +10,29 @@
 </head>
 
 <body ontouchmove="event.preventDefault();">
-    <header class="mui-bar mui-bar-nav"><a href="javascript:;" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-        <h1 class="mui-title">字诗图猜</h1></header>
-    <section class="lottery-classify mui-scroll-wrapper mui-slider-indicatorcode mui-segmented-control mui-segmented-control-inverted">
-        <div class="mui-scroll">
-            <ul>
-                <li v-for="(item,index) in lotterys" v-bind:data-code="item.code" v-bind:data-index="index" v-bind:class="index==curLottery?'active':''" v-on:click="changeLtype">
-                    {{ item.name }}
-                </li>
-            </ul>
-        </div>
-    </section>
-    <div class="mui-slider guess" id="slider1">
-        <div class="mui-slider-group">
-            <!--第一个内容区容器-->
-            <div class="mui-slider-item">
-                <div class="mui-scroll-wrapper">
-                    <div class="mui-scroll">
-                        <ul>
-                            <li class="mui-table-view-cell">
-                                <a href="guess-detail.html" class="mui-navigate-right">双色球17143期火箭客一句定蓝谜</a>
-                            </li>
-                            <li class="mui-table-view-cell">
-                                <a href="guess-detail.html" class="mui-navigate-right">双色球17143期火箭客一句定蓝谜</a>
-                            </li>
-                            <li class="mui-table-view-cell">
-                                <a href="guess-detail.html" class="mui-navigate-right">双色球17143期火箭客一句定蓝谜</a>
-                            </li>
-                            <li class="mui-table-view-cell">
-                                <a href="guess-detail.html" class="mui-navigate-right">双色球17143期火箭客一句定蓝谜</a>
-                            </li>
-                            <li class="mui-table-view-cell">
-                                <a href="guess-detail.html" class="mui-navigate-right">双色球17143期火箭客一句定蓝谜</a>
-                            </li>
-                            <li class="mui-table-view-cell">
-                                <a href="guess-detail.html" class="mui-navigate-right">双色球17143期火箭客一句定蓝谜</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+    <div id="app">
+        <header class="mui-bar mui-bar-nav"><a href="javascript:;" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+            <h1 class="mui-title">字诗图谜</h1></header>
+        <section class="lottery-classify mui-scroll-wrapper mui-slider-indicatorcode mui-segmented-control mui-segmented-control-inverted">
+            <div class="mui-scroll">
+                <ul>
+                    <li v-for="(item,index) in lotterys" v-bind:data-code="item.code" v-bind:data-index="index" v-bind:class="index==curLottery?'active':''" v-on:click="changeLtype">
+                        {{ item.name }}
+                    </li>
+                </ul>
             </div>
-            <!--第二个内容区容器-->
-            <div class="mui-slider-item">
-                <div class="mui-scroll-wrapper">
-                    <div class="mui-scroll">
-                        <ul>
-                            <li class="mui-table-view-cell">
-                                <a href="guess-detail.html" class="mui-navigate-right">双色球17143期火箭客一句定蓝谜</a>
-                            </li>
-                            <li class="mui-table-view-cell">
-                                <a href="guess-detail.html" class="mui-navigate-right">双色球17143期火箭客一句定蓝谜</a>
-                            </li>
-                            <li class="mui-table-view-cell">
-                                <a href="guess-detail.html" class="mui-navigate-right">双色球17143期火箭客一句定蓝谜</a>
-                            </li>
-                            <li class="mui-table-view-cell">
-                                <a href="guess-detail.html" class="mui-navigate-right">双色球17143期火箭客一句定蓝谜</a>
-                            </li>
-                            <li class="mui-table-view-cell">
-                                <a href="guess-detail.html" class="mui-navigate-right">双色球17143期火箭客一句定蓝谜</a>
-                            </li>
-                            <li class="mui-table-view-cell">
-                                <a href="guess-detail.html" class="mui-navigate-right">双色球17143期火箭客一句定蓝谜</a>
-                            </li>
-                        </ul>
+        </section>
+        <div class="mui-slider guess" id="slider1">
+            <div class="mui-slider-group">
+                <div class="mui-slider-item" v-for="group in lotterys">
+                    <div class="mui-scroll-wrapper mui-scroll-wrapper-segmented">
+                        <div class="mui-scroll">
+                            <ul>
+                                <li class="mui-table-view-cell" v-for="li in group.list">
+                                    <a v-bind:href="'guess-detail.html?id='+li.id" class="mui-navigate-right">{{li.title}}</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
