@@ -84,14 +84,14 @@ function getData(params, callback) {
 
                     if (this.informationtypename == "xinwen") {
                         pullRefreshEl = $(`#${this.informationtypename} .mui-scroll-wrapper`)[0];
-                        curLData.list = data.informationtlist;
+                        curLData.list = data.informationtlist||[];
                         mui(pullRefreshEl).pullRefresh().endPulldownToRefresh(); //refresh completed
                         if (data.pagecount <= curLData.pagecount) {
                             mui(pullRefreshEl).pullRefresh().endPullupToRefresh(true);
                         }
                     } else {
                         pullRefreshEl = $(`#${this.informationtypename} .mui-scroll-wrapper`).eq(this.dataset[this.informationtypename].curLindex)[0];
-                        curLData.ltype[curLData.curLindex].list = data.informationtlist;
+                        curLData.ltype[curLData.curLindex].list = data.informationtlist||[];
                         mui(pullRefreshEl).pullRefresh().endPulldownToRefresh(); //refresh completed
                         if (data.pagecount <= curLData.ltype[curLData.curLindex].pagecount) {
                             mui(pullRefreshEl).pullRefresh().endPullupToRefresh(true);
@@ -105,22 +105,19 @@ function getData(params, callback) {
                 }.bind(this))
             }
         },
-        beforeCreate: function() {
+        created: function() {
             getData({
                 informationtype: this.informationtype,
-                ltype: this.curLtype,
+                ltype: this.dataset[this.informationtypename].curLtype,
                 page: 1,
                 pagesize: 20
             }, function(data) {
                 var curLData = this.dataset[this.informationtypename];
-                curLData.ltype[curLData.curLindex].list = data.informationtlist;
+                curLData.ltype[curLData.curLindex].list = data.informationtlist||[];
                 if (data.pagecount <= curLData.ltype[curLData.curLindex].pagecount) {
                     mui(mui('#fenxi .mui-scroll-wrapper')[0]).pullRefresh().endPullupToRefresh(true)
                 }
             }.bind(this))
-        },
-        created: function() {
-            // console.log(this.dataset.fenxi.ltype)
         }
     })
     mui.ready(function() {
@@ -144,18 +141,12 @@ function getData(params, callback) {
                 }, function(data) {
                     if (vm.informationtypename == "xinwen") {
                         pullRefreshEl = $(`#${vm.informationtypename} .mui-scroll-wrapper`)[0];
-                        curLData.list = data.informationtlist;
+                        curLData.list = data.informationtlist||[];
                         mui(pullRefreshEl).pullRefresh().endPulldownToRefresh(); //refresh completed
-                        if (data.pagecount <= curLData.page) {
-                            mui(pullRefreshEl).pullRefresh().endPullupToRefresh(true);
-                        }
                     } else {
                         pullRefreshEl = $(`#${vm.informationtypename} .mui-scroll-wrapper`).eq(vm.dataset[vm.informationtypename].curLindex)[0];
-                        curLData.ltype[curLData.curLindex].list = data.informationtlist;
+                        curLData.ltype[curLData.curLindex].list = data.informationtlist||[];
                         mui(pullRefreshEl).pullRefresh().endPulldownToRefresh(); //refresh completed
-                        if (data.pagecount <= curLData.ltype[curLData.curLindex].page) {
-                            mui(pullRefreshEl).pullRefresh().endPullupToRefresh(true);
-                        }
                     }
                 })
             });
@@ -186,17 +177,11 @@ function getData(params, callback) {
                     page: 1 //curLData.ltype[curLData.curLindex].page
                 }, function(data) {
                     if (vm.informationtypename == "xinwen") {
-                        curLData.list = data.informationtlist;
+                        curLData.list = data.informationtlist||[];
                         mui(pullRefreshEl).pullRefresh().endPulldownToRefresh(); //refresh completed
-                        if (data.pagecount <= curLData.page) {
-                            mui(pullRefreshEl).pullRefresh().endPullupToRefresh(true);
-                        }
                     } else {
-                        curLData.ltype[curLData.curLindex].list = data.informationtlist;
+                        curLData.ltype[curLData.curLindex].list = data.informationtlist||[];
                         mui(pullRefreshEl).pullRefresh().endPulldownToRefresh(); //refresh completed
-                        if (data.pagecount <= curLData.ltype[curLData.curLindex].page) {
-                            mui(pullRefreshEl).pullRefresh().endPullupToRefresh(true);
-                        }
                     }
                 })
             }
@@ -213,16 +198,18 @@ function getData(params, callback) {
                     page: curLData.ltype[curLData.curLindex].page
                 }, function(data) {
                     if (vm.informationtypename == "xinwen") {
-                        curLData.list = data.informationtlist;
-                        mui(pullRefreshEl).pullRefresh().endPulldownToRefresh(); //refresh completed
+                        curLData.list = curLData.list.concat(data.informationtlist||[]);
                         if (data.pagecount <= curLData.page) {
                             mui(pullRefreshEl).pullRefresh().endPullupToRefresh(true);
+                        }else{
+                            mui(pullRefreshEl).pullRefresh().endPullupToRefresh();
                         }
                     } else {
-                        curLData.ltype[curLData.curLindex].list = data.informationtlist;
-                        mui(pullRefreshEl).pullRefresh().endPulldownToRefresh(); //refresh completed
+                        curLData.ltype[curLData.curLindex].list = curLData.ltype[curLData.curLindex].list.concat(data.informationtlist||[]);
                         if (data.pagecount <= curLData.ltype[curLData.curLindex].page) {
                             mui(pullRefreshEl).pullRefresh().endPullupToRefresh(true);
+                        }else{
+                            mui(pullRefreshEl).pullRefresh().endPullupToRefresh();
                         }
                     }
                 })

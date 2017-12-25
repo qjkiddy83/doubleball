@@ -23,6 +23,22 @@
             font-size: 14px;
             color: #5c5757;
         }
+        dl{
+            text-align: center;
+
+            dt{
+                display: inline-block;
+                vertical-align: middle;
+            }
+            dd{
+                text-align: left;
+                display: inline-block;
+                vertical-align: middle;
+                p{
+                    margin: 5px 0 5px 10px;
+                }
+            }
+        }
     }
     ul {
         display: flex;
@@ -41,9 +57,13 @@
                 vertical-align: middle;
                 color: #f85959;
             }
+            a{
+                display: block;
+            }
             span {
                 display: inline-block;
                 vertical-align: middle;
+                color: #5c5757;
             }
             &:not(:last-child):after {
                 position: absolute;

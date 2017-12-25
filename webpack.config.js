@@ -80,7 +80,7 @@ function getExports() {
     if (isDev) {
         _exports = merge(_exports, {
             devServer: {
-                host: '192.168.11.231',
+                host: 'localhost',
                 // host: os.networkInterfaces().en0[1].address,
                 port: 8080,
                 inline: true, //可以监控js变化
@@ -126,9 +126,9 @@ function getRules() {
     }, {
         test: /\.(png|jpg|gif)$/,
         use: [{
-            loader: 'url-loader',
+            loader: 'file-loader',
             options: {
-                limit: 8192,
+                // limit: 8192,
                 name: 'images/[name].[ext]',
                 publicPath: '../'
             }

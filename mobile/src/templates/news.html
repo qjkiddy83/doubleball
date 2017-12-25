@@ -33,7 +33,7 @@
                         <div class="mui-content mui-scroll-wrapper">
                             <div class="mui-scroll">
                                 <ul class="mui-table-view">
-                                    <li v-if="item.list.length>1" class="mui-table-view-cell" v-for="cell in item.list">
+                                    <li v-if="item.list.length>0" class="mui-table-view-cell" v-for="cell in item.list">
                                         <a v-bind:href="'article.html?id='+cell.id">{{cell.informationtitile}}<span>{{cell.informationtime}}</span></a>
                                     </li>
                                 </ul>
@@ -57,7 +57,7 @@
                         <div class="mui-content mui-scroll-wrapper">
                             <div class="mui-scroll">
                                 <ul class="mui-table-view">
-                                    <li v-if="item.list.length>1" class="mui-table-view-cell" v-for="cell in item.list">
+                                    <li v-if="item.list.length>0" class="mui-table-view-cell" v-for="cell in item.list">
                                         <a v-bind:href="'article.html?id='+cell.id">{{cell.informationtitile}}<span>{{cell.informationtime}}</span></a>
                                     </li>
                                 </ul>
@@ -71,7 +71,7 @@
             <div class="mui-content mui-scroll-wrapper">
                 <div class="mui-scroll">
                     <ul class="mui-table-view">
-                        <li v-if="dataset.xinwen.list.length>=1" class="mui-table-view-cell" v-for="cell in dataset.xinwen.list">
+                        <li v-if="dataset.xinwen.list.length>0" class="mui-table-view-cell" v-for="cell in dataset.xinwen.list">
                             <a v-bind:href="'article.html?id='+cell.id">{{cell.informationtitile}}<span>{{cell.informationtime}}</span></a>
                         </li>
                     </ul>

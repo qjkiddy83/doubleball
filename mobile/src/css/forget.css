@@ -1,0 +1,68 @@
+#app{
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	position: absolute;
+	width: 100%;
+	left: 0;
+	top: 0;
+	input, textarea, select{
+		font-size: 16px;
+	}
+}
+.mui-content{
+	flex: 99;
+	margin-top: 15px;
+	display: flex;
+	flex-direction: column;
+	.form{
+		height: 100%;
+		background: #fff;
+		flex: 1;
+		.validate-code{
+			input{
+				width: 35%;
+				float: left;
+			}
+			.mui-btn{
+				float: right;
+			    width: 26%;
+			    font-size: 14px; 
+			    padding: 5px 0;
+			    margin-top: 6px;
+			    margin-right: 4%;
+			}
+		}
+	}
+	.agreement{
+		margin: 20px 0 0;
+		text-align: center;
+		font-size: 16px;
+		input[type='checkbox']{
+			position: static;
+			display: inline-block;
+			vertical-align: middle;
+		}
+		label{
+			vertical-align: middle;
+			width: auto;
+			padding: 0;
+			line-height: 28px;
+		}
+	}
+	.mui-content-padded{
+		padding: 20px 0 0;
+		.link-area{
+			overflow: hidden;
+			margin-top: 15px;
+			a{
+				float: left;
+				color: #f85959;
+				padding: 0 10px;
+				&:last-child{
+					float:right;
+				}
+			}
+		}
+	}
+}
