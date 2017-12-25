@@ -1,9 +1,10 @@
+var cookie = require('js-cookie');
 let $ = require('./zepto.js');
 module.exports = {
     fetch(args) {
         $.ajax(Object.assign({
             headers: {
-
+                userid: cookie.get('uid')
             }
         }, args));
     },
