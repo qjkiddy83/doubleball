@@ -53,33 +53,33 @@ var vm = new Vue({
             scrollX: false
         });
         document.querySelector('#slider1').addEventListener('slide', function(event) {
-            vm.cur = event.detail.slideNumber == 0?"month":'week';
-            vm.subscribetype = event.detail.slideNumber == 0?"02":'01';
+            vm.cur = event.detail.slideNumber == 0 ? "month" : 'week';
+            vm.subscribetype = event.detail.slideNumber == 0 ? "02" : '01';
             var _this = vm;
-            Vue.nextTick(function(){
-		        tools.fetch({
-		            url: '/subscribe/subscribeprice.jsp',
-		            data: {
-		                subscribetype: vm.subscribetype,
-		                userid: cookie.get('uid')
-		            },
-		            method: "POST",
-		            dataType: 'json',
-		            success(data) {
-		                if (data.statuscode !== "1") {
-		                    mui.alert(`${data.statusmsg}`, '提示');
-		                } else {
-		                    data.subscribepricelist.map(item => {
-		                        var _item = lotterys.filter(lottery => {
-		                            return (lottery.code == item.lotterytype)
-		                        });
-		                        item.lotteryname = _item.length ? _item[0].name : "通用"
-		                    })
-		                    _this[vm.cur] = data.subscribepricelist
-		                }
-		            }
-		        })
-	        })
+            Vue.nextTick(function() {
+                tools.fetch({
+                    url: '/subscribe/subscribeprice.jsp',
+                    data: {
+                        subscribetype: vm.subscribetype,
+                        userid: cookie.get('uid')
+                    },
+                    method: "POST",
+                    dataType: 'json',
+                    success(data) {
+                        if (data.statuscode !== "1") {
+                            mui.alert(`${data.statusmsg}`, '提示');
+                        } else {
+                            data.subscribepricelist.map(item => {
+                                var _item = lotterys.filter(lottery => {
+                                    return (lottery.code == item.lotterytype)
+                                });
+                                item.lotteryname = _item.length ? _item[0].name : "通用"
+                            })
+                            _this[vm.cur] = data.subscribepricelist
+                        }
+                    }
+                })
+            })
         });
     });
 })(require('./mui/mui'))

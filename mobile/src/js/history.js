@@ -2,6 +2,7 @@
 (function(mui) {
     var $ = require('./zepto.js');
     var Vue = require('./vue.js');
+    var tools = require('./tools');
     var lotterytype = (location.search.match(/[?&]code=(.*?)(?:&|$)/) || [])[1];
     var lotteryname = (location.search.match(/[?&]name=(.*?)(?:&|$)/) || [])[1];
 
@@ -14,7 +15,7 @@
     }
 
     function getData(params, callback) {
-        $.ajax({
+        tools.fetch({
             url: '/lottery/lotterywinning.jsp',
             data: params,
             method: 'POST',
@@ -68,15 +69,15 @@
      */
     function pulldownRefresh() {
         vm.page = 1;
-        Vue.nextTick(function(){
+        Vue.nextTick(function() {
             getData({
                 lotterytype: lotterytype,
                 drawstat: 1,
                 page: vm.page,
                 pagesize: 20
-            },function(d){
+            }, function(d) {
                 var nomore = false;
-                if(d.pagecount <= vm.page){
+                if (d.pagecount <= vm.page) {
                     nomore = true;
                 }
                 d.lotterylist.map(function(item) {
@@ -92,15 +93,15 @@
      */
     function pullupRefresh() {
         vm.page++;
-        Vue.nextTick(function(){
+        Vue.nextTick(function() {
             getData({
                 lotterytype: lotterytype,
                 drawstat: 1,
                 page: vm.page,
                 pagesize: 20
-            },function(d){
+            }, function(d) {
                 var nomore = false;
-                if(d.pagecount <= vm.page){
+                if (d.pagecount <= vm.page) {
                     nomore = true;
                 }
                 d.lotterylist.map(function(item) {

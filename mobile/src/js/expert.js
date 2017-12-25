@@ -95,7 +95,7 @@ var vm = new Vue({
         followUser() {
             var _this = this;
             tools.fetch({
-                url: _this.follow=="0"?'/exper/follow.jsp':'/exper/disfollow.jsp',
+                url: _this.follow == "0" ? '/exper/follow.jsp' : '/exper/disfollow.jsp',
                 data: {
                     expertid: (location.search.match(/[?&]expertid=(.*?)(?:&|$)/) || [])[1]
                 },
@@ -105,12 +105,12 @@ var vm = new Vue({
                     if (d.statuscode !== "1") {
                         mui.alert(`${d.statusmsg}`, '提示');
                     } else {
-                        _this.follow = _this.follow=="1"?"0":"1";
+                        _this.follow = _this.follow == "1" ? "0" : "1";
                     }
                 }
             })
         },
-        praiseUser(){
+        praiseUser() {
             var _this = this;
             tools.fetch({
                 url: '/exper/praise.jsp',

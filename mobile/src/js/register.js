@@ -11,78 +11,78 @@ var vm = new Vue({
         nickname: '',
         userpic: '',
         pass: '',
-        repass:'',
+        repass: '',
         autcode: '',
         t_account: '',
         t_userpass: '',
         frm: '',
-        agree:false
+        agree: false
     },
     methods: {
-    	getAutCode(){
-            if(!tools.validator.mobile.rules.test(this.account)){
+        getAutCode() {
+            if (!tools.validator.mobile.rules.test(this.account)) {
                 mui.alert(`${tools.validator.mobile.error}`, '提示');
                 return false;
             }
-    		tools.fetch({
-		        url: '/system/sendauthsms.jsp',
-		        data: {
-		            account: this.account,
-			        m:'reguser'
-		        },
-		        method: "POST",
-		        dataType: 'json',
-		        success(data) {
-		        	if(data.statuscode !== "1"){
-		        		mui.alert(`${data.statusmsg}`, '提示');
-		        	}
-		        }
-		    })
-    	},
-    	submit(e){
-    		if(!tools.validator.mobile.rules.test(this.account)){
-    			mui.alert(`${tools.validator.mobile.error}`, '提示');
+            tools.fetch({
+                url: '/system/sendauthsms.jsp',
+                data: {
+                    account: this.account,
+                    m: 'reguser'
+                },
+                method: "POST",
+                dataType: 'json',
+                success(data) {
+                    if (data.statuscode !== "1") {
+                        mui.alert(`${data.statusmsg}`, '提示');
+                    }
+                }
+            })
+        },
+        submit(e) {
+            if (!tools.validator.mobile.rules.test(this.account)) {
+                mui.alert(`${tools.validator.mobile.error}`, '提示');
                 return false;
-    		}
-			if(tools.validator.empty.rules.test(this.nickname)){
-    			mui.alert(`昵称不能为空`, '提示');
+            }
+            if (tools.validator.empty.rules.test(this.nickname)) {
+                mui.alert(`昵称不能为空`, '提示');
                 return false;
-    		}
-    		if(!tools.validator.password.rules.test(this.pass)){
-    			mui.alert(`${tools.validator.password.error}`, '提示');
+            }
+            if (!tools.validator.password.rules.test(this.pass)) {
+                mui.alert(`${tools.validator.password.error}`, '提示');
                 return false;
-    		}
-    		if(this.pass !== this.repass){
-    			mui.alert(`密码不一致，请重新确认您的密码`, '提示');
+            }
+            if (this.pass !== this.repass) {
+                mui.alert(`密码不一致，请重新确认您的密码`, '提示');
                 return false;
-    		}
-    		if(tools.validator.empty.rules.test(this.autcode)){
-    			mui.alert(`请输入正确的验证码`, '提示');
+            }
+            if (tools.validator.empty.rules.test(this.autcode)) {
+                mui.alert(`请输入正确的验证码`, '提示');
                 return false;
-    		}
-    		if(!this.agree){
-    			mui.alert(`请同意用户服务协议`, '提示');
+            }
+            if (!this.agree) {
+                mui.alert(`请同意用户服务协议`, '提示');
                 return false;
-    		}
-    		tools.fetch({
-		        url: '/user/reguser.jsp',
-		        data: {
-		            account: this.account,
-			        nickname: this.nickname,
-			        pass: md5(`pass=${this.pass}|${tools.key}`),
-			        autcode: this.autcode
-		        },
-		        method: "POST",
-		        dataType: 'json',
-		        success(data) {
-		        	if(data.statuscode !== "1"){
-		        		mui.alert(`${data.statusmsg}`, '提示');
-		        		return;
-		        	}else{
-		        		location.href = 'login.html'
-		        	}
-		        }
-		    })
-    	}
+            }
+            tools.fetch({
+                url: '/user/reguser.jsp',
+                data: {
+                    account: this.account,
+                    nickname: this.nickname,
+                    pass: md5(`pass=${this.pass}|${tools.key}`),
+                    autcode: this.autcode
+                },
+                method: "POST",
+                dataType: 'json',
+                success(data) {
+                    if (data.statuscode !== "1") {
+                        mui.alert(`${data.statusmsg}`, '提示');
+                        return;
+                    } else {
+                        location.href = 'login.html'
+                    }
+                }
+            })
+        }
     }
 })

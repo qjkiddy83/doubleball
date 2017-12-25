@@ -2,6 +2,7 @@ var lotterys = require('./lottery-data.js');
 var $ = require('./zepto.js');
 var mui = require('./mui/mui');
 var Vue = require('./vue');
+var tools = require('./tools');
 
 lotterys.map(function(item) { //初始化数据结构
     $.extend(item, {
@@ -43,7 +44,7 @@ function setData(data) {
 function getData(params, callback) {
     console.log('eee')
 
-    $.ajax({
+    tools.fetch({
         url: '/infomation/decodelist.jsp',
         data: params,
         method: 'POST',

@@ -2,6 +2,8 @@ var lotterys = require('./lottery-data.js');
 var $ = require('./zepto.js');
 var Vue = require('./vue.js');
 var mui = require('./mui/mui');
+var tools = require('./tools');
+
 lotterys.map(function(item) { //初始化数据结构
     $.extend(item, {
         lotteryFormat: [
@@ -86,7 +88,8 @@ mui.ready(function() {
         }
     });
     document.querySelector('#slider1').addEventListener('slide', function(event) {
-        var curLottery = event.detail.slideNumber,curforecast = 0;
+        var curLottery = event.detail.slideNumber,
+            curforecast = 0;
         vm.curLottery = event.detail.slideNumber;
         vm.lotterys[curLottery].product[curforecast].page = 1;
         getData({
@@ -143,12 +146,13 @@ var vm = new Vue({
             }, function(d) {
                 callbackTpl(this.lotterys, curLottery, curforecast, 0, d)
                 pullRefreshArr[curLottery].refresh(true)
-                pullRefreshArr[curLottery].scrollTo(0,0)
+                pullRefreshArr[curLottery].scrollTo(0, 0)
             }.bind(this));
         },
         changeLtype: function(event) {
             var dataset = event.target.dataset;
-            var curLottery = dataset.index,curforecast = 0;
+            var curLottery = dataset.index,
+                curforecast = 0;
             this.curLottery = curLottery;
             this.lotterys[curLottery].product[curforecast].page = 1;
             mui(`.mui-slider`).slider().gotoItem(dataset.index);
@@ -177,7 +181,7 @@ var vm = new Vue({
 })
 
 function callbackTpl(lotterys, curLottery, curforecast, load, d) {
-    if(d.statuscode != '1'){
+    if (d.statuscode != '1') {
         return;
     }
     lotterys[curLottery].periods = d.periods;
@@ -198,7 +202,7 @@ function lotteryFormat(str) {
 }
 
 function getData(params, callback) {
-    $.ajax({
+    tools.fetch({
         url: '/forecast/forecastprivlist.jsp',
         data: params,
         dataType: 'json',

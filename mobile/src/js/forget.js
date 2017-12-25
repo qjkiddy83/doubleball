@@ -11,65 +11,65 @@ var vm = new Vue({
         nickname: '',
         userpic: '',
         pass: '',
-        repass:'',
+        repass: '',
         autcode: '',
         t_account: '',
         t_userpass: '',
         frm: '',
-        agree:false
+        agree: false
     },
     methods: {
-    	getAutCode(){
-            if(!tools.validator.mobile.rules.test(this.account)){
+        getAutCode() {
+            if (!tools.validator.mobile.rules.test(this.account)) {
                 mui.alert(`${tools.validator.mobile.error}`, '提示');
                 return false;
             }
-    		tools.fetch({
-		        url: '/system/sendauthsms.jsp',
-		        data: {
-		            account: this.account,
-			        m:'modpass'
-		        },
-		        method: "POST",
-		        dataType: 'json',
-		        success(data) {
-		        	if(data.statuscode !== "1"){
-		        		mui.alert(`${data.statusmsg}`, '提示');
-		        	}
-		        }
-		    })
-    	},
-    	submit(e){
-    		if(!tools.validator.mobile.rules.test(this.account)){
-    			mui.alert(`${tools.validator.mobile.error}`, '提示');
+            tools.fetch({
+                url: '/system/sendauthsms.jsp',
+                data: {
+                    account: this.account,
+                    m: 'modpass'
+                },
+                method: "POST",
+                dataType: 'json',
+                success(data) {
+                    if (data.statuscode !== "1") {
+                        mui.alert(`${data.statusmsg}`, '提示');
+                    }
+                }
+            })
+        },
+        submit(e) {
+            if (!tools.validator.mobile.rules.test(this.account)) {
+                mui.alert(`${tools.validator.mobile.error}`, '提示');
                 return false;
-    		}
-    		if(!tools.validator.password.rules.test(this.pass)){
-    			mui.alert(`${tools.validator.password.error}`, '提示');
+            }
+            if (!tools.validator.password.rules.test(this.pass)) {
+                mui.alert(`${tools.validator.password.error}`, '提示');
                 return false;
-    		}
-    		if(tools.validator.empty.rules.test(this.autcode)){
-    			mui.alert(`请输入正确的验证码`, '提示');
+            }
+            if (tools.validator.empty.rules.test(this.autcode)) {
+                mui.alert(`请输入正确的验证码`, '提示');
                 return false;
-    		}
-    		tools.fetch({
-		        url: '/user/modpass.jsp',
-		        data: {
-		            account: this.account,
-			        newpass: md5(`pass=${this.pass}|${tools.key}`),
-			        autcode: this.autcode
-		        },
-		        method: "POST",
-		        dataType: 'json',
-		        success(data) {
-		        	if(data.statuscode !== "1"){
-		        		mui.alert(`${data.statusmsg}`, '提示');
-		        		return;
-		        	}else{
-		        		location.href = 'login.html'
-		        	}
-		        }
-		    })
-    	}
+            }
+            tools.fetch({
+                url: '/user/modpass.jsp',
+                data: {
+                    account: this.account,
+                    newpass: md5(`pass=${this.pass}|${tools.key}`),
+                    autcode: this.autcode
+                },
+                method: "POST",
+                dataType: 'json',
+                success(data) {
+                    if (data.statuscode !== "1") {
+                        mui.alert(`${data.statusmsg}`, '提示');
+                        return;
+                    } else {
+                        location.href = 'login.html'
+                    }
+                }
+            })
+        }
     }
 })

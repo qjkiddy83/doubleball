@@ -2,6 +2,8 @@ var lotterys = require('./lottery-data.js');
 var $ = require('./zepto.js');
 var Vue = require('./vue.js');
 var mui = require('./mui/mui');
+var tools = require('./tools');
+
 var pullRefreshArr = []
 
 lotterys.map(function(item) { //初始化数据结构
@@ -17,7 +19,7 @@ lotterys.map(function(item) { //初始化数据结构
 })
 
 function getData(params, callback) {
-    $.ajax({
+    tools.fetch({
         url: '/forecast/forecastlist.jsp',
         data: params,
         dataType: 'json',
@@ -140,12 +142,13 @@ var vm = new Vue({
                 pagesize: 20
             }, function(d) {
                 callbackTpl(this.lotterys, curLottery, curforecast, 0, d)
-                pullRefreshArr[vm.curLottery].scrollTo(0,0);
+                pullRefreshArr[vm.curLottery].scrollTo(0, 0);
             }.bind(this));
         },
         changeLtype: function(event) {
             var dataset = event.target.dataset;
-            var curLottery = dataset.index,curforecast = 0;
+            var curLottery = dataset.index,
+                curforecast = 0;
             this.curLottery = curLottery;
             this.lotterys[curLottery].product[curforecast].page = 1;
             mui(`.mui-slider`).slider().gotoItem(dataset.index);

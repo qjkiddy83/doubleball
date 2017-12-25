@@ -2,7 +2,7 @@ var lotterys = require('./lottery-data.js');
 var $ = require('./zepto.js');
 var Vue = require('./vue');
 var mui = require('./mui/mui');
-
+var tools = require('./tools');
 
 lotterys.map(function(item) { //初始化数据结构
     $.extend(item, {
@@ -20,7 +20,7 @@ document.querySelector('#slider1').addEventListener('slide', function(event) {
     mui(`.mui-slider`).slider().gotoItem(sliderIndex);
 });
 
-mui.ready(function(){
+mui.ready(function() {
     mui('.lottery-classify').scroll({
         scrollY: false, //是否竖向滚动
         scrollX: true
@@ -43,13 +43,13 @@ mui.ready(function(){
         function pulldownRefresh() {
             vm.page = 1;
             getData({
-                codetype:codetype,
+                codetype: codetype,
                 lotterytype: vm.lotterys[vm.curLottery].code,
                 page: 1,
                 pagesize: 20
             }, function(data) {
                 vm.lotterys[vm.curLottery].list = data[`list${codetype}`];
-                mui(pullRefreshEl).pullRefresh().endPulldownToRefresh(); 
+                mui(pullRefreshEl).pullRefresh().endPulldownToRefresh();
             })
         }
         /**
@@ -59,7 +59,7 @@ mui.ready(function(){
             vm.lotterys[vm.curLottery].page++;
             Vue.nextTick(() => {
                 getData({
-                    codetype:codetype,
+                    codetype: codetype,
                     lotterytype: vm.lotterys[vm.curLottery].code,
                     page: vm.page,
                     pagesize: 20
@@ -67,10 +67,10 @@ mui.ready(function(){
                     var nomore = false;
                     console.log(vm.lotterys[vm.curLottery].list)
                     vm.lotterys[vm.curLottery].list = vm.lotterys[vm.curLottery].list.concat(data[`list${codetype}`]);
-                    if(vm.lotterys[vm.curLottery].page>=data.pagecount){
+                    if (vm.lotterys[vm.curLottery].page >= data.pagecount) {
                         nomore = true;
                     }
-                    mui(pullRefreshEl).pullRefresh().endPullupToRefresh(nomore); 
+                    mui(pullRefreshEl).pullRefresh().endPullupToRefresh(nomore);
                 })
             })
         }
@@ -78,7 +78,7 @@ mui.ready(function(){
 })
 
 function getData(params, callback) {
-    $.ajax({
+    tools.fetch({
         url: '/infomation/decodelist.jsp',
         data: params,
         method: 'POST',
@@ -89,7 +89,7 @@ function getData(params, callback) {
     })
 }
 
-var codetype = (location.search.match(/[?&]codetype=(.*?)(?:&|$)/)||[])[1];
+var codetype = (location.search.match(/[?&]codetype=(.*?)(?:&|$)/) || [])[1];
 
 var vm = new Vue({
     el: '#app',
@@ -108,7 +108,7 @@ var vm = new Vue({
             mui(`.mui-slider`).slider().gotoItem(dataset.index);
             Vue.nextTick(() => {
                 getData({
-                    codetype:codetype,
+                    codetype: codetype,
                     lotterytype: this.lotterys[this.curLottery].code,
                     page: this.page,
                     pagesize: 20
@@ -120,7 +120,7 @@ var vm = new Vue({
     },
     created: function() {
         getData({
-            codetype:codetype,
+            codetype: codetype,
             lotterytype: this.lotterys[this.curLottery].code,
             page: this.page,
             pagesize: 20
