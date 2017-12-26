@@ -61,11 +61,10 @@ mui.ready(function() {
                 getData({
                     codetype: codetype,
                     lotterytype: vm.lotterys[vm.curLottery].code,
-                    page: vm.page,
+                    page: vm.lotterys[vm.curLottery].page,
                     pagesize: 20
                 }, function(data) {
                     var nomore = false;
-                    console.log(vm.lotterys[vm.curLottery].list)
                     vm.lotterys[vm.curLottery].list = vm.lotterys[vm.curLottery].list.concat(data[`list${codetype}`]);
                     if (vm.lotterys[vm.curLottery].page >= data.pagecount) {
                         nomore = true;

@@ -40,6 +40,7 @@ var vm = new Vue({
             location.href = './'
         },
         checkin() {
+            var _this = this;
             if (!this.userid) {
                 location.href = "login.html";
                 return;
@@ -47,7 +48,7 @@ var vm = new Vue({
             tools.fetch({
                 url: '/user/sign.jsp',
                 data: {
-                    userid: this.userid
+                    userid: _this.userid
                 },
                 method: "POST",
                 dataType: 'json',
@@ -55,7 +56,7 @@ var vm = new Vue({
                     if (data.statuscode !== "1") {
                         mui.alert(`${data.statusmsg}`, '提示');
                     } else {
-                        userinfo(this)
+                        userinfo(_this)
                     }
                 }
             })

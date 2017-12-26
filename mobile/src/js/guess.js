@@ -36,14 +36,18 @@ mui.ready(function() {
 });
 
 function setData(data) {
-    vm.lotterys[vm.curLottery].list0001 = data.list0001 || [];
-    vm.lotterys[vm.curLottery].list0002 = data.list0002 || [];
-    vm.lotterys[vm.curLottery].list0003 = data.list0003 || [];
+    vm.lotterys[vm.curLottery].list0001 = data.list.filter(item =>{
+        return item.codetype == '0001'
+    }) || [];
+    vm.lotterys[vm.curLottery].list0002 = data.list.filter(item =>{
+        return item.codetype == '0002'
+    }) || [];
+    vm.lotterys[vm.curLottery].list0003 = data.list.filter(item =>{
+        return item.codetype == '0003'
+    }) || [];
 }
 
 function getData(params, callback) {
-    console.log('eee')
-
     tools.fetch({
         url: '/infomation/decodelist.jsp',
         data: params,
@@ -65,7 +69,6 @@ var vm = new Vue({
     },
     methods: {
         changeLtype: function(event) {
-            console.log('111')
             var dataset = event.target.dataset;
             var curLottery = dataset.index,
                 curforecast = 0;
