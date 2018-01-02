@@ -204,6 +204,7 @@ function lotteryFormat(str) {
 function getData(params, callback) {
     tools.fetch({
         url: '/forecast/forecastprivlist.jsp',
+        type : 'post',
         data: params,
         dataType: 'json',
         success: function(d) {
