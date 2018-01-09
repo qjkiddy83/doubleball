@@ -69,7 +69,25 @@ var vm = new Vue({
         sliderIndex: 0
     },
     methods: {
+        buy(event){
+            tools.fetch({
+                url: '/money/recharge.jsp',
+                data: {
+                    rechargeamount: 10,
+                    rechargetype: '0066',
+                    forecastid:event.target.dataset.id
+                },
+                method: "POST",
+                dataType: 'json',
+                success(data) {
+                    if(data.statuscode == 1){
+                        window.open(data.rechargeorder.jumpurl)
+                    }
+                }
+            })
+        },
         showResult: function(event) {
+
             this.buyed = lotteryFormat(this.lotterylist[event.target.dataset.index].periodscon);
             this.buyedname = this.lotterylist[event.target.dataset.index].forecasttypename;
             this.$nextTick(function() {

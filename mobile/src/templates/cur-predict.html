@@ -39,7 +39,7 @@
                                 <div class="mui-scroll">
                                     <ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
                                         <li class="mui-table-view-cell" v-for="li in group.product[group.curforecast].list">
-                                            <a v-on:click="pay" v-bind:data-expense="li.expense" v-bind:data-predict="li.expertsname">
+                                            <a v-on:click="pay" v-bind:data-expense="li.expense" v-bind:data-predict="li.expertsname" v-bind:data-id="li.forecastid">
                                                 <img class="mui-media-object mui-pull-left" v-bind:src="li.expertspic">
                                                 <div class="mui-media-body">
                                                     <h3><span>{{li.expertsname}}</span><small>{{li.rank}}</small></h3>
