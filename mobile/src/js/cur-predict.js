@@ -160,6 +160,9 @@ var vm = new Vue({
             }, function(d) {
                 callbackTpl(this.lotterys, curLottery, curforecast, 0, d)
             }.bind(this))
+        },
+        pay(){
+            
         }
     },
     created: function() {

@@ -18,6 +18,7 @@ var webpack = require('webpack'),
     },
     _exports = { //基础配置
         entry: oConfig.oEntry,
+        devtool: '#source-map',
         output: {
             path: path.join(__dirname, webroot, 'dist'),
             filename: 'js/[name].js'

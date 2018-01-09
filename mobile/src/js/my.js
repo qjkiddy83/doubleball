@@ -57,6 +57,7 @@ var vm = new Vue({
                         mui.alert(`${data.statusmsg}`, '提示');
                     } else {
                         userinfo(_this)
+                        mui.alert(`签到成功`, '提示');
                     }
                 }
             })

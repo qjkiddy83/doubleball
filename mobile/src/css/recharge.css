@@ -1,0 +1,18 @@
+.mui-input-group .mui-input-row{
+	height: auto;
+	&>*{
+		padding-left: 15px;
+	}
+	p{
+		margin-top: 10px;
+	}
+	.btns-group{
+		display: flex;
+		justify-content: space-around;
+		.mui-btn{
+			float: none;
+			width: auto;
+			margin: 10px;
+		}
+	}
+}
