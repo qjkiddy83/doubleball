@@ -14,10 +14,10 @@
         <header class="mui-bar mui-bar-nav"><a href="javascript:;" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
             <h1 class="mui-title">金币充值</h1></header>
         <div class="mui-content">
-            <form>
+            <div class="form">
                 <section class="mui-input-group">
                     <div class="mui-input-row">
-                        <p>金币余额：8.00</p>
+                        <p>金币余额：{{balance}}</p>
                     </div>
                     <div class="mui-input-row">
                         <p>专家预测让您更接近500万！</p>
@@ -25,14 +25,14 @@
                     </div>
                     <div class="mui-input-row">
                         <div class="btns-group">
-                            <a href="javascript:;" v-on:click="changeAmount" v-bind:class='rechargeamount==50?"mui-btn-primary":""' class="mui-btn mui-icon" data-amount=50>充50</a>
-                            <a href="javascript:;" v-on:click="changeAmount" v-bind:class='rechargeamount==100?"mui-btn-primary":""' class="mui-btn mui-icon" data-amount=100>充100</a>
-                            <a href="javascript:;" v-on:click="changeAmount" v-bind:class='rechargeamount==200?"mui-btn-primary":""' class="mui-btn mui-icon" data-amount=200>充200</a>
-                            <a href="javascript:;" v-on:click="changeAmount" v-bind:class='rechargeamount==500?"mui-btn-primary":""' class="mui-btn mui-icon" data-amount=500>充500</a>
+                            <a href="javascript:;" v-on:tap="changeAmount" v-bind:class='rechargeamount==50?"mui-btn-primary":""' class="mui-btn mui-icon" data-amount=50>充50</a>
+                            <a href="javascript:;" v-on:tap="changeAmount" v-bind:class='rechargeamount==100?"mui-btn-primary":""' class="mui-btn mui-icon" data-amount=100>充100</a>
+                            <a href="javascript:;" v-on:tap="changeAmount" v-bind:class='rechargeamount==200?"mui-btn-primary":""' class="mui-btn mui-icon" data-amount=200>充200</a>
+                            <a href="javascript:;" v-on:tap="changeAmount" v-bind:class='rechargeamount==500?"mui-btn-primary":""' class="mui-btn mui-icon" data-amount=500>充500</a>
                         </div>
                     </div>
                 </section>
-            </form>
+            </div>
             <div class="third">
                 <div class="mui-content-padded">
                     <button id='login' v-on:click="submit" class="mui-btn mui-btn-block mui-btn-red">下一步</button>
