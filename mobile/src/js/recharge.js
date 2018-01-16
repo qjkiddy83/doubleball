@@ -6,7 +6,7 @@ var mui = require('./mui/mui.js')
 var vm = new Vue({
     el: '#app',
     data: {
-        rechargetype:'0002',
+        rechargetype:'0066',
         rechargeamount:100
     },
     methods: {

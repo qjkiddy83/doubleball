@@ -17,7 +17,8 @@ module.exports = {
     fetch(args) {
         let t = Math.floor(Date.now() / 1000);
         args.type = args.type || "post";
-        $.ajax(Object.assign({
+        args.url = 'http://115.28.145.132'+args.url;
+        $.ajax(Object.assign({},{
             headers: {
                 "channel": "",
                 "platform": 'iOS',
