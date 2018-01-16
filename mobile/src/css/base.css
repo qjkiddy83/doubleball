@@ -224,8 +224,8 @@ header.mui-bar .mui-icon-extra{
     top: 44px;
     position: relative;
     width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     .mui-scrollbar{
         display: none;
     }
