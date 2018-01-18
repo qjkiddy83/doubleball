@@ -5,4 +5,7 @@ switch(oqs.type){
 	case 'B'://充值
 		location.href = 'my.html';
 	break;
+	case 'F':
+		parent.paysuccess();
+	break;
 }

@@ -1,0 +1,70 @@
+.tabs {
+    margin-top: 44px;
+    position: relative;
+    width: 100%;
+    ul {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        display: flex;
+    }
+    li {
+        list-style: none;
+        flex: 1;
+        padding: 0 1rem;
+        white-space: nowrap;
+        line-height: 38px;
+        font-size: 15px;
+        position: relative;
+        border-bottom: 1px solid #ccc;
+        text-align: center;
+        background-color: #fff;
+        &.active {
+            color: #d43d3d;
+            &:after {
+                content: '';
+                display: block;
+                height: 2px;
+                background-color: #d43d3d;
+                position: absolute;
+                width: 100%;
+                left: 0;
+                bottom: 0;
+            }
+        }
+    }
+    &>p{
+        text-align: center;
+        line-height: 41px;
+    }
+}
+.mui-slider{
+    position: absolute;
+    top: 83px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    .mui-slider-group{
+        height: 100%;
+        .mui-table-view-cell{
+            background: #fff;
+            &>div{
+                display: block;
+                p{
+                    margin-left: 15px;
+                    color: #000;
+                    display: inline-block;
+                    vertical-align: middle;
+                    .mball{
+                        margin: 0 4px 0 0;
+                    }
+                }
+                em{
+                    margin-left: 15px;
+                    color: #f85959;
+                    font-style: normal;
+                }
+            }
+        }
+    }
+}

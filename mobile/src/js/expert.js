@@ -36,6 +36,11 @@ function getAchievement(callback) {
     })
 }
 
+window.paysuccess = function(){
+    $('#paying').hide()
+    vm.showResult()
+}
+
 var vm = new Vue({
     el: '#app',
     data: {
@@ -81,25 +86,28 @@ var vm = new Vue({
                 method: "POST",
                 dataType: 'json',
                 success(data) {
+                    that.buyed = lotteryFormat(that.lotterylist[event.target.dataset.index].periodscon);
+                    that.buyedname = that.lotterylist[event.target.dataset.index].forecasttypename;
                     if(data.statuscode == 1){
-                        let tpl = '',
-                        jumpurl = data.rechargeorder.jumpurl.split('?');
-                        jumpurl[1].split('&').forEach(item=>{
-                            let kv = item.split('=');
-                            tpl += `<input name="${kv[0]}" type="hidden" value="${kv[1]}"/>`;
-                        })
-                        $(`<form action="${jumpurl[0]}" target="_blank">${tpl}</form>`).appendTo($('body')).submit();
+                        // let tpl = '',
+                        // jumpurl = data.rechargeorder.jumpurl.split('?');
+                        // jumpurl[1].split('&').forEach(item=>{
+                        //     let kv = item.split('=');
+                        //     tpl += `<input name="${kv[0]}" type="hidden" value="${kv[1]}"/>`;
+                        // })
+                        // $(`<form action="${jumpurl[0]}" target="_blank">${tpl}</form>`).appendTo($('body')).submit();
                         // window.open(data.rechargeorder.jumpurl)
+                        $('#paying').show().find('iframe').attr('src',data.rechargeorder.jumpurl);
+                        // setTimeout(function(){
+                        //     $('#paying').find('iframe').attr('src','http://192.168.11.231:8080/payback.html?type=F')
+                        // },3000)
                     }else if(data.statuscode == "-10801"){
-                        that.showResult(event)
+                        that.showResult()
                     }
                 }
             })
         },
-        showResult: function(event) {
-
-            this.buyed = lotteryFormat(this.lotterylist[event.target.dataset.index].periodscon);
-            this.buyedname = this.lotterylist[event.target.dataset.index].forecasttypename;
+        showResult: function() {
             this.$nextTick(function() {
                 var tpl = $('#rets').html();
                 mui.alert(`${tpl}`, '提示', function() {
@@ -155,6 +163,9 @@ var vm = new Vue({
                     }
                 }
             })
+        },
+        closePaylayer:function(){
+            $('#paying').hide().find('iframe').attr('src','');
         }
     },
     created: function() {
