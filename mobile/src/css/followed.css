@@ -1,0 +1,24 @@
+.mui-scroll-wrapper {
+    position: absolute;
+    top: 44px;
+    bottom: 0;
+    li{
+    	img{
+    		border-radius: 50%;
+    		border-radius: 50%;
+		    position: absolute;
+		    top: 50%;
+		    transform: translate3d(0, -50%, 0);
+    	}
+    	.mui-media-body{
+    		margin-left: 50px;
+		    border-left: 1px solid #ccc;
+		    padding-left: 10px;
+		    margin-right: 20px;
+		    p{
+		    	white-space: normal;
+		    	margin-top: 5px;
+		    }
+    	}
+    }
+}

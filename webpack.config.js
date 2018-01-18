@@ -81,7 +81,7 @@ function getExports() {
     if (isDev) {
         _exports = merge(_exports, {
             devServer: {
-                host: 'localhost',
+                host: '192.168.105.89',
                 // host: os.networkInterfaces().en0[1].address,
                 port: 8080,
                 inline: true, //可以监控js变化
@@ -89,7 +89,9 @@ function getExports() {
                 proxy: {
                     '*': {
                       target: 'http://115.28.145.132/',
-                      changeOrigin: true
+                      changeOrigin: true,
+                      disableHostCheck: true,
+                      noInfo: true
                     }
                  }
             },

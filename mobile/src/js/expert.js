@@ -69,11 +69,12 @@ var vm = new Vue({
         sliderIndex: 0
     },
     methods: {
-        buy(event){
+        buy:function(event){
+            let that = this;
             tools.fetch({
                 url: '/money/recharge.jsp',
                 data: {
-                    rechargeamount: 10,
+                    rechargeamount: event.target.dataset.expense,
                     rechargetype: '0066',
                     forecastid:event.target.dataset.id
                 },
@@ -81,7 +82,16 @@ var vm = new Vue({
                 dataType: 'json',
                 success(data) {
                     if(data.statuscode == 1){
-                        window.open(data.rechargeorder.jumpurl)
+                        let tpl = '',
+                        jumpurl = data.rechargeorder.jumpurl.split('?');
+                        jumpurl[1].split('&').forEach(item=>{
+                            let kv = item.split('=');
+                            tpl += `<input name="${kv[0]}" type="hidden" value="${kv[1]}"/>`;
+                        })
+                        $(`<form action="${jumpurl[0]}" target="_blank">${tpl}</form>`).appendTo($('body')).submit();
+                        // window.open(data.rechargeorder.jumpurl)
+                    }else if(data.statuscode == "-10801"){
+                        that.showResult(event)
                     }
                 }
             })

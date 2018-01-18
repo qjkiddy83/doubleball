@@ -26,13 +26,14 @@ var vm = new Vue({
                 method: "POST",
                 dataType: 'json',
                 success(data) {
-                    let tpl = '',
-                    jumpurl = data.rechargeorder.jumpurl.split('?');
-                    jumpurl[1].split('&').forEach(item=>{
-                        let kv = item.split('=');
-                        tpl += `<input name="${kv[0]}" type="hidden" value="${kv[1]}"/>`;
-                    })
-                    $(`<form action="${jumpurl[0]}" target="_blank">${tpl}</form>`).appendTo($('body')).submit(); 
+                    // let tpl = '',
+                    // jumpurl = data.rechargeorder.jumpurl.split('?');
+                    // jumpurl[1].split('&').forEach(item=>{
+                    //     let kv = item.split('=');
+                    //     tpl += `<input name="${kv[0]}" type="hidden" value="${kv[1]}"/>`;
+                    // })
+                    // $(`<form action="${jumpurl[0]}" target="_blank">${tpl}</form>`).appendTo($('body')).submit(); 
+                    location.href = data.rechargeorder.jumpurl;
                 }
             })
         }

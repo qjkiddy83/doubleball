@@ -49,7 +49,7 @@
                                             <div class="mui-table">
                                                 <div class="mui-table-cell">
                                                     <p class="mui-ellipsis">{{li.forecasttypename}}<span class="mui-h5">{{li.periods}}</span></p>
-                                                    <button type="button" v-on:click="buy" v-bind:data-index="index" v-bind:data-id="li.forecastid" class="mui-btn mui-btn-danger">查看该预测号码</button>
+                                                    <button type="button" v-on:click="buy" v-bind:data-index="index" v-bind:data-id="li.forecastid" v-bind:data-expense="li.expense" class="mui-btn mui-btn-danger">查看该预测号码</button>
                                                 </div>
                                             </div>
                                         </li>
@@ -107,6 +107,9 @@
                 <p><span class="mball" v-if="ball" v-for="ball in buyed[0]">{{ball}}</span><span class="mball blue" v-if="ball" v-for="ball in buyed[1]">{{ball}}</span></p>
                 <p>已添加到购买记录</p>
             </div>
+        </div>
+        <div id="paying">
+            <a href="javascript:;">已付款成功</a>
         </div>
     </div>
 </body>

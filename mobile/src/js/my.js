@@ -21,6 +21,9 @@ function userinfo(_this) {
                     $.extend(_this, data.user)
                     localStorage["__user__"] = JSON.stringify(data.user);
                 }
+            },
+            error(xhr){
+                console.log(xhr.responseText)
             }
         })
 }

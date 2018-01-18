@@ -161,8 +161,24 @@ var vm = new Vue({
                 callbackTpl(this.lotterys, curLottery, curforecast, 0, d)
             }.bind(this))
         },
-        pay(){
-            
+        pay:function(event){
+            let forecastid = event.currentTarget.dataset.forecastid,
+                expense = event.currentTarget.dataset.expense;
+            tools.fetch({
+                url: '/money/recharge.jsp',
+                data: {
+                    rechargeamount: expense,
+                    rechargetype: '0066',
+                    forecastid:forecastid
+                },
+                method: "POST",
+                dataType: 'json',
+                success(data) {
+                    if(data.statuscode == 1){
+                        window.open(data.rechargeorder.jumpurl)
+                    }
+                }
+            })
         }
     },
     created: function() {
