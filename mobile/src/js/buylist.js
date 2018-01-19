@@ -141,8 +141,8 @@ mui.ready(function() {
                 }, function(data) {
                     var nomore = false;
                     if (data.statuscode !== "1") {
-                        mui.alert(`${data.statusmsg}`, '提示');
-                        mui(pullRefreshEl).pullRefresh().endPullupToRefresh();
+                        // mui.alert(`${data.statusmsg}`, '提示');
+                        mui(pullRefreshEl).pullRefresh().endPullupToRefresh(true);
                         vm[vm.cur].page--
                     } else {
                         data.returnlist.map(function(item) {

@@ -81,7 +81,7 @@ function getExports() {
     if (isDev) {
         _exports = merge(_exports, {
             devServer: {
-                host: '192.168.105.89',
+                host: '192.168.11.194',
                 // host: os.networkInterfaces().en0[1].address,
                 port: 8080,
                 inline: true, //可以监控js变化

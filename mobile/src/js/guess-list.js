@@ -12,14 +12,6 @@ lotterys.map(function(item) { //初始化数据结构
     })
 })
 
-document.querySelector('#slider1').addEventListener('slide', function(event) {
-    sliderIndex = event.detail.slideNumber;
-    var curLottery = sliderIndex,
-        curforecast = 0;
-    this.curLottery = curLottery;
-    mui(`.mui-slider`).slider().gotoItem(sliderIndex);
-});
-
 mui.ready(function() {
     mui('.lottery-classify').scroll({
         scrollY: false, //是否竖向滚动
@@ -65,7 +57,9 @@ mui.ready(function() {
                     pagesize: 20
                 }, function(data) {
                     var nomore = false;
-                    vm.lotterys[vm.curLottery].list = vm.lotterys[vm.curLottery].list.concat(data[`list${codetype}`]);
+                    if(data[`list${codetype}`]){
+                        vm.lotterys[vm.curLottery].list = vm.lotterys[vm.curLottery].list.concat(data[`list${codetype}`]);
+                    }
                     if (vm.lotterys[vm.curLottery].page >= data.pagecount) {
                         nomore = true;
                     }
@@ -73,6 +67,23 @@ mui.ready(function() {
                 })
             })
         }
+    });
+
+    document.querySelector('#slider1').addEventListener('slide', function(event) {
+        let sliderIndex = event.detail.slideNumber;
+        var curLottery = sliderIndex,
+            curforecast = 0;
+        vm.curLottery = curLottery;
+        Vue.nextTick(() => {
+            getData({
+                codetype: codetype,
+                lotterytype: vm.lotterys[vm.curLottery].code,
+                page: vm.page,
+                pagesize: 20
+            }, function(data) {
+                vm.lotterys[vm.curLottery].list = data[`list${codetype}`];
+            })
+        })
     });
 })
 
@@ -105,16 +116,6 @@ var vm = new Vue({
             this.curLottery = curLottery;
             this.lotterys[curLottery].product[curforecast].page = 1;
             mui(`.mui-slider`).slider().gotoItem(dataset.index);
-            Vue.nextTick(() => {
-                getData({
-                    codetype: codetype,
-                    lotterytype: this.lotterys[this.curLottery].code,
-                    page: this.page,
-                    pagesize: 20
-                }, function(data) {
-                    this.lotterys[this.curLottery].list = data[`list${codetype}`];
-                }.bind(this))
-            })
         }
     },
     created: function() {

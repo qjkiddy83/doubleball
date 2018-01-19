@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title></title>
+    <title>彩票荐号</title>
 </head>
 
 <body ontouchmove="event.preventDefault();">
@@ -38,8 +38,8 @@
                             <div class="mui-content mui-scroll-wrapper mui-scroll-wrapper-segmented li-praised">
                                 <div class="mui-scroll">
                                     <ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
-                                        <li class="mui-table-view-cell" v-for="li in group.product[group.curforecast].list">
-                                            <a v-on:tap="pay" v-bind:data-expense="li.expense" v-bind:data-predict="li.expertsname" v-bind:data-forecastid="li.forecastid">
+                                        <li class="mui-table-view-cell" v-for="(li,index) in group.product[group.curforecast].list">
+                                            <a v-on:tap="pay" v-bind:data-expense="li.expense" v-bind:data-predict="li.expertsname" v-bind:data-forecastid="li.forecastid" v-bind:data-index="index">
                                                 <img class="mui-media-object mui-pull-left" v-bind:src="li.expertspic">
                                                 <div class="mui-media-body">
                                                     <h3><span>{{li.expertsname}}</span><small>{{li.rank}}</small></h3>
@@ -79,6 +79,18 @@
                 <span class="mui-tab-label">我的</span>
             </a>
         </nav>
+        
+        <div id="rets">
+            <div class="buyed">
+                <p>{{buyedname}}预测结果</p>
+                <p><span class="mball" v-if="ball" v-for="ball in buyed[0]">{{ball}}</span><span class="mball blue" v-if="ball" v-for="ball in buyed[1]">{{ball}}</span></p>
+                <p>已添加到购买记录</p>
+            </div>
+        </div>
+        <div id="paying">
+            <a href="javascript:;" v-on:tap="closePaylayer">关闭</a>
+            <iframe src=""></iframe>
+        </div>
     </div>
 </body>
 

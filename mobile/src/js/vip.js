@@ -3,6 +3,7 @@ var $ = require('./zepto.js');
 var Vue = require('./vue.js')
 var tools = require('./tools');
 var lotterys = require('./lottery-data.js');
+var mui = require('./mui/mui');
 var cookie = require('js-cookie');
 
 var vm = new Vue({
@@ -16,7 +17,29 @@ var vm = new Vue({
         cur: 'month'
     },
     methods: {
-
+        pay:function(event){
+            var that = this;
+            tools.fetch({
+                url: '/money/expertsubscribe.jsp',
+                data: {
+                    rechargetype: '0066',
+                    rechargeamount:event.target.dataset.price,
+                    subscribeid:event.target.dataset.subscribeid
+                },
+                method: "POST",
+                dataType: 'json',
+                success(data) {
+                    if(data.statuscode == 1){
+                        $('#paying').show().find('iframe').attr('src',data.rechargeorder.jumpurl);
+                    }else{
+                        mui.alert(`${data.statusmsg}`, '提示');
+                    }
+                }
+            })
+        },
+        closePaylayer:function(){
+            $('#paying').hide().find('iframe').attr('src','');
+        }
     },
     created: function() {
         var _this = this;
@@ -45,41 +68,38 @@ var vm = new Vue({
     }
 })
 
-;
-(function(mui) {
-    mui.ready(function() {
-        mui('.mui-scroll-wrapper-segmented').scroll({
-            scrollY: true, //是否竖向滚动
-            scrollX: false
-        });
-        document.querySelector('#slider1').addEventListener('slide', function(event) {
-            vm.cur = event.detail.slideNumber == 0 ? "month" : 'week';
-            vm.subscribetype = event.detail.slideNumber == 0 ? "02" : '01';
-            var _this = vm;
-            Vue.nextTick(function() {
-                tools.fetch({
-                    url: '/subscribe/subscribeprice.jsp',
-                    data: {
-                        subscribetype: vm.subscribetype,
-                        userid: cookie.get('uid')
-                    },
-                    method: "POST",
-                    dataType: 'json',
-                    success(data) {
-                        if (data.statuscode !== "1") {
-                            mui.alert(`${data.statusmsg}`, '提示');
-                        } else {
-                            data.subscribepricelist.map(item => {
-                                var _item = lotterys.filter(lottery => {
-                                    return (lottery.code == item.lotterytype)
-                                });
-                                item.lotteryname = _item.length ? _item[0].name : "通用"
-                            })
-                            _this[vm.cur] = data.subscribepricelist
-                        }
-                    }
-                })
-            })
-        });
+mui.ready(function() {
+    mui('.mui-scroll-wrapper-segmented').scroll({
+        scrollY: true, //是否竖向滚动
+        scrollX: false
     });
-})(require('./mui/mui'))
+    document.querySelector('#slider1').addEventListener('slide', function(event) {
+        vm.cur = event.detail.slideNumber == 0 ? "month" : 'week';
+        vm.subscribetype = event.detail.slideNumber == 0 ? "02" : '01';
+        var _this = vm;
+        Vue.nextTick(function() {
+            tools.fetch({
+                url: '/subscribe/subscribeprice.jsp',
+                data: {
+                    subscribetype: vm.subscribetype,
+                    userid: cookie.get('uid')
+                },
+                method: "POST",
+                dataType: 'json',
+                success(data) {
+                    if (data.statuscode !== "1") {
+                        mui.alert(`${data.statusmsg}`, '提示');
+                    } else {
+                        data.subscribepricelist.map(item => {
+                            var _item = lotterys.filter(lottery => {
+                                return (lottery.code == item.lotterytype)
+                            });
+                            item.lotteryname = _item.length ? _item[0].name : "通用"
+                        })
+                        _this[vm.cur] = data.subscribepricelist
+                    }
+                }
+            })
+        })
+    });
+});

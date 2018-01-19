@@ -18,7 +18,7 @@ module.exports = {
         let t = Math.floor(Date.now() / 1000);
         args.type = args.type || "post";
         // args.url = 'http://115.28.145.132'+args.url;
-        $.ajax(Object.assign({},{
+        $.ajax(Object.assign({}, args, {
             headers: {
                 "channel": "",
                 "platform": 'iOS',
@@ -28,8 +28,15 @@ module.exports = {
                 "version": '1.0.0',
                 "package": '',
                 "sign": sign(args.data, t)
+            },
+            success(data) {
+                if (data.statuscode == '-1003') {
+                    location.href = 'login.html';
+                    return;
+                }
+                args.success(data);
             }
-        }, args));
+        }));
     },
     key: signkey,
     validator: {

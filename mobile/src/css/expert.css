@@ -205,18 +205,3 @@ body {
         }
     }
 }
-.buyed{
-    overflow: hidden;
-    text-align: center;
-    padding: 10px 0;
-    p{
-        margin-bottom: 0;
-        &:nth-child(2){
-            margin: 5px 0;
-        }
-    }
-    .ball,.mball{
-        float: none;
-        display: inline-block;
-    }
-}

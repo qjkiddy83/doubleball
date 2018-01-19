@@ -31,7 +31,7 @@ function getData(params, callback) {
 
 function lotteryFormat(str) {
     var ret = [];
-    str.split('|').forEach(function(item, i) {
+    str.split(/\|+/).forEach(function(item, i) {
         ret[i] = item.split(',');
     })
     return ret;
@@ -124,11 +124,19 @@ mui.ready(function() {
     });
 });
 
+
+window.paysuccess = function(){
+    $('#paying').hide()
+    vm.showResult()
+}
+
 var vm = new Vue({
     el: '#app',
     data: {
         lotterys: lotterys,
-        curLottery: 0
+        curLottery: 0,
+        buyed: [],
+        buyedname: ''
     },
     methods: {
         changeForecast: function(event) {
@@ -162,6 +170,8 @@ var vm = new Vue({
             }.bind(this))
         },
         pay:function(event){
+            let that = this;
+            let dataset = event.currentTarget.dataset;
             let forecastid = event.currentTarget.dataset.forecastid,
                 expense = event.currentTarget.dataset.expense;
             tools.fetch({
@@ -174,11 +184,27 @@ var vm = new Vue({
                 method: "POST",
                 dataType: 'json',
                 success(data) {
+                    let curLottery = that.lotterys[that.curLottery];
+                    that.buyed = curLottery.product[curLottery.curforecast].list[dataset.index].lotteryFormat;
+                    that.buyedname = that.lotterys[that.curLottery].name;
                     if(data.statuscode == 1){
-                        window.open(data.rechargeorder.jumpurl)
+                        $('#paying').show().find('iframe').attr('src',data.rechargeorder.jumpurl);
+                    }else if(data.statuscode == "-10801"){
+                        that.showResult()
                     }
                 }
             })
+        },
+        showResult: function() {
+            this.$nextTick(function() {
+                var tpl = $('#rets').html();
+                mui.alert(`${tpl}`, '提示', function() {
+
+                });
+            })
+        },
+        closePaylayer:function(){
+            $('#paying').hide().find('iframe').attr('src','');
         }
     },
     created: function() {
