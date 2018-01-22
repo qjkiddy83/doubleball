@@ -76,35 +76,28 @@ var vm = new Vue({
     methods: {
         buy:function(event){
             let that = this;
-            tools.fetch({
-                url: '/money/recharge.jsp',
-                data: {
-                    rechargeamount: event.target.dataset.expense,
-                    rechargetype: '0066',
-                    forecastid:event.target.dataset.id
-                },
-                method: "POST",
-                dataType: 'json',
-                success(data) {
-                    that.buyed = lotteryFormat(that.lotterylist[event.target.dataset.index].periodscon);
-                    that.buyedname = that.lotterylist[event.target.dataset.index].forecasttypename;
-                    if(data.statuscode == 1){
-                        // let tpl = '',
-                        // jumpurl = data.rechargeorder.jumpurl.split('?');
-                        // jumpurl[1].split('&').forEach(item=>{
-                        //     let kv = item.split('=');
-                        //     tpl += `<input name="${kv[0]}" type="hidden" value="${kv[1]}"/>`;
-                        // })
-                        // $(`<form action="${jumpurl[0]}" target="_blank">${tpl}</form>`).appendTo($('body')).submit();
-                        // window.open(data.rechargeorder.jumpurl)
-                        $('#paying').show().find('iframe').attr('src',data.rechargeorder.jumpurl);
-                        // setTimeout(function(){
-                        //     $('#paying').find('iframe').attr('src','http://192.168.11.231:8080/payback.html?type=F')
-                        // },3000)
-                    }else if(data.statuscode == "-10801"){
-                        that.showResult()
+            tools.pay(event.target.dataset.expense,function(rechargetype){
+                tools.fetch({
+                    url: '/money/recharge.jsp',
+                    data: {
+                        rechargeamount: event.target.dataset.expense,
+                        rechargetype: rechargetype,
+                        forecastid:event.target.dataset.id
+                    },
+                    method: "POST",
+                    dataType: 'json',
+                    success(data) {
+                        that.buyed = lotteryFormat(that.lotterylist[event.target.dataset.index].periodscon);
+                        that.buyedname = that.lotterylist[event.target.dataset.index].forecasttypename;
+                        if(data.statuscode == 1){
+                            $('#paying').show().find('iframe').attr('src',data.rechargeorder.jumpurl);
+                        }else if(data.statuscode == "-10801"){
+                            mui.alert(`${data.statusmsg}`, '提示',function(){
+                                that.showResult()
+                            });
+                        }
                     }
-                }
+                })
             })
         },
         showResult: function() {

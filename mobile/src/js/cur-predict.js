@@ -174,26 +174,29 @@ var vm = new Vue({
             let dataset = event.currentTarget.dataset;
             let forecastid = event.currentTarget.dataset.forecastid,
                 expense = event.currentTarget.dataset.expense;
-            tools.fetch({
-                url: '/money/recharge.jsp',
-                data: {
-                    rechargeamount: expense,
-                    rechargetype: '0066',
-                    forecastid:forecastid
-                },
-                method: "POST",
-                dataType: 'json',
-                success(data) {
-                    let curLottery = that.lotterys[that.curLottery];
-                    that.buyed = curLottery.product[curLottery.curforecast].list[dataset.index].lotteryFormat;
-                    that.buyedname = that.lotterys[that.curLottery].name;
-                    if(data.statuscode == 1){
-                        $('#paying').show().find('iframe').attr('src',data.rechargeorder.jumpurl);
-                    }else if(data.statuscode == "-10801"){
-                        that.showResult()
+            tools.pay(expense,function(rechargetype){
+                tools.fetch({
+                    url: '/money/recharge.jsp',
+                    data: {
+                        rechargeamount: expense,
+                        rechargetype: rechargetype,
+                        forecastid:forecastid
+                    },
+                    method: "POST",
+                    dataType: 'json',
+                    success(data) {
+                        let curLottery = that.lotterys[that.curLottery];
+                        that.buyed = curLottery.product[curLottery.curforecast].list[dataset.index].lotteryFormat;
+                        that.buyedname = that.lotterys[that.curLottery].name;
+                        if(data.statuscode == 1){
+                            $('#paying').show().find('iframe').attr('src',data.rechargeorder.jumpurl);
+                        }else if(data.statuscode == "-10801"){
+                            mui.alert(`${data.statusmsg}`, '提示');
+                            that.showResult()
+                        }
                     }
-                }
-            })
+                })
+            });
         },
         showResult: function() {
             this.$nextTick(function() {

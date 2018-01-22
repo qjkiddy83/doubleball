@@ -19,23 +19,25 @@ var vm = new Vue({
     methods: {
         pay:function(event){
             var that = this;
-            tools.fetch({
-                url: '/money/expertsubscribe.jsp',
-                data: {
-                    rechargetype: '0066',
-                    rechargeamount:event.target.dataset.price,
-                    subscribeid:event.target.dataset.subscribeid
-                },
-                method: "POST",
-                dataType: 'json',
-                success(data) {
-                    if(data.statuscode == 1){
-                        $('#paying').show().find('iframe').attr('src',data.rechargeorder.jumpurl);
-                    }else{
-                        mui.alert(`${data.statusmsg}`, '提示');
+            tools.pay(event.target.dataset.price,function(rechargetype){
+                tools.fetch({
+                    url: '/money/expertsubscribe.jsp',
+                    data: {
+                        rechargetype: rechargetype,
+                        rechargeamount:event.target.dataset.price,
+                        subscribeid:event.target.dataset.subscribeid
+                    },
+                    method: "POST",
+                    dataType: 'json',
+                    success(data) {
+                        if(data.statuscode == 1){
+                            $('#paying').show().find('iframe').attr('src',data.rechargeorder.jumpurl);
+                        }else{
+                            mui.alert(`${data.statusmsg}`, '提示');
+                        }
                     }
-                }
-            })
+                })
+            });
         },
         closePaylayer:function(){
             $('#paying').hide().find('iframe').attr('src','');

@@ -51,5 +51,57 @@ module.exports = {
         'empty': {
             'rules': /^\s*$/
         }
+    },
+    pay:function(price,callback){
+        this.fetch({
+            url: '/user/getinfo.jsp',
+            data: {
+                userid: cookie.get('uid')
+            },
+            method: "POST",
+            dataType: 'json',
+            success(data) {
+                if (data.statuscode !== "1") {
+                    mui.alert(`${data.statusmsg}`, '提示');
+                } else {
+                    $('body').append(`<div class="paylayer">
+                        <header class="mui-bar mui-bar-nav"><a href="javascript:;" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+                            <h1 class="mui-title">支付</h1>
+                        </header>
+                        <div class="mui-content">
+                            <p class="mui-table-view-cell" >支付金额：￥${price}</p>
+                            <dl>
+                                <dt>请选择支付方式</dt>
+                                <dd>
+                                    <div class="mui-input-row mui-radio mui-left">
+                                        <label><i class="iconfont icon-zhifubaozhifu"></i><span>支付宝</span></label>
+                                        <input name="rechargetype" value="0066" type="radio" checked="">
+                                    </div>
+                                </dd>
+                                <dd>
+                                    <div class="mui-input-row mui-radio mui-left">
+                                        <label><i class="iconfont icon-jinbi"></i><span>金币（余额：${data.user.balance}元）</span></label>
+                                        <input name="rechargetype" value="0004" type="radio">
+                                    </div>
+                                </dd>
+                            </dl>
+                            <div class="mui-btn-cont">
+                                <a href="javascript:;" id="next" class="mui-btn mui-btn-block mui-btn-danger" >下一步</a>
+                            </div>
+                        </div>
+                    </div>`)
+                    $('.paylayer').on('click','#next',function(){
+                        callback($('.paylayer [name="rechargetype"]:checked').val());
+                        $('.paylayer').remove();
+                    }).on('tap','.mui-icon-left-nav',function(){
+                        $('.paylayer').remove();
+                    })
+                }
+            },
+            error(xhr){
+                console.log(xhr.responseText)
+            }
+        })
+        
     }
 }
