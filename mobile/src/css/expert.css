@@ -20,8 +20,8 @@ body {
             border-radius: 42px;
         }
     }
-    .mui-table-view-cell {
-        padding-right: 0;
+    &>.mui-media{
+        padding: 11px 0 11px 15px;
     }
     .mui-media-body {
         padding-left: 10px;

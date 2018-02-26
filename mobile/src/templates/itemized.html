@@ -10,27 +10,25 @@
 <body ontouchmove="event.preventDefault();">
     <div id="app">
     <header class="mui-bar mui-bar-nav"><a href="javascript:;" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-        <h1 class="mui-title">我的购买</h1>
+        <h1 class="mui-title">充值明细</h1>
     </header>
     <section class="tabs">
         <ul>
-            <li v-bind:class="cur=='expert'?'active':''">专家预测号</li>
-            <li v-bind:class="cur=='guess'?'active':''">字诗图解码</li>
+            <li v-bind:class="cur=='buy'?'active':''">充值明细</li>
+            <li v-bind:class="cur=='gift'?'active':''">赠送明细</li>
         </ul>
     </section>
+    <p class="unfilled">金币余额：{{userbalance}}</p>
     <div class="mui-slider" id="slider1">
         <div class="mui-slider-group">
             <div class="mui-slider-item">
                 <div class="mui-scroll-wrapper mui-scroll-wrapper-segmented">
                     <div class="mui-scroll">
                         <ul>
-                            <li class="mui-table-view-cell" v-for="li in expert.list">
-                                <div>时间<p>{{li.createdate}}</p></div>
-                                <div>专家<p>{{li.expertname}}</p></div>
-                                <div>玩法<p>{{li.lotterytypename}}  {{li.forecasttypename}}</p></div>
-                                <div>金额<em>￥{{li.expense}}</em></div>
-                                <div>预测期数<p>第{{li.forecastperiod}}期</p></div>
-                                <div>预测内容<p><span class="mball" v-if="ball" v-for="ball in li.lotteryFormat[0]">{{ball}}</span><span class="mball blue" v-if="ball" v-for="ball in li.lotteryFormat[1]">{{ball}}</span></p></div>
+                            <li class="mui-table-view-cell" v-for="li in buy.list">
+                                <div>时间<p>{{li.time}}</p></div>
+                                <div>充值金额<p>￥{{li.balance}}</p></div>
+                                <div>充值方式<em>{{iconType(li.sourcetype)}}</em></div>
                             </li>
                         </ul>
                     </div>
@@ -40,8 +38,10 @@
                 <div class="mui-scroll-wrapper mui-scroll-wrapper-segmented">
                     <div class="mui-scroll">
                         <ul>
-                            <li class="mui-table-view-cell" v-for="li in guess.list">
-                                <a href="guess-detail.html?id=337" class="mui-navigate-right">{{li.title}}</a>
+                            <li class="mui-table-view-cell" v-for="li in gift.list">
+                                <div>时间<p>{{li.time}}</p></div>
+                                <div>充值金额<p>￥{{li.balance}}</p></div>
+                                <div>充值方式<em>{{iconType(li.sourcetype)}}</em></div>
                             </li>
                         </ul>
                     </div>

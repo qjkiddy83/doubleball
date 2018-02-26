@@ -28,11 +28,11 @@
                     <div class="mui-scroll-wrapper mui-scroll-wrapper-segmented">
                         <div class="mui-scroll">
                             <ul>
-                                <li class="mui-table-view-cell" v-for="li in month">
+                                <li class="mui-table-view-cell" v-for="(li,index) in month">
                                     <p>{{li.lotteryname}}</p>
                                     <p><em>30天套餐包</em></p>
                                     <p><span class="color-pink">￥{{li.showsubscribeprice}}</span><span>原价￥{{li.originalprice}}</span></p>
-                                    <p><a href="javascript:;" v-on:tap="pay" v-bind:data-price="li.showsubscribeprice" v-bind:data-subscribeid="li.id" class="mui-btn mui-btn-danger">购买</a></p>
+                                    <p><a href="javascript:;" v-on:tap="pay" v-bind:data-price="li.showsubscribeprice" v-bind:data-subscribeid="li.id" v-bind:data-index="index" class="mui-btn mui-btn-danger" v-if="li.usersubscribe == '0'">购买</a><a v-else class="mui-btn mui-btn-disabled" href="javascript:;">已购</a></p>
                                 </li>
                             </ul>
                         </div>
@@ -42,11 +42,11 @@
                     <div class="mui-scroll-wrapper mui-scroll-wrapper-segmented">
                         <div class="mui-scroll">
                             <ul>
-                                <li class="mui-table-view-cell" v-for="li in week">
+                                <li class="mui-table-view-cell" v-for="(li,index) in week">
                                     <p>{{li.lotteryname}}</p>
                                     <p><em>7天套餐包</em></p>
                                     <p><span class="color-pink">￥{{li.showsubscribeprice}}</span><span>原价￥{{li.originalprice}}</span></p>
-                                    <p><a href="javascript:;" v-on:tap="pay" v-bind:data-price="li.showsubscribeprice" v-bind:data-subscribeid="li.id" class="mui-btn mui-btn-danger">购买</a></p>
+                                    <p><a href="javascript:;" v-on:tap="pay" v-bind:data-price="li.showsubscribeprice" v-bind:data-subscribeid="li.id" v-bind:data-index="index" class="mui-btn mui-btn-danger" v-if="li.usersubscribe == '0'">购买</a><a v-else class="mui-btn mui-btn-disabled" href="javascript:;">已购</a></p>
                                 </li>
                             </ul>
                         </div>

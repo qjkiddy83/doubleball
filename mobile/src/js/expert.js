@@ -36,9 +36,12 @@ function getAchievement(callback) {
     })
 }
 
-window.paysuccess = function(){
+window.paysuccess = function(){//购买预测
     $('#paying').hide()
     vm.showResult()
+}
+window.paysuccess1 = function(){//购买包月
+    location.reload();
 }
 
 var vm = new Vue({
@@ -76,6 +79,12 @@ var vm = new Vue({
     methods: {
         buy:function(event){
             let that = this;
+            if(event.currentTarget.dataset.purchasestat == "1"){
+                that.buyed = lotteryFormat(that.lotterylist[event.target.dataset.index].periodscon);
+                that.buyedname = that.lotterylist[event.target.dataset.index].forecasttypename;
+                that.showResult();
+                return false;
+            }
             tools.pay(event.target.dataset.expense,function(rechargetype){
                 tools.fetch({
                     url: '/money/recharge.jsp',
@@ -89,16 +98,59 @@ var vm = new Vue({
                     success(data) {
                         that.buyed = lotteryFormat(that.lotterylist[event.target.dataset.index].periodscon);
                         that.buyedname = that.lotterylist[event.target.dataset.index].forecasttypename;
-                        if(data.statuscode == 1){
-                            $('#paying').show().find('iframe').attr('src',data.rechargeorder.jumpurl);
-                        }else if(data.statuscode == "-10801"){
-                            mui.alert(`${data.statusmsg}`, '提示',function(){
-                                that.showResult()
-                            });
+                        if(rechargetype == tools.payType.COIN){
+                            if(data.statuscode == 1){
+                                mui.alert(`${data.statusmsg}`, '提示',function(){
+                                    that.showResult()
+                                });
+                                that.lotterylist[event.target.dataset.index].purchasestat = 1;
+                            }
+                        }else if(rechargetype == tools.payType.ALIPAY){
+                            if(data.statuscode == 1){
+                                $('#paying').show().find('iframe').attr('src',data.rechargeorder.jumpurl);
+                            }else if(data.statuscode == "-10801"){
+                                mui.alert(`${data.statusmsg}`, '提示',function(){
+                                    that.showResult()
+                                });
+                                that.lotterylist[event.target.dataset.index].purchasestat = 1;
+                            }
                         }
                     }
                 })
             })
+        },
+        buymonth:function(event){//包月
+            let that = this;
+            tools.pay(this.subscribemonth,function(rechargetype){
+                tools.fetch({
+                    url: '/money/expertsubscribe.jsp',
+                    data: {
+                        rechargeamount: this.subscribemonth,
+                        rechargetype: rechargetype,
+                        subscribetype:event.target.dataset.subscribetype,
+                        expertid:this.expertsid
+                    },
+                    method: "POST",
+                    dataType: 'json',
+                    success(data) {
+                        if(rechargetype == tools.payType.COIN){
+                            if(data.statuscode == 1){
+                                mui.alert(`${data.statusmsg}`, '提示',function(){
+                                    location.reload();
+                                });
+                            }
+                        }else if(rechargetype == tools.payType.ALIPAY){
+                            if(data.statuscode == 1){
+                                $('#paying').show().find('iframe').attr('src',data.rechargeorder.jumpurl);
+                            }else if(data.statuscode == "-10801"){
+                                mui.alert(`${data.statusmsg}`, '提示',function(){
+                                    location.reload();
+                                });
+                            }
+                        }
+                    }
+                })
+            }.bind(this))
         },
         showResult: function() {
             this.$nextTick(function() {
@@ -166,7 +218,8 @@ var vm = new Vue({
         tools.fetch({
             url: '/exper/forecastexperbyexper.jsp',
             data: {
-                expertid: (location.search.match(/[?&]expertid=(.*?)(?:&|$)/) || [])[1]
+                expertid: (location.search.match(/[?&]expertid=(.*?)(?:&|$)/) || [])[1],
+                page:_this.page
             },
             method: 'POST',
             dataType: 'json',

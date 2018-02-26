@@ -118,7 +118,7 @@ function expand(list, _this) {
     _this.html(`<span>收起 <i class="mui-icon mui-icon-arrowup"></i></span>`).data('combined', 0)
     _this.closest('.mui-slider-group').find('.li-praised').removeClass('combine')
 }
-$(document).on('click', '[node-act="combine"]', function() {
+$(document).on('tap', '[node-act="combine"]', function() {
     var _this = $(this);
     if (_this.data('combined')) {
         expand($(this).parent().find('li'), _this)

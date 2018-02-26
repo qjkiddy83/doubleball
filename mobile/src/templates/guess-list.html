@@ -16,7 +16,7 @@
         <section class="lottery-classify mui-scroll-wrapper mui-slider-indicatorcode mui-segmented-control mui-segmented-control-inverted">
             <div class="mui-scroll">
                 <ul>
-                    <li v-for="(item,index) in lotterys" v-bind:data-code="item.code" v-bind:data-index="index" v-bind:class="index==curLottery?'active':''" v-on:click="changeLtype">
+                    <li v-for="(item,index) in lotterys" v-bind:data-code="item.code" v-bind:data-index="index" v-bind:class="index==curLottery?'active':''" v-on:tap="changeLtype">
                         {{ item.name }}
                     </li>
                 </ul>

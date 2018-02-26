@@ -119,8 +119,19 @@ mui.ready(function() {
     });
 
     document.querySelector('#slider1').addEventListener('slide', function(event) {
-        sliderIndex = event.detail.slideNumber;
-        $('.lottery-classify li').eq(sliderIndex).addClass('active').siblings().removeClass('active')
+ 
+        var curLottery = event.detail.slideNumber,
+            curforecast = 0;
+        vm.curLottery = event.detail.slideNumber;
+        vm.lotterys[curLottery].product[curforecast].page = 1;
+        getData({
+            forecasttype: vm.lotterys[curLottery].product[curforecast].code,
+            lotterytype: vm.lotterys[curLottery].code,
+            page: 1,
+            pagesize: 20
+        }, function(d) {
+            callbackTpl(vm.lotterys, curLottery, curforecast, 0, d)
+        })
     });
 });
 
@@ -174,6 +185,14 @@ var vm = new Vue({
             let dataset = event.currentTarget.dataset;
             let forecastid = event.currentTarget.dataset.forecastid,
                 expense = event.currentTarget.dataset.expense;
+
+            if(event.currentTarget.dataset.purchasestat == "1"){
+                let curLottery = that.lotterys[that.curLottery];
+                that.buyed = curLottery.product[curLottery.curforecast].list[dataset.index].lotteryFormat;
+                that.buyedname = that.lotterys[that.curLottery].name;
+                that.showResult();
+                return false;
+            }
             tools.pay(expense,function(rechargetype){
                 tools.fetch({
                     url: '/money/recharge.jsp',
@@ -188,11 +207,21 @@ var vm = new Vue({
                         let curLottery = that.lotterys[that.curLottery];
                         that.buyed = curLottery.product[curLottery.curforecast].list[dataset.index].lotteryFormat;
                         that.buyedname = that.lotterys[that.curLottery].name;
-                        if(data.statuscode == 1){
-                            $('#paying').show().find('iframe').attr('src',data.rechargeorder.jumpurl);
-                        }else if(data.statuscode == "-10801"){
-                            mui.alert(`${data.statusmsg}`, '提示');
-                            that.showResult()
+                        if(rechargetype == tools.payType.COIN){
+                            if(data.statuscode == 1){
+                                mui.alert(`${data.statusmsg}`, '提示',function(){
+                                    that.showResult()
+                                });
+                                curLottery.product[curLottery.curforecast].list[dataset.index].purchasestat = 1;
+                            }
+                        }else if(rechargetype == tools.payType.ALIPAY){
+                            if(data.statuscode == 1){
+                                $('#paying').show().find('iframe').attr('src',data.rechargeorder.jumpurl);
+                            }else if(data.statuscode == "-10801"){
+                                mui.alert(`${data.statusmsg}`, '提示');
+                                that.showResult()
+                                curLottery.product[curLottery.curforecast].list[dataset.index].purchasestat = 1;
+                            }
                         }
                     }
                 })
@@ -239,7 +268,7 @@ function expand(list, _this) {
     _this.html(`<span>收起 <i class="mui-icon mui-icon-arrowup"></i></span>`).data('combined', 0)
     _this.closest('.mui-slider-group').find('.li-praised').removeClass('combine')
 }
-$(document).on('click', '[node-act="combine"]', function() {
+$(document).on('tap', '[node-act="combine"]', function() {
     var _this = $(this);
     if (_this.data('combined')) {
         expand($(this).parent().find('li'), _this)

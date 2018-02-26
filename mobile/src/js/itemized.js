@@ -5,68 +5,60 @@ var tools = require('./tools');
 var mui = require('./mui/mui');
 var cookie = require('js-cookie');
 
-function lotteryFormat(str) {
-    var ret = [];
-    str.split('|').forEach(function(item, i) {
-        ret[i] = item.split(',');
-    })
-    return ret;
+function iconType(id){
+    return ({
+        "0001": "微信充值",
+        "0002": "支付宝充值",
+        "0008": "签到",
+        "0009": "不中退款",
+        "0006": "微信冲返",
+        "0007": "支付宝冲返"
+    })[id]
 }
 
 var vm = new Vue({
     el: '#app',
     data: {
-        expert: {
+        buy: {
             page: 1,
             pagecount: 1,
             list: []
         },
-        guess: {
+        gift: {
             page: 1,
             pagecount: 1,
             list: []
         },
-        cur: 'expert'
+        cur: 'buy',
+        iconType:iconType,
+        userbalance:'0.00'
     },
     methods: {
 
     },
     mounted: function() {
-        getExpertData({
+        getData({
             page:1,
-            pagesize:20
+            pagesize:20,
+            give : 0
         },function(data){
             if (data.statuscode !== "1") {
                 mui.alert(`${data.statusmsg}`, '提示');
             } else {
-                data.returnlist.map(function(item) {
-                    item.lotteryFormat = lotteryFormat(item.forecastcontent)
-                })
-                vm.expert.list = data.returnlist;
-                vm.expert.pagecount = data.pagecount;
+                vm.buy.list = data.loglist;
             }
         })
     }
 })
 
-function getExpertData(params,callback){
+function getData(params,callback){
     tools.fetch({
-        url: '/money/purchaselist.jsp',
+        url: '/money/balancelist.jsp',
         data: params,
         method: "POST",
         dataType: 'json',
         success(data) {
-            callback(data)
-        }
-    })
-}
-function getGuessData(params,callback){
-    tools.fetch({
-        url: '/infomation/userdecodelist.jsp',
-        data: params,
-        method: "POST",
-        dataType: 'json',
-        success(data) {
+            vm.userbalance = data.userbalance
             callback(data)
         }
     })
@@ -78,34 +70,31 @@ mui.ready(function() {
         scrollX: false
     });
     document.querySelector('#slider1').addEventListener('slide', function(event) {
-        vm.cur = event.detail.slideNumber == 0 ? "expert" : 'guess';
+        vm.cur = event.detail.slideNumber == 0 ? "buy" : 'gift';
         var _this = vm;
         Vue.nextTick(function() {
-            if(vm.cur == "expert"){
-                getExpertData({
+            if(vm.cur == "buy"){
+                getData({
                     page:1,
-                    pagesize:20
+                    pagesize:20,
+                    give:0
                 },function(data){
                     if (data.statuscode !== "1") {
                         mui.alert(`${data.statusmsg}`, '提示');
                     } else {
-                        data.returnlist.map(function(item) {
-                            item.lotteryFormat = lotteryFormat(item.forecastcontent)
-                        })
-                        vm.expert.list = data.returnlist;
-                        vm.expert.pagecount = data.pagecount;
+                        vm.buy.list = data.loglist;
                     }
                 })
             }else{
-                getGuessData({
+                getData({
                     page:1,
-                    pagesize:20
+                    pagesize:20,
+                    give:1
                 },function(data){
                     if (data.statuscode !== "1") {
                         mui.alert(`${data.statusmsg}`, '提示');
                     } else {
-                        vm.guess.list = data.list;
-                        vm.guess.pagecount = data.pagecount;
+                         vm.gift.list = data.loglist;
                     }
                 })
             }
@@ -127,31 +116,29 @@ mui.ready(function() {
          */
         function pulldownRefresh() {
             vm[vm.cur].page = 1;
-            if(vm.cur == "expert"){
-                getExpertData({
+            if(vm.cur == "buy"){
+                getData({
                     page: 1,
-                    pagesize: 20
+                    pagesize: 20,
+                    give : 0
                 }, function(data) {
                     if (data.statuscode !== "1") {
                         mui.alert(`${data.statusmsg}`, '提示');
                     } else {
-                        data.returnlist.map(function(item) {
-                            item.lotteryFormat = lotteryFormat(item.forecastcontent)
-                        })
-                        vm.expert.list = data.returnlist;
+                        vm.buy.list = data.loglist;
                         mui(pullRefreshEl).pullRefresh().endPulldownToRefresh();
                     }
                 })
             }else{
-                getGuessData({
-                    page:1,
-                    pagesize:20
-                },function(data){
+                getData({
+                    page: 1,
+                    pagesize: 20,
+                    give:1
+                }, function(data) {
                     if (data.statuscode !== "1") {
                         mui.alert(`${data.statusmsg}`, '提示');
                     } else {
-                        vm.guess.list = data.list;
-                        vm.guess.pagecount = data.pagecount;
+                        vm.gift.list = data.loglist;
                         mui(pullRefreshEl).pullRefresh().endPulldownToRefresh();
                     }
                 })
@@ -163,10 +150,11 @@ mui.ready(function() {
         function pullupRefresh() {
             vm[vm.cur].page++;
             Vue.nextTick(() => {
-                if(vm.cur == "expert"){
-                    getExpertData({
-                        page: vm.expert.page,
-                        pagesize: 20
+                if(vm.cur == "buy"){
+                    getData({
+                        page: vm[vm.cur].page,
+                        pagesize: 20,
+                        give:0
                     }, function(data) {
                         var nomore = false;
                         if (data.statuscode !== "1") {
@@ -174,11 +162,8 @@ mui.ready(function() {
                             mui(pullRefreshEl).pullRefresh().endPullupToRefresh(true);
                             vm[vm.cur].page--
                         } else {
-                            data.returnlist.map(function(item) {
-                                item.lotteryFormat = lotteryFormat(item.forecastcontent)
-                            })
-                            vm.expert.list = vm.expert.list.concat(data.returnlist);
-                            if (vm[vm.cur].page >= data.pagecount) {
+                            vm.lottery.list = data.loglist;
+                            if (vm.buy.page >= data.pagecount) {
                                 nomore = true;
                             }
                             mui(pullRefreshEl).pullRefresh().endPullupToRefresh(nomore);
@@ -186,9 +171,10 @@ mui.ready(function() {
                         
                     })
                 }else{
-                    getGuessData({
-                        page: vm.guess.page,
-                        pagesize: 20
+                   getData({
+                        page: vm.gift.page,
+                        pagesize: 20,
+                        give:1
                     }, function(data) {
                         var nomore = false;
                         if (data.statuscode !== "1") {
@@ -196,14 +182,14 @@ mui.ready(function() {
                             mui(pullRefreshEl).pullRefresh().endPullupToRefresh(true);
                             vm[vm.cur].page--
                         } else {
-                            vm.guess.list = vm.guess.list.concat(data.list);
-                            if (vm.guess.page >= data.pagecount) {
+                            vm.gift.list = vm.gift.list.concat(data.returnlist);
+                            if (vm.gift.page >= data.pagecount) {
                                 nomore = true;
                             }
                             mui(pullRefreshEl).pullRefresh().endPullupToRefresh(nomore);
                         }
                         
-                    })
+                    }) 
                 }
             })
         }

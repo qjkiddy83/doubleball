@@ -1,3 +1,6 @@
+body{
+	background: #efeff4;
+}
 .mui-input-group .mui-input-row{
 	height: auto;
 	&>*{

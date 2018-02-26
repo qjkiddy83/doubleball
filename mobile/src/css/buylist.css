@@ -68,3 +68,12 @@
         }
     }
 }
+.unfilled{
+    background: #efeff4;
+    color: #c9333e;
+    line-height: 30px;
+    padding-left: 20px;
+}
+.unfilled ~ .mui-slider{
+    top: 113px;
+}

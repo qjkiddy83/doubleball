@@ -46,7 +46,7 @@
         <div id="jiqiao" class="mui-control-content mui-active">
             <section class="lottery-classify">
                 <ul>
-                    <li v-for="(item,index) in lotterys" v-bind:data-code="item.code" v-bind:data-index="index" v-bind:class="item.code==(dataset.jiqiao.curLtype)?'active':''" v-on:click="changeLtype">
+                    <li v-for="(item,index) in lotterys" v-bind:data-code="item.code" v-bind:data-index="index" v-bind:class="item.code==(dataset.jiqiao.curLtype)?'active':''" v-on:tap="changeLtype">
                         {{ item.name }}
                     </li>
                 </ul>

@@ -16,7 +16,7 @@
         <section class="mui-content">
             <h5>{{title}}</h5>
             <article>
-                <div v-if="!decoded">
+                <div v-if="!decodecontent">
                     <img v-bind:src="pic" width="100%" v-if="pic">
                     <pre><p>{{content}}</p></pre>
                 </div>
@@ -25,7 +25,7 @@
                 </div>
             </article>
             <div class="author">{{expername}}</div>
-            <a class="mui-btn mui-btn-block" v-on:tap="decode">解码</a>
+            <a class="mui-btn mui-btn-block" v-if="!decodecontent" v-on:tap="decode" >解码</a>
             <div class="explain">
                 <p>解码说明</p>
                 <p>1.文字文字文字文字文字文字文字文字文字文字文字文字文文字文字文字文字文字文字文字文字文字文字</p>
@@ -34,6 +34,10 @@
                 <p>4.文字文字文字文字文字文字文字文字文文字</p>
             </div>
         </section>
+    </div>
+    <div id="paying">
+        <a href="javascript:;" v-on:tap="closePaylayer">关闭</a>
+        <iframe src=""></iframe>
     </div>
 </body>
 

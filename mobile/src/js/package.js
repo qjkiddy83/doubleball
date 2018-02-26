@@ -2,6 +2,7 @@
 var $ = require('./zepto.js');
 var Vue = require('./vue.js')
 var tools = require('./tools');
+var lotterys = require('./lottery-data.js');
 var mui = require('./mui/mui');
 var cookie = require('js-cookie');
 
@@ -16,42 +17,44 @@ function lotteryFormat(str) {
 var vm = new Vue({
     el: '#app',
     data: {
+        lottery: {
+            page: 1,
+            pagecount: 1,
+            list: []
+        },
         expert: {
             page: 1,
             pagecount: 1,
             list: []
         },
-        guess: {
-            page: 1,
-            pagecount: 1,
-            list: []
-        },
-        cur: 'expert'
+        cur: 'lottery'
     },
     methods: {
 
     },
     mounted: function() {
-        getExpertData({
+        getLotteryData({
             page:1,
             pagesize:20
         },function(data){
             if (data.statuscode !== "1") {
                 mui.alert(`${data.statusmsg}`, '提示');
             } else {
-                data.returnlist.map(function(item) {
-                    item.lotteryFormat = lotteryFormat(item.forecastcontent)
+                data.subscribeloglist.map(item => {
+                    var _item = lotterys.filter(lottery => {
+                        return (lottery.code == item.lotterytype)
+                    });
+                    item.lotteryname = _item.length ? _item[0].name : "全彩种"
                 })
-                vm.expert.list = data.returnlist;
-                vm.expert.pagecount = data.pagecount;
+                vm.lottery.list = data.subscribeloglist;
             }
         })
     }
 })
 
-function getExpertData(params,callback){
+function getLotteryData(params,callback){
     tools.fetch({
-        url: '/money/purchaselist.jsp',
+        url: '/subscribe/subscribelist.jsp',
         data: params,
         method: "POST",
         dataType: 'json',
@@ -60,9 +63,9 @@ function getExpertData(params,callback){
         }
     })
 }
-function getGuessData(params,callback){
+function getExpertData(params,callback){
     tools.fetch({
-        url: '/infomation/userdecodelist.jsp',
+        url: '/subscribe/expertsubscribelist.jsp',
         data: params,
         method: "POST",
         dataType: 'json',
@@ -78,7 +81,7 @@ mui.ready(function() {
         scrollX: false
     });
     document.querySelector('#slider1').addEventListener('slide', function(event) {
-        vm.cur = event.detail.slideNumber == 0 ? "expert" : 'guess';
+        vm.cur = event.detail.slideNumber == 0 ? "lottery" : 'expert';
         var _this = vm;
         Vue.nextTick(function() {
             if(vm.cur == "expert"){
@@ -89,23 +92,24 @@ mui.ready(function() {
                     if (data.statuscode !== "1") {
                         mui.alert(`${data.statusmsg}`, '提示');
                     } else {
-                        data.returnlist.map(function(item) {
-                            item.lotteryFormat = lotteryFormat(item.forecastcontent)
-                        })
-                        vm.expert.list = data.returnlist;
-                        vm.expert.pagecount = data.pagecount;
+                        vm.expert.list = data.subscribeloglist;
                     }
                 })
             }else{
-                getGuessData({
+                getLotteryData({
                     page:1,
                     pagesize:20
                 },function(data){
                     if (data.statuscode !== "1") {
                         mui.alert(`${data.statusmsg}`, '提示');
                     } else {
-                        vm.guess.list = data.list;
-                        vm.guess.pagecount = data.pagecount;
+                        data.subscribeloglist.map(item => {
+                            var _item = lotterys.filter(lottery => {
+                                return (lottery.code == item.lotterytype)
+                            });
+                            item.lotteryname = _item.length ? _item[0].name : "全彩种"
+                        })
+                        vm.lottery.list = data.subscribeloglist;
                     }
                 })
             }
@@ -127,7 +131,29 @@ mui.ready(function() {
          */
         function pulldownRefresh() {
             vm[vm.cur].page = 1;
-            if(vm.cur == "expert"){
+            if(vm.cur == "lottery"){
+                getLotteryData({
+                    page: 1,
+                    pagesize: 20
+                }, function(data) {
+                    if (data.statuscode !== "1") {
+                        mui.alert(`${data.statusmsg}`, '提示');
+                    } else {
+                        data.subscribeloglist.map(item => {
+                            var _item = lotterys.filter(lottery => {
+                                return (lottery.code == item.lotterytype)
+                            });
+                            item.lotteryname = _item.length ? _item[0].name : "全彩种"
+                        })
+                        vm.lottery.list = data.subscribeloglist;
+                        mui(pullRefreshEl).pullRefresh().endPulldownToRefresh();
+                        if (vm[vm.cur].page >= data.pagecount) {
+                            mui(pullRefreshEl).pullRefresh().endPullupToRefresh(true);
+                        }
+                        
+                    }
+                })
+            }else{
                 getExpertData({
                     page: 1,
                     pagesize: 20
@@ -135,24 +161,12 @@ mui.ready(function() {
                     if (data.statuscode !== "1") {
                         mui.alert(`${data.statusmsg}`, '提示');
                     } else {
-                        data.returnlist.map(function(item) {
-                            item.lotteryFormat = lotteryFormat(item.forecastcontent)
-                        })
-                        vm.expert.list = data.returnlist;
+                        vm.expert.list = data.subscribeloglist;
                         mui(pullRefreshEl).pullRefresh().endPulldownToRefresh();
-                    }
-                })
-            }else{
-                getGuessData({
-                    page:1,
-                    pagesize:20
-                },function(data){
-                    if (data.statuscode !== "1") {
-                        mui.alert(`${data.statusmsg}`, '提示');
-                    } else {
-                        vm.guess.list = data.list;
-                        vm.guess.pagecount = data.pagecount;
-                        mui(pullRefreshEl).pullRefresh().endPulldownToRefresh();
+                        if (vm[vm.cur].page >= data.pagecount) {
+                            mui(pullRefreshEl).pullRefresh().endPullupToRefresh(true);
+                        }
+                        
                     }
                 })
             }
@@ -163,9 +177,9 @@ mui.ready(function() {
         function pullupRefresh() {
             vm[vm.cur].page++;
             Vue.nextTick(() => {
-                if(vm.cur == "expert"){
-                    getExpertData({
-                        page: vm.expert.page,
+                if(vm.cur == "lottery"){
+                    getLotteryData({
+                        page: vm[vm.cur].page,
                         pagesize: 20
                     }, function(data) {
                         var nomore = false;
@@ -174,10 +188,13 @@ mui.ready(function() {
                             mui(pullRefreshEl).pullRefresh().endPullupToRefresh(true);
                             vm[vm.cur].page--
                         } else {
-                            data.returnlist.map(function(item) {
-                                item.lotteryFormat = lotteryFormat(item.forecastcontent)
+                            data.subscribeloglist.map(item => {
+                                var _item = lotterys.filter(lottery => {
+                                    return (lottery.code == item.lotterytype)
+                                });
+                                item.lotteryname = _item.length ? _item[0].name : "全彩种"
                             })
-                            vm.expert.list = vm.expert.list.concat(data.returnlist);
+                            vm.lottery.list = data.subscribeloglist;
                             if (vm[vm.cur].page >= data.pagecount) {
                                 nomore = true;
                             }
@@ -186,8 +203,8 @@ mui.ready(function() {
                         
                     })
                 }else{
-                    getGuessData({
-                        page: vm.guess.page,
+                   getExpertData({
+                        page: vm[vm.cur].page,
                         pagesize: 20
                     }, function(data) {
                         var nomore = false;
@@ -196,14 +213,14 @@ mui.ready(function() {
                             mui(pullRefreshEl).pullRefresh().endPullupToRefresh(true);
                             vm[vm.cur].page--
                         } else {
-                            vm.guess.list = vm.guess.list.concat(data.list);
-                            if (vm.guess.page >= data.pagecount) {
+                            vm.expert.list = vm.expert.list.concat(data.returnlist);
+                            if (vm[vm.cur].page >= data.pagecount) {
                                 nomore = true;
                             }
                             mui(pullRefreshEl).pullRefresh().endPullupToRefresh(nomore);
                         }
                         
-                    })
+                    }) 
                 }
             })
         }

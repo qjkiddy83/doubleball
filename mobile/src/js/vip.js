@@ -6,6 +6,12 @@ var lotterys = require('./lottery-data.js');
 var mui = require('./mui/mui');
 var cookie = require('js-cookie');
 
+window.paysuccess = function(){
+    mui.alert(`购买成功！`, '提示',function(){
+        location.reload();
+    });
+}
+
 var vm = new Vue({
     el: '#app',
     data: {
@@ -21,7 +27,7 @@ var vm = new Vue({
             var that = this;
             tools.pay(event.target.dataset.price,function(rechargetype){
                 tools.fetch({
-                    url: '/money/expertsubscribe.jsp',
+                    url: '/money/subscribe.jsp',
                     data: {
                         rechargetype: rechargetype,
                         rechargeamount:event.target.dataset.price,
@@ -30,11 +36,24 @@ var vm = new Vue({
                     method: "POST",
                     dataType: 'json',
                     success(data) {
-                        if(data.statuscode == 1){
-                            $('#paying').show().find('iframe').attr('src',data.rechargeorder.jumpurl);
-                        }else{
-                            mui.alert(`${data.statusmsg}`, '提示');
+                        let index = event.target.dataset.index;
+                        let li = that[that.cur][index];
+                        if(rechargetype == tools.payType.COIN){
+                            if(data.statuscode == 1){
+                                mui.alert(`购买成功！`, '提示');
+                                li.usersubscribe = "1";
+                            }else{
+                                mui.alert(`${data.statusmsg}`, '提示');
+                            }
+                        }else if(rechargetype == tools.payType.ALIPAY){
+                            if(data.statuscode == 1){
+                                $('#paying').show().find('iframe').attr('src',data.rechargeorder.jumpurl);
+                            }else if(data.statuscode == "-10801"){
+                                mui.alert(`${data.statusmsg}`, '提示');
+                                li.usersubscribe = "1";
+                            }
                         }
+                        
                     }
                 })
             });

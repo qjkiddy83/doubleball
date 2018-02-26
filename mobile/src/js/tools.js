@@ -17,7 +17,7 @@ module.exports = {
     fetch(args) {
         let t = Math.floor(Date.now() / 1000);
         args.type = args.type || "post";
-        // args.url = 'http://115.28.145.132'+args.url;
+        args.url = 'http://115.28.145.132'+args.url;
         $.ajax(Object.assign({}, args, {
             headers: {
                 "channel": "",
@@ -90,7 +90,7 @@ module.exports = {
                             </div>
                         </div>
                     </div>`)
-                    $('.paylayer').on('click','#next',function(){
+                    $('.paylayer').on('tap','#next',function(){
                         callback($('.paylayer [name="rechargetype"]:checked').val());
                         $('.paylayer').remove();
                     }).on('tap','.mui-icon-left-nav',function(){
@@ -103,5 +103,9 @@ module.exports = {
             }
         })
         
+    },
+    payType : {
+        'COIN':'0004',
+        'ALIPAY':'0066'
     }
 }

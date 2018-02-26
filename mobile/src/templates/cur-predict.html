@@ -13,7 +13,7 @@
         <section class="lottery-classify mui-scroll-wrapper mui-slider-indicatorcode mui-segmented-control mui-segmented-control-inverted">
             <div class="mui-scroll">
                 <ul>
-                    <li v-for="(item,index) in lotterys" v-bind:data-code="item.code" v-bind:data-index="index" v-bind:class="index==curLottery?'active':''" v-on:click="changeLtype">
+                    <li v-for="(item,index) in lotterys" v-bind:data-code="item.code" v-bind:data-index="index" v-bind:class="index==curLottery?'active':''" v-on:tap="changeLtype">
                         {{ item.name }}
                     </li>
                 </ul>
@@ -30,7 +30,7 @@
                             </div>
                             <div class="mini-classify">
                                 <ul>
-                                    <li v-for="(item,index) in group.product" v-on:click="changeForecast" v-bind:data-index="index" v-bind:class="group.product[group.curforecast].code==item.code?'active mui-col-xs-3':'mui-col-xs-3'"><span>{{item.name}}</span></li><li v-if="group.product.length>5" class="mui-col-xs-3" node-act="combine"><span>收起 <i class="mui-icon mui-icon-arrowup"></i></span></li>
+                                    <li v-for="(item,index) in group.product" v-on:tap="changeForecast" v-bind:data-index="index" v-bind:class="group.product[group.curforecast].code==item.code?'active mui-col-xs-3':'mui-col-xs-3'"><span>{{item.name}}</span></li><li v-if="group.product.length>5" class="mui-col-xs-3" node-act="combine"><span>收起 <i class="mui-icon mui-icon-arrowup"></i></span></li>
                                 </ul>
                             </div>
                         </div>
@@ -39,7 +39,7 @@
                                 <div class="mui-scroll">
                                     <ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
                                         <li class="mui-table-view-cell" v-for="(li,index) in group.product[group.curforecast].list">
-                                            <a v-on:tap="pay" v-bind:data-expense="li.expense" v-bind:data-predict="li.expertsname" v-bind:data-forecastid="li.forecastid" v-bind:data-index="index">
+                                            <a v-on:tap="pay" v-bind:data-expense="li.expense" v-bind:data-predict="li.expertsname" v-bind:data-purchasestat="li.purchasestat" v-bind:data-forecastid="li.forecastid" v-bind:data-index="index">
                                                 <img class="mui-media-object mui-pull-left" v-bind:src="li.expertspic">
                                                 <div class="mui-media-body">
                                                     <h3><span>{{li.expertsname}}</span><small>{{li.rank}}</small></h3>

@@ -10,12 +10,12 @@
 <body ontouchmove="event.preventDefault();">
     <div id="app">
     <header class="mui-bar mui-bar-nav"><a href="javascript:;" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-        <h1 class="mui-title">我的购买</h1>
+        <h1 class="mui-title">我的套餐</h1>
     </header>
     <section class="tabs">
         <ul>
-            <li v-bind:class="cur=='expert'?'active':''">专家预测号</li>
-            <li v-bind:class="cur=='guess'?'active':''">字诗图解码</li>
+            <li v-bind:class="cur=='lottery'?'active':''">彩种套餐</li>
+            <li v-bind:class="cur=='expert'?'active':''">专家包月</li>
         </ul>
     </section>
     <div class="mui-slider" id="slider1">
@@ -24,13 +24,10 @@
                 <div class="mui-scroll-wrapper mui-scroll-wrapper-segmented">
                     <div class="mui-scroll">
                         <ul>
-                            <li class="mui-table-view-cell" v-for="li in expert.list">
-                                <div>时间<p>{{li.createdate}}</p></div>
-                                <div>专家<p>{{li.expertname}}</p></div>
-                                <div>玩法<p>{{li.lotterytypename}}  {{li.forecasttypename}}</p></div>
-                                <div>金额<em>￥{{li.expense}}</em></div>
-                                <div>预测期数<p>第{{li.forecastperiod}}期</p></div>
-                                <div>预测内容<p><span class="mball" v-if="ball" v-for="ball in li.lotteryFormat[0]">{{ball}}</span><span class="mball blue" v-if="ball" v-for="ball in li.lotteryFormat[1]">{{ball}}</span></p></div>
+                            <li class="mui-table-view-cell" v-for="li in lottery.list">
+                                <div>有效期<p>{{li.begtime}} 至 {{li.endtime}}</p></div>
+                                <div>彩&nbsp;&nbsp;&nbsp;&nbsp;种<p>{{li.lotteryname}}</p></div>
+                                <div>金&nbsp;&nbsp;&nbsp;&nbsp;额<em>￥{{li.amount}}</em></div>
                             </li>
                         </ul>
                     </div>
@@ -40,8 +37,10 @@
                 <div class="mui-scroll-wrapper mui-scroll-wrapper-segmented">
                     <div class="mui-scroll">
                         <ul>
-                            <li class="mui-table-view-cell" v-for="li in guess.list">
-                                <a href="guess-detail.html?id=337" class="mui-navigate-right">{{li.title}}</a>
+                            <li class="mui-table-view-cell" v-for="li in expert.list">
+                                <div>有效期<p>{{li.begtime}} 至 {{li.endtime}}</p></div>
+                                <div>专&nbsp;&nbsp;&nbsp;&nbsp;家<p>{{li.expertname}}</p></div>
+                                <div>金&nbsp;&nbsp;&nbsp;&nbsp;额<em>￥{{li.amount}}</em></div>
                             </li>
                         </ul>
                     </div>
