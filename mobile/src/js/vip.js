@@ -45,7 +45,7 @@ var vm = new Vue({
                             }else{
                                 mui.alert(`${data.statusmsg}`, '提示');
                             }
-                        }else if(rechargetype == tools.payType.ALIPAY){
+                        }else{
                             if(data.statuscode == 1){
                                 $('#paying').show().find('iframe').attr('src',data.rechargeorder.jumpurl);
                             }else if(data.statuscode == "-10801"){

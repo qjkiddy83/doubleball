@@ -80,6 +80,12 @@ module.exports = {
                                 </dd>
                                 <dd>
                                     <div class="mui-input-row mui-radio mui-left">
+                                        <label><i class="iconfont icon-wechat"></i><span>微信</span></label>
+                                        <input name="rechargetype" value="0005" type="radio">
+                                    </div>
+                                </dd>
+                                <dd>
+                                    <div class="mui-input-row mui-radio mui-left">
                                         <label><i class="iconfont icon-jinbi"></i><span>金币（余额：${data.user.balance}元）</span></label>
                                         <input name="rechargetype" value="0004" type="radio">
                                     </div>
@@ -106,6 +112,7 @@ module.exports = {
     },
     payType : {
         'COIN':'0004',
-        'ALIPAY':'0066'
+        'ALIPAY':'0066',
+        'WECHAT':'0005'
     }
 }

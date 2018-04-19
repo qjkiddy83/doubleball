@@ -214,7 +214,7 @@ var vm = new Vue({
                                 });
                                 curLottery.product[curLottery.curforecast].list[dataset.index].purchasestat = 1;
                             }
-                        }else if(rechargetype == tools.payType.ALIPAY){
+                        }else{
                             if(data.statuscode == 1){
                                 $('#paying').show().find('iframe').attr('src',data.rechargeorder.jumpurl);
                             }else if(data.statuscode == "-10801"){

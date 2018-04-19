@@ -54,6 +54,8 @@ body {
 
 .icon-zhifubaozhifu:before { content: "\e612"; }
 
+.icon-wechat:before { content: "\e619"; }
+
 .mui-bar~.mui-content .mui-fullscreen {
     top: 44px;
     height: auto;
