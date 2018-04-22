@@ -14,8 +14,8 @@
     </header>
     <section class="tabs">
         <ul>
-            <li v-bind:class="cur=='lottery'?'active':''">彩种套餐</li>
-            <li v-bind:class="cur=='expert'?'active':''">专家包月</li>
+            <li v-bind:class="cur=='lottery'?'active':''" data-index=0 v-on:tap="changeTab">彩种套餐</li>
+            <li v-bind:class="cur=='expert'?'active':''" data-index=1 v-on:tap="changeTab">专家包月</li>
         </ul>
     </section>
     <div class="mui-slider" id="slider1">

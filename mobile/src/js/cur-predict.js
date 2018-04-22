@@ -182,9 +182,13 @@ var vm = new Vue({
         },
         pay:function(event){
             let that = this;
+            localStorage.buytype = "F";
             let dataset = event.currentTarget.dataset;
             let forecastid = event.currentTarget.dataset.forecastid,
                 expense = event.currentTarget.dataset.expense;
+
+            that.buyed_id = forecastid;
+            that.buyed_index = dataset.index;
 
             if(event.currentTarget.dataset.purchasestat == "1"){
                 let curLottery = that.lotterys[that.curLottery];
@@ -207,11 +211,17 @@ var vm = new Vue({
                         let curLottery = that.lotterys[that.curLottery];
                         that.buyed = curLottery.product[curLottery.curforecast].list[dataset.index].lotteryFormat;
                         that.buyedname = that.lotterys[that.curLottery].name;
+
                         if(rechargetype == tools.payType.COIN){
                             if(data.statuscode == 1){
-                                mui.alert(`${data.statusmsg}`, '提示',function(){
-                                    that.showResult()
-                                });
+                                that.buyedCallback()
+                            }
+                        }else if(rechargetype == tools.payType.WECHAT){
+                            if(data.statuscode == 1){
+                                location.href = data.rechargeorder.jumpurl;
+                            }else if(data.statuscode == "-10801"){
+                                mui.alert(`${data.statusmsg}`, '提示');
+                                that.showResult()
                                 curLottery.product[curLottery.curforecast].list[dataset.index].purchasestat = 1;
                             }
                         }else{
@@ -226,6 +236,27 @@ var vm = new Vue({
                     }
                 })
             });
+        },
+        buyedCallback(){
+            let that = this;
+            tools.fetch({
+                url:'/forecast/forecastget.jsp',
+                data:{
+                    id:that.buyed_id
+                },
+                method:"POST",
+                dataType:'json',
+                success(data){
+                    let curLottery = that.lotterys[that.curLottery];
+                    let curforecast = curLottery.product[curLottery.curforecast].list[that.buyed_index];
+                    curforecast = data.returnlist[0];
+                    curforecast.lotteryFormat = lotteryFormat(curforecast.periodscon)
+                    that.buyed = curforecast.lotteryFormat;
+                    that.buyedname = that.lotterys[that.curLottery].name;
+                    that.showResult()
+                    curLottery.product[curLottery.curforecast].list[that.buyed_index].purchasestat = 1;
+                }
+            })
         },
         showResult: function() {
             this.$nextTick(function() {

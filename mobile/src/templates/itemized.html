@@ -14,8 +14,8 @@
     </header>
     <section class="tabs">
         <ul>
-            <li v-bind:class="cur=='buy'?'active':''">充值明细</li>
-            <li v-bind:class="cur=='gift'?'active':''">赠送明细</li>
+            <li v-bind:class="cur=='buy'?'active':''" data-index=0 v-on:tap="changeTab">充值明细</li>
+            <li v-bind:class="cur=='gift'?'active':''" data-index=1 v-on:tap="changeTab">赠送明细</li>
         </ul>
     </section>
     <p class="unfilled">金币余额：{{userbalance}}</p>

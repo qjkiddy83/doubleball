@@ -38,7 +38,7 @@ function getAchievement(callback) {
 
 window.paysuccess = function(){//购买预测
     $('#paying').hide()
-    vm.showResult()
+    vm.buyedCallback()
 }
 window.paysuccess1 = function(){//购买包月
     location.reload();
@@ -79,6 +79,9 @@ var vm = new Vue({
     methods: {
         buy:function(event){
             let that = this;
+            localStorage.buytype = "F";
+            that.buyed_id = event.target.dataset.id;
+            that.buyed_index = event.target.dataset.index;
             if(event.currentTarget.dataset.purchasestat == "1"){
                 that.buyed = lotteryFormat(that.lotterylist[event.target.dataset.index].periodscon);
                 that.buyedname = that.lotterylist[event.target.dataset.index].forecasttypename;
@@ -100,6 +103,13 @@ var vm = new Vue({
                         that.buyedname = that.lotterylist[event.target.dataset.index].forecasttypename;
                         if(rechargetype == tools.payType.COIN){
                             if(data.statuscode == 1){
+                                that.buyedCallback()
+                            }
+                        }else if(rechargetype == tools.payType.WECHAT){
+                            if(data.statuscode == 1){
+                                location.href = data.rechargeorder.jumpurl
+                                // location.href = "wxpay://"+data.rechargeorder.jumpurl.replace('https://','');
+                            }else if(data.statuscode == "-10801"){
                                 mui.alert(`${data.statusmsg}`, '提示',function(){
                                     that.showResult()
                                 });
@@ -119,8 +129,27 @@ var vm = new Vue({
                 })
             })
         },
+        buyedCallback(){
+            let that = this;
+            tools.fetch({
+                url:'/forecast/forecastget.jsp',
+                data:{
+                    id:that.buyed_id
+                },
+                method:"POST",
+                dataType:'json',
+                success(data){
+                    that.lotterylist[that.buyed_index] = data.returnlist[0];
+                    that.buyed = lotteryFormat(data.returnlist[0].periodscon);
+                    that.buyedname = data.returnlist[0].forecasttypename;
+                    that.showResult()
+                    that.lotterylist[that.buyed_index].purchasestat = 1;
+                }
+            })
+        },
         buymonth:function(event){//包月
             let that = this;
+            localStorage.buytype = "E";
             tools.pay(this.subscribemonth,function(rechargetype){
                 tools.fetch({
                     url: '/money/expertsubscribe.jsp',
@@ -135,6 +164,15 @@ var vm = new Vue({
                     success(data) {
                         if(rechargetype == tools.payType.COIN){
                             if(data.statuscode == 1){
+                                mui.alert(`${data.statusmsg}`, '提示',function(){
+                                    location.reload();
+                                });
+                            }
+                        }else if(rechargetype == tools.payType.WECHAT){
+                            if(data.statuscode == 1){
+                                // $('#paying').show().find('iframe').attr('src',data.rechargeorder.jumpurl);
+                                location.href = data.rechargeorder.jumpurl;
+                            }else if(data.statuscode == "-10801"){
                                 mui.alert(`${data.statusmsg}`, '提示',function(){
                                     location.reload();
                                 });
@@ -287,7 +325,7 @@ function pulldownRefresh() {
 }
 
 function pullupRefresh() {
-    if (d.pagecount <= _this.page) {
+    if (vm.pagecount.pagecount <= vm.page) {
         mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
         return;
     }

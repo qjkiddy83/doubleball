@@ -34,7 +34,9 @@ var vm = new Vue({
         userbalance:'0.00'
     },
     methods: {
-
+        changeTab:function(e){
+            mui(`.mui-slider`).slider().gotoItem(e.target.dataset.index);
+        }
     },
     mounted: function() {
         getData({

@@ -68,7 +68,7 @@
                                     <div class="mui-scroll achievement-list">
                                         <h5>{{achievement.lotterys[achievement.curLottery].name}}最近10期预测战绩</h5>
                                         <ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
-                                            <li v-for="period in achievement.periodinfos">
+                                            <li v-for="period in achievement.periodinfos" v-if="period.list.length>0">
                                                 <table>
                                                     <tbody>
                                                         <tr>

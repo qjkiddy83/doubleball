@@ -30,7 +30,9 @@ var vm = new Vue({
         cur: 'lottery'
     },
     methods: {
-
+        changeTab:function(e){
+            mui(`.mui-slider`).slider().gotoItem(e.target.dataset.index);
+        }
     },
     mounted: function() {
         getLotteryData({

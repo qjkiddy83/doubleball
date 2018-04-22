@@ -31,6 +31,11 @@
 			    padding: 5px 0;
 			    margin-top: 6px;
 			    margin-right: 4%;
+			    &.mui-btn-disabled{
+			    	background-color: #c5bfbf;
+				    color: #fff;
+				    border: #c5bfbf;
+			    }
 			}
 		}
 	}

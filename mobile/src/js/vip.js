@@ -25,6 +25,7 @@ var vm = new Vue({
     methods: {
         pay:function(event){
             var that = this;
+            localStorage.buytype = "S";
             tools.pay(event.target.dataset.price,function(rechargetype){
                 tools.fetch({
                     url: '/money/subscribe.jsp',
@@ -44,6 +45,13 @@ var vm = new Vue({
                                 li.usersubscribe = "1";
                             }else{
                                 mui.alert(`${data.statusmsg}`, '提示');
+                            }
+                        }else if(rechargetype == tools.payType.WECHAT){
+                            if(data.statuscode == 1){
+                                location.href = data.rechargeorder.jumpurl;
+                            }else if(data.statuscode == "-10801"){
+                                mui.alert(`${data.statusmsg}`, '提示');
+                                li.usersubscribe = "1";
                             }
                         }else{
                             if(data.statuscode == 1){
