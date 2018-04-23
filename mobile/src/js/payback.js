@@ -4,7 +4,9 @@ let oqs = qs.parse(location.search.replace(/^\?/,''));
 function init(oqs){
 	switch(oqs.type){
 		case 'B'://充值
-			location.replace('my.html');
+			// location.replace('my.html');
+			// parent.window.location.replace('my.html');
+			parent.paysuccess();
 		break;
 		case 'F'://预测
 			// parent.history.go(-3);
@@ -23,11 +25,11 @@ function init(oqs){
 			parent.paysuccess1();
 		break;
 		default:
-			if(localStorage.buytype){
-				init({
-					type:localStorage.buytype
-				})
-			}
+			// if(localStorage.buytype){
+			// 	init({
+			// 		type:localStorage.buytype
+			// 	})
+			// }
 		break;
 	}
 }

@@ -7,9 +7,7 @@ var mui = require('./mui/mui');
 var cookie = require('js-cookie');
 
 window.paysuccess = function(){
-    mui.alert(`购买成功！`, '提示',function(){
-        location.reload();
-    });
+    location.reload();
 }
 
 var vm = new Vue({
@@ -49,6 +47,14 @@ var vm = new Vue({
                         }else if(rechargetype == tools.payType.WECHAT){
                             if(data.statuscode == 1){
                                 location.href = data.rechargeorder.jumpurl;
+                                mui.confirm('是否已经支付成功？', '微信支付', ['支付成功', '重新支付'], function(e) {
+                                    if (e.index == 0) {
+                                        paysuccess();
+                                    } else {
+                                        location.href = data.rechargeorder.jumpurl
+                                        return false;
+                                    }
+                                })
                             }else if(data.statuscode == "-10801"){
                                 mui.alert(`${data.statusmsg}`, '提示');
                                 li.usersubscribe = "1";

@@ -177,6 +177,24 @@ var vm = new Vue({
         }, function(d) {
             callbackTpl(this.lotterys, curLottery, curforecast, 0, d)
         }.bind(this))
+
+        // tools.fetch({
+        //     url: '/system/bannerlist.jsp',
+        //     type : 'get',
+        //     data:{},
+        //     dataType: 'json',
+        //     success: function(d) {
+        //         console.log(d)
+        //     }
+        // })
+        // var btnArray = ['是', '否'];
+        // mui.confirm('是否已经支付成功？', '微信支付', btnArray, function(e) {
+        //     if (e.index == 0) {
+        //         paysuccess();
+        //     } else {
+        //         location.href = data.rechargeorder.jumpurl
+        //     }
+        // })
     }
 })
 

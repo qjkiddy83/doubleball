@@ -43,6 +43,7 @@ window.paysuccess = function(){//购买预测
 window.paysuccess1 = function(){//购买包月
     location.reload();
 }
+var btnArray = ['支付成功', '重新支付'];
 
 var vm = new Vue({
     el: '#app',
@@ -109,6 +110,14 @@ var vm = new Vue({
                             if(data.statuscode == 1){
                                 location.href = data.rechargeorder.jumpurl
                                 // location.href = "wxpay://"+data.rechargeorder.jumpurl.replace('https://','');
+                                mui.confirm('是否已经支付成功？', '微信支付', btnArray, function(e) {
+                                    if (e.index == 0) {
+                                        paysuccess();
+                                    } else {
+                                        location.href = data.rechargeorder.jumpurl
+                                        return false;
+                                    }
+                                })
                             }else if(data.statuscode == "-10801"){
                                 mui.alert(`${data.statusmsg}`, '提示',function(){
                                     that.showResult()
@@ -139,6 +148,10 @@ var vm = new Vue({
                 method:"POST",
                 dataType:'json',
                 success(data){
+                    if(!data.returnlist[0].periodscon){
+                        mui.alert("请确认是否支付成功")
+                        return false;
+                    }
                     that.lotterylist[that.buyed_index] = data.returnlist[0];
                     that.buyed = lotteryFormat(data.returnlist[0].periodscon);
                     that.buyedname = data.returnlist[0].forecasttypename;
@@ -172,6 +185,14 @@ var vm = new Vue({
                             if(data.statuscode == 1){
                                 // $('#paying').show().find('iframe').attr('src',data.rechargeorder.jumpurl);
                                 location.href = data.rechargeorder.jumpurl;
+                                mui.confirm('是否已经支付成功？', '微信支付', btnArray, function(e) {
+                                    if (e.index == 0) {
+                                        paysuccess1();
+                                    } else {
+                                        location.href = data.rechargeorder.jumpurl
+                                        return false;
+                                    }
+                                })
                             }else if(data.statuscode == "-10801"){
                                 mui.alert(`${data.statusmsg}`, '提示',function(){
                                     location.reload();

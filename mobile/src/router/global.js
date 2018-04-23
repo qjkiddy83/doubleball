@@ -1,7 +1,7 @@
 import '../css/mui.css';
 import '../css/base.css';
 import mui from '../js/mui/mui.js';
-var $ = require('../js/zepto.js');
+// var $ = require('../js/zepto.js');
 require('../js/vue.js')
 mui.init();
 mui("body").on('tap', 'a', function() {
@@ -10,6 +10,6 @@ mui("body").on('tap', 'a', function() {
         location.href = href
 })
 
-$('.mui-bar-nav .mui-icon-left-nav').on('tap',function(){
-	history.go(-1);
-})
+// $('body').on('tap','.mui-bar-nav .mui-icon-left-nav',function(){
+// 	history.go(-2)
+// })

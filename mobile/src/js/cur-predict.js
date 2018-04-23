@@ -46,7 +46,7 @@ function callbackTpl(lotterys, curLottery, curforecast, load, d) {
     lotterys[curLottery].product[curforecast].list = load && lotterys[curLottery].product[curforecast].list ? lotterys[curLottery].product[curforecast].list.concat(d.returnlist) : d.returnlist;
 }
 
-
+var btnArray = ['支付成功', '重新支付'];
 var sliderIndex = 0;
 
 mui.ready(function() {
@@ -219,6 +219,14 @@ var vm = new Vue({
                         }else if(rechargetype == tools.payType.WECHAT){
                             if(data.statuscode == 1){
                                 location.href = data.rechargeorder.jumpurl;
+                                mui.confirm('是否已经支付成功？', '微信支付', btnArray, function(e) {
+                                    if (e.index == 0) {
+                                        paysuccess();
+                                    } else {
+                                        location.href = data.rechargeorder.jumpurl
+                                        return false;
+                                    }
+                                })
                             }else if(data.statuscode == "-10801"){
                                 mui.alert(`${data.statusmsg}`, '提示');
                                 that.showResult()
