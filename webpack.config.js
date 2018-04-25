@@ -89,7 +89,7 @@ function getExports() {
                 hot: true, //热启动
                 proxy: {
                     '*': {
-                      target: 'http://115.28.145.132/',
+                      target: 'http://yc.forcebeijing.com/',
                       changeOrigin: true,
                       disableHostCheck: true,
                       noInfo: true

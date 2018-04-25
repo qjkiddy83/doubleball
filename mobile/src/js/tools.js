@@ -17,16 +17,17 @@ module.exports = {
     fetch(args) {
         let t = Math.floor(Date.now() / 1000);
         args.type = args.type || "post";
-        args.url = 'http://115.28.145.132'+args.url;
+        args.url = 'http://yc.forcebeijing.com'+args.url;
+        // args.url = 'http://115.28.145.132'+args.url;
         $.ajax(Object.assign({}, args, {
             headers: {
                 "channel": "",
-                "platform": 'iOS',
+                "platform": 'android',
                 "type": 'demo',
                 "userid": cookie.get('uid') || '',
                 "t": t,
                 "version": '1.0.0',
-                "package": '',
+                "package": 'afcom.jc.h5',
                 "sign": sign(args.data, t)
             },
             success(data) {
@@ -81,7 +82,7 @@ module.exports = {
                                 <dd>
                                     <div class="mui-input-row mui-radio mui-left">
                                         <label><i class="iconfont icon-wechat"></i><span>微信</span></label>
-                                        <input name="rechargetype" value="0005" type="radio">
+                                        <input name="rechargetype" value="0065" type="radio">
                                     </div>
                                 </dd>
                                 ${recharge?'':`<dd>
@@ -113,6 +114,6 @@ module.exports = {
     payType : {
         'COIN':'0004',
         'ALIPAY':'0066',
-        'WECHAT':'0005'
+        'WECHAT':'0065'
     }
 }
